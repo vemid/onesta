@@ -1,0 +1,36 @@
+{% spaceless %}
+<!DOCTYPE html>
+    <html lang="sr">
+        {% include '@layout/title.html.twig' %}
+        {% include '@layout/head.html.twig' %}
+
+        <body class="pace-done">
+        {% include '@layout/spinner.html.twig' %}
+        <div id="wrapper">
+            {% include '@layout/sidebar.html.twig' %}
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                {% include '@layout/header.html.twig' %}
+                <div id="content" class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="flash-session">
+                                {{ flashSession.display(null, true) | raw }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% block content %}
+                    {% endblock %}
+                </div>
+
+                <div class="footer">
+                    {% include '@layout/footer.html.twig' %}
+                </div>
+            </div>
+            {% include '@layout/modal.html.twig' %}
+
+        </div>
+        {% include '@layout/foot-js.html.twig' %}
+    </body>
+</html>
+{% endspaceless %}

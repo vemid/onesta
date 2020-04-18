@@ -1,0 +1,17 @@
+{% spaceless %}
+<!DOCTYPE html>
+    <html lang="sr">
+        {% include '@layout/title.html.twig' %}
+        {% include '@layout/head.html.twig' %}
+
+        <body>
+        {% include '@layout/header.html.twig' %}
+            <div id="content">
+                <a href="#" class="block"> asdadas<i class="fa fa-user-circle"></i></a>
+            {% block content %}
+            {% endblock %}
+        </div>
+        {% include '@layout/foot-js.html.twig' %}
+    </body>
+</html>
+{% endspaceless %}

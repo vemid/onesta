@@ -1,0 +1,44 @@
+{% spaceless %}
+    <!DOCTYPE html>
+    <html lang="sr">
+    {% include '@layout/title.html.twig' %}
+    {% include '@layout/head.html.twig' %}
+
+    <body class="frontend fixed-sidebar mini-navbar pace-done">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div id="content">
+                <div class="content">
+                    {% block content %}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="text-center">
+                                    <h1 class="logo-name">VEMID</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="next-step">
+                            <div class="middle-box text-center loginscreen animated fadeInDown">
+                                {{ flashSession.display(null, true) | raw }}
+                                {% if qrCodeImage %}
+                                    <img src="data:image/png;base64, {{ qrCodeImage }}"/>
+                                {% endif %}
+
+                                {{ form.render('begin') | raw }}
+                                {{ form.render('errors') | raw }}
+                                {{ form['send'].control | raw }}
+                                {{ form.render('end') | raw }}
+                                <p class="m-t"><small>Vemid software development &copy;
+                                        2014-{{ date().format('Y') }}</small></p>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            {% include '@layout/footer.html.twig' %}
+        </div>
+    </div>
+    {% include '@layout/foot-js.html.twig' %}
+    </body>
+    </html>
+{% endspaceless %}

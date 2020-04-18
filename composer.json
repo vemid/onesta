@@ -1,0 +1,77 @@
+{
+    "name": "darkovesic/skeleton",
+    "description": "Vemid Software",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:darkovesic/php-smpp-worker.git"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "7.2"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">= 7.2",
+        "ext-json": "*",
+        "bacon/bacon-qr-code": "^2.0",
+        "beberlei/doctrineextensions": "^1.2",
+        "filp/whooyps": "^2.7",
+        "jasny/session-middleware": "^1.0",
+        "knplabs/knp-snappy": "^1.2",
+        "laminas/laminas-permissions-acl": "^2.7@dev",
+        "laminas/laminas-stratigility": "^3.2",
+        "league/event": "^2.2",
+        "mezzio/mezzio": "^3.2",
+        "mezzio/mezzio-fastroute": "^3.0",
+        "mezzio/mezzio-flash": "^1.0",
+        "middlewares/http-authentication": "^1.1",
+        "middlewares/request-handler": "^1.4",
+        "monolog/monolog": "^2.0",
+        "narrowspark/http-emitter": "^0.8.0",
+        "nette/forms": "^3.0",
+        "nikolaposa/phoundation": "^2.0",
+        "php-di/php-di": "^6.0",
+        "php-http/guzzle6-adapter": "^2.0",
+        "pragmarx/google2fa": "^7.0",
+        "rakit/validation": "^1.2",
+        "robmorgan/phinx": "^0.11.4",
+        "sentry/sdk": "^2.0",
+        "swiftmailer/swiftmailer": "^6.2",
+        "tecnickcom/tc-lib-pdf": "dev-master",
+        "tecnickcom/tcpdf": "^6.3",
+        "zendframework/zend-config": "^3.3",
+        "zendframework/zend-config-aggregator": "^1.1",
+        "zendframework/zend-diactoros": "^2.1"
+    },
+    "require-dev": {
+        "phpunit/php-code-coverage": "^7.0",
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4" : {
+          "Vemid\\ProjectOne\\Common\\": "src/common",
+          "Vemid\\ProjectOne\\Api\\": "src/modules/Api",
+          "Vemid\\ProjectOne\\Main\\": "src/modules/Default",
+          "Vemid\\ProjectOne\\Admin\\": "src/modules/Admin",
+          "Vemid\\ProjectOne\\Form\\": "src/modules/Form",
+          "Vemid\\ProjectOne\\Entity\\": "src/models"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4": {
+            "Tests\\Vemid\\ProjectOne\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "/bin/bash  .bin/setup.sh"
+        ],
+        "test": "phpunit"
+    }
+}

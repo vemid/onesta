@@ -1,0 +1,33 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" style="margin-bottom: 0" role="navigation">
+        <div class="navbar-header col-xs-6 col-lg-8 no-padding">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            <form class="navbar-form-custom" action="" role="search">
+                <div class="form-group">
+                    <input id="top-search border" class="form-control bordered" type="text" name="top-search" placeholder="Pretraga">
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-6 col-lg-4">
+            <ul class="pull-right nav navbar-top-links navbar-right">
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                        <i class="fa fa-bell"></i>  <span class="label label-warning">{{ totalActiveNotifications }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                    </ul>
+                </li>
+                <li>
+                    <a href="/auth/logout">
+                        <i class="fa fa-sign-out"></i>
+                        Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

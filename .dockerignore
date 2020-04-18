@@ -1,0 +1,11 @@
+.circleci
+.git-hooks
+.terraform
+tests
+docs
+docker-compose.yml
+Dockerfile
+.phpunit.result.cache
+phpunit.xml
+phpunit.xml.dist
+README.md

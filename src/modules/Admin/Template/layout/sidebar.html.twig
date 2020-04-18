@@ -1,0 +1,42 @@
+{% set url = request.getURI().getPath() %}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul id="side-menu" class="nav metismenu">
+            <li class="nav-header">
+                {% if session.get('user')|length %}
+                    <div class="dropdown profile-element text-center">
+                    <span>
+                        <img class="img-circle" width="60px" src="{{ session.get('user')['avatar'] }}" alt="image">
+                    </span>
+                    <div class="space-5"></div>
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <span class="clear">
+                            <span class="text-muted text-xs block">
+                                {{ session.get('user')['name'] }}
+                            </span>
+                        </span>
+                    </a>
+                    </div>
+                {% endif %}
+            </li>
+            <li class="{{ request.getURI().getPath() == '/admin' ? 'active' : '' }}">
+                <a href="/admin">
+                    <i class="fa fa-home"></i>
+                    <span class="nav-label">Home</span>
+                </a>
+            </li>
+            <li class="{{ 'user/profile' in url ? 'active' : '' }}">
+                <a href="/admin/user/profile">
+                    <i class="fa fa-user-plus"></i>
+                    <span class="nav-label">{{ t('Account Settings') }}</span>
+                </a>
+            </li>
+            <li class="{{ 'user/management' in url ? 'active' : '' }}">
+                <a href="/admin/user/management">
+                    <i class="fa fa-users"></i>
+                    <span class="nav-label">{{ t('User Management') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

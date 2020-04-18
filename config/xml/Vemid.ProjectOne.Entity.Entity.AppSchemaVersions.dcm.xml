@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Vemid\ProjectOne\Entity\Entity\AppSchemaVersion" table="app_schema_versions">
+    <id name="version" type="bigint" column="version">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="migrationName" type="string" column="migration_name" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="startTime" type="datetime" column="start_time" nullable="true"/>
+    <field name="endTime" type="datetime" column="end_time" nullable="true"/>
+    <field name="breakpoint" type="boolean" column="breakpoint" nullable="false">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

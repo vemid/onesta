@@ -1,0 +1,19 @@
+{% spaceless %}
+    <!DOCTYPE html>
+    <html lang="sr">
+    {% include '@layout/title.html.twig' %}
+    {% include '@layout/head.html.twig' %}
+
+    <body class="frontend fixed-sidebar mini-navbar pace-done">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>403</h1>
+        <h3 class="font-bold">You are not allowed to visit this page</h3>
+
+        <div class="error-desc">
+            If you wanna access this page or you have some additional question about restriction reasons please contact site admin.
+        </div>
+    </div>
+    {% include '@layout/foot-js.html.twig' %}
+    </body>
+    </html>
+{% endspaceless %}

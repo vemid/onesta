@@ -1,0 +1,1737 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the API documentation for the CRM Billing Service",
+        "version": "0.0.1",
+        "title": "CRM Billing Service",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "damian.brooks@arbor-education.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "api.billing-service.arbor.sc",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Arbor Education",
+            "description": "Transforming the way schools work",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "https://arbor-education.com"
+            }
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/docs": {
+            "options": {
+                "tags": [
+                    "API Documentation"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "parameters": [{
+                    "in": "path",
+                    "name": "version",
+                    "type": "integer",
+                    "description": "api's version number",
+                    "required": true
+                }],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID'",
+                                "method.response.header.Access-Control-Allow-Methods" : "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "type": "mock"
+                }
+            },
+            "get": {
+                "tags": [
+                    "API Documentation"
+                ],
+                "summary": "Swagger docs endpoint",
+                "description": "This endpoint is used for routing to the Swagger docs definition",
+                "operationId": "docs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "description": "The version of the API",
+                        "required": true,
+                        "type": "string",
+                        "enum": ["v1"]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful and access token returned.",
+                        "schema": {
+                            "$ref": "#/definitions/LoginResponse"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed."
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID'",
+                                "method.response.header.Access-Control-Allow-Methods" : "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/docs",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "GET",
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        },
+        "/{version}/customer/create": {
+            "options": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "4\\d{2}": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "5\\d{2}": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+            "post": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Add a customer",
+                "description": "Creates a customer",
+                "operationId": "Customer.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "customer",
+                        "description": "The customer object to be added.",
+                        "required": true,
+                        "schema": {
+                            "$ref" : "#/definitions/Customer"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "The result of the action."
+                    },
+                    "400": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "400": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "401": {
+                            "statusCode": "401",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "403": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "500": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/{version}/customer/create",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "POST",
+                    "requestParameters": {
+                        "integration.request.header.x-correlation-id": "method.request.header.x-correlation-id",
+                        "integration.request.path.version": "method.request.path.version"
+                    },
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        },
+        "/{version}/plans": {
+            "options": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "path",
+                    "name": "version",
+                    "type": "integer",
+                    "description": "api's version number",
+                    "required": true
+                },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "description": "ID of the notification to return",
+                        "required": true
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "4\\d{2}": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "5\\d{2}": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Retrieves a specific Notification by ID",
+                "description": "Returns a specific Notification by ID",
+                "operationId": "Notification.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "security" : [
+                    {
+                        "api_key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "ID of the notification to return",
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "The requested notification",
+                        "schema": {
+                            "$ref": "#/definitions/Notifications"
+                        }
+                    },
+                    "400": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "400": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "401": {
+                            "statusCode": "401",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "403": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "500": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/{version}/notifications/id/{id}",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "GET",
+                    "requestParameters": {
+                        "integration.request.header.x-correlation-id": "method.request.header.x-correlation-id",
+                        "integration.request.path.version": "method.request.path.version",
+                        "integration.request.path.id": "method.request.path.id"
+                    },
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        },
+        "/{version}/addons/active": {
+            "options": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "path",
+                    "name": "version",
+                    "type": "integer",
+                    "description": "api's version number",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "4\\d{2}": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "5\\d{2}": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Gets all active notifications",
+                "description": "Returns all active notifications",
+                "operationId": "Notification.active",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "security" : [
+                    {
+                        "api_key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "The page to return (for pagination)",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "The limit defines the number of results to return (for pagination)",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "search",
+                        "description": "The search parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "orderBy",
+                        "description": "The order by column parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "direction",
+                        "description": "The order by direction parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "date",
+                        "description": "Only show notifications active for the date/time of the query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "in": "query",
+                        "name": "phase",
+                        "description": "The phases filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "school-group",
+                        "description": "The school groups filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "application-id",
+                        "description": "The schools application ids filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "All active notifications.",
+                        "schema": {
+                            "$ref": "#/definitions/Notifications"
+                        }
+                    },
+                    "400": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "400": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "401": {
+                            "statusCode": "401",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "403": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "500": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/{version}/notifications/active",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "GET",
+                    "requestParameters": {
+                        "integration.request.header.x-correlation-id": "method.request.header.x-correlation-id",
+                        "integration.request.path.version": "method.request.path.version",
+                        "integration.request.querystring.page": "method.request.querystring.page",
+                        "integration.request.querystring.limit": "method.request.querystring.limit",
+                        "integration.request.querystring.search": "method.request.querystring.search",
+                        "integration.request.querystring.orderBy": "method.request.querystring.orderBy",
+                        "integration.request.querystring.direction": "method.request.querystring.direction",
+                        "integration.request.querystring.date": "method.request.querystring.date",
+                        "integration.request.querystring.phase": "method.request.querystring.phase",
+                        "integration.request.querystring.school-group": "method.request.querystring.school-group",
+                        "integration.request.querystring.application-id": "method.request.querystring.application-id"
+                    },
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        },
+        "/{version}/subscriptions": {
+            "options": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "path",
+                    "name": "version",
+                    "type": "integer",
+                    "description": "api's version number",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "4\\d{2}": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "5\\d{2}": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Gets all not active notifications",
+                "description": "Returns all not active notifications",
+                "operationId": "Notification.notActive",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "security" : [
+                    {
+                        "api_key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "The page to return (for pagination)",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "The limit defines the number of results to return (for pagination)",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "search",
+                        "description": "The search parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "orderBy",
+                        "description": "The order by column parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "direction",
+                        "description": "The order by direction parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "date",
+                        "description": "Only show notifications active for the date/time of the query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "in": "query",
+                        "name": "phase",
+                        "description": "The phases filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "school-group",
+                        "description": "The school groups filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "application-id",
+                        "description": "The schools application ids filter parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "All not active notifications.",
+                        "schema": {
+                            "$ref": "#/definitions/Notifications"
+                        }
+                    },
+                    "400": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "400": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "401": {
+                            "statusCode": "401",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "403": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "500": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/{version}/notifications/not-active",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "GET",
+                    "requestParameters": {
+                        "integration.request.header.x-correlation-id": "method.request.header.x-correlation-id",
+                        "integration.request.path.version": "method.request.path.version",
+                        "integration.request.querystring.page": "method.request.querystring.page",
+                        "integration.request.querystring.limit": "method.request.querystring.limit",
+                        "integration.request.querystring.search": "method.request.querystring.search",
+                        "integration.request.querystring.orderBy": "method.request.querystring.orderBy",
+                        "integration.request.querystring.direction": "method.request.querystring.direction",
+                        "integration.request.querystring.date": "method.request.querystring.date",
+                        "integration.request.querystring.phase": "method.request.querystring.phase",
+                        "integration.request.querystring.school-group": "method.request.querystring.school-group",
+                        "integration.request.querystring.application-id": "method.request.querystring.application-id"
+                    },
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        },
+        "/{version}/coupons": {
+            "options": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "CORS Support",
+                "description": "Enable CORS by returning correct headers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "path",
+                    "name": "version",
+                    "type": "integer",
+                    "description": "api's version number",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Preflight Check",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "requestTemplates": {
+                        "application/json": "{\n  \"statusCode\" : 200\n}"
+                    },
+                    "responses": {
+                        "4\\d{2}": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "5\\d{2}": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+            "put": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Updates a notification status",
+                "description": "Updates a notification status",
+                "operationId": "Notification.setStatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "security" : [
+                    {
+                        "api_key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "version",
+                        "type": "integer",
+                        "description": "api's version number",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "notification",
+                        "description": "The notification object to be updated, must contain notificationId, active, modifiedBy properties",
+                        "required": true,
+                        "schema": {
+                            "$ref" : "#/definitions/Notification"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-correlation-id",
+                        "description": "Correlation id for the request",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "The result of the action.",
+                        "schema": {
+                            "$ref": "#/definitions/Notification"
+                        }
+                    },
+                    "400": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Authentication failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "2\\d{2}": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "400": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "401": {
+                            "statusCode": "401",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "403": {
+                            "statusCode": "403",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        },
+                        "500": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'",
+                                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            }
+                        }
+                    },
+                    "uri": "http://${stageVariables.billing_api_host}/{version}/notifications/status",
+                    "passthroughBehavior": "when_no_match",
+                    "httpMethod": "PUT",
+                    "requestParameters": {
+                        "integration.request.header.x-correlation-id": "method.request.header.x-correlation-id",
+                        "integration.request.path.version": "method.request.path.version"
+                    },
+                    "type": "http",
+                    "connectionType": "VPC_LINK",
+                    "connectionId": "${stageVariables.vpcLinkId}"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "x-api-key",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "LoginResponse": {},
+        "Error": {},
+        "Empty": {}
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "x-amazon-apigateway-gateway-responses": {
+        "DEFAULT_5XX": {
+            "responseParameters": {
+                "gatewayresponse.header.Access-Control-Allow-Methods": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'"
+            }
+        },
+        "DEFAULT_4XX": {
+            "responseParameters": {
+                "gatewayresponse.header.Access-Control-Allow-Methods": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Correlation-ID,x-report-id,x-permissions,x-client-id,x-role-id,x-user-id'"
+            }
+        }
+    }
+}

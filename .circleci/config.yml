@@ -1,0 +1,121 @@
+version: 2
+
+jobs:
+
+  test:
+    docker:
+      - image: circleci/php:7.3.4-stretch
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Install python dev dependencies
+          command: |
+            sudo apt update -y && \
+            sudo apt install -y \
+               python3 \
+               python3-dev \
+               python3-virtualenv \
+               python3-setuptools \
+               build-essential \
+               cmake \
+               findutils zip unzip \
+               libatlas-base-dev \
+               libatlas3-base \
+               libblas-dev \
+               libblas3 \
+               libmlpack-dev
+            sudo apt install python-pip
+            sudo apt-get install curl software-properties-common jq gettext
+            sudo pip install awscli
+
+      - run:
+          name: Install AWS CLI
+          command: |
+            pip install awscli --upgrade --user
+            aws --version
+
+      - run:
+          name: Run Tests
+          command: |
+            chmod +x .bin/run-test.sh
+            .bin/run-test.sh
+
+  deploy:
+    docker:
+      - image: circleci/python:latest
+
+    working_directory: ~/app
+     
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Install python dev dependencies
+          command: |
+            sudo apt update -y && \
+            sudo apt install -y \
+              python3 \
+              python3-dev \
+              python3-virtualenv \
+              python3-setuptools \
+              build-essential \
+              cmake \
+              findutils zip unzip \
+              libatlas-base-dev \
+              libatlas3-base \
+              libblas-dev \
+              libblas3 \
+              libmlpack-dev     
+            sudo apt-get install curl software-properties-common jq gettext  
+            sudo pip install --progress-bar off awscli
+            
+      - run:
+          name: Install AWS CLI
+          command: |
+            pip install awscli --upgrade --user
+            aws --version
+
+      - run:
+          name: Install Node/npm
+          command: |
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+            sudo apt-get install nodejs
+            node -v
+            npm -v
+
+      - run:
+          name: Install AWS ECS CLI
+          command: |
+            sudo curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+            sudo chmod +x /usr/local/bin/ecs-cli
+
+      - run:
+          name: Install Flyway
+          command: |
+            wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-5.2.4/flyway /usr/local/bin
+
+      - run:
+          name: Run Deploy Script
+          command: |
+            chmod +x .bin/deploy.sh
+            .bin/deploy.sh
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - staging

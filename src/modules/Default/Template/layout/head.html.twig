@@ -1,0 +1,22 @@
+{% block head %}
+    <head>
+        {{ assets({files: [
+            '@build/css/jquery-ui.min.css',
+            '@build/css/bootstrap.css',
+            '@build/css/flatpickr.min.css',
+            '@build/css/chosen.css',
+            '@build/css/icheck.css',
+            '@build/css/data-tables.buttons.min.css',
+            '@build/css/style.css',
+        ], name: 'main.css'})
+        }}
+
+        {{ assets({files: [
+            '@build/js/jquery.min.js',
+            '@build/js/jquery.ui.min.js',
+            '@build/js/bootstrap.min.js',
+            '@build/js/fontawesome.js',
+        ], name: 'foot.js'})
+        }}
+    </head>
+{% endblock %}

@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'mailer.driver' => '',
+    'mailer.host' => '',
+    'mailer.port' => 0,
+    'mailer.encryption' => '',
+    'mailer.username' => '',
+    'mailer.password' => '',
+    'mailer.from.email' => '',
+    'mailer.from.name'  => '',
+    'mailer.inquiry.email' => '',
+    'mailer.inquiry.name' => '',
+    'mailer.contact.email' => '',
+    'mailer.contact.name' => '',
+    'mailer.verification.email' => '',
+    'mailer.verification.name' => '',
+];

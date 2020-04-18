@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'site' => 'http://project.local',
+   'version' => '',
+   '2fa' => '',
+   'sentry.dns' => '',
+   'error_handling.display_errors' =>  0,
+   'profiling' => false,
+   'language' => [],
+];

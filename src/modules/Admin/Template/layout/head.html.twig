@@ -1,0 +1,27 @@
+{% block head %}
+    <head>
+        {{ assets({files: [
+            '@build/css/jquery-ui.min.css',
+            '@build/css/bootstrap.css',
+            '@build/css/mdb.css',
+            '@build/css/toastr.min.css',
+            '@build/css/flatpickr.min.css',
+            '@build/css/sweetalert.css',
+            '@build/css/chosen.css',
+            '@build/css/icheck.css',
+            '@build/css/footable.core.css',
+            '@build/css/switchery.css',
+            '@build/css/data-tables.buttons.min.css',
+            '@build/css/style.css',
+        ], name: 'main.css'})
+        }}
+
+        {{ assets({files: [
+            '@build/js/jquery.min.js',
+            '@build/js/jquery.ui.min.js',
+            '@build/js/bootstrap.min.js',
+            '@build/js/fontawesome.js',
+        ], name: 'head.js'})
+        }}
+    </head>
+{% endblock %}
