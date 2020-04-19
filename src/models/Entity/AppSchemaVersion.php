@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * AppSchemaVersions
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="app_schema_versions")
  * @ORM\Entity
  */
-class AppSchemaVersion implements EntityInterface
+class AppSchemaVersion extends Entity
 {
     /**
      * @var int

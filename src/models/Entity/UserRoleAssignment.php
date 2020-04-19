@@ -60,13 +60,12 @@ class UserRoleAssignment extends Entity
 
     }
 
-
     /**
      * Get id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,7 +77,7 @@ class UserRoleAssignment extends Entity
      *
      * @return UserRoleAssignment
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): UserRoleAssignment
     {
         $this->user = $user;
 
@@ -90,7 +89,7 @@ class UserRoleAssignment extends Entity
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?USer
     {
         return $this->user;
     }
@@ -102,7 +101,7 @@ class UserRoleAssignment extends Entity
      *
      * @return UserRoleAssignment
      */
-    public function setRole(Role $role = null)
+    public function setRole(Role $role = null): UserRoleAssignment
     {
         $this->role = $role;
 
@@ -114,7 +113,7 @@ class UserRoleAssignment extends Entity
      *
      * @return Role|null
      */
-    public function getRole()
+    public function getRole(): ?Role
     {
         return $this->role;
     }

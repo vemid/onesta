@@ -6,18 +6,13 @@ namespace Vemid\ProjectOne\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Admin\Form\UserChangePassword;
-use Vemid\ProjectOne\Admin\Form\UserLoginForm;
-use Vemid\ProjectOne\Admin\Form\UserResetPasswordForm;
-use Vemid\ProjectOne\Common\Config\ConfigInterface;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\Avatar;
-use Vemid\ProjectOne\Common\Mailer\MailManagerInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Role;
 use Vemid\ProjectOne\Entity\Entity\User as EntityUser;
 use Vemid\ProjectOne\Entity\Entity\UserRoleAssignment;
-use Vemid\ProjectOne\Entity\Repository\UserRepository;
 
 /**
  * Class UserHandler

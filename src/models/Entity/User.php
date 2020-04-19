@@ -146,7 +146,7 @@ class User extends Entity
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -158,7 +158,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): User
     {
         $this->firstName = $firstName;
 
@@ -170,7 +170,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -182,7 +182,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): User
     {
         $this->lastName = $lastName;
 
@@ -194,7 +194,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -206,7 +206,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail($email): User
     {
         $this->email = $email;
 
@@ -218,7 +218,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -230,7 +230,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setUsername($username): User
     {
         $this->username = $username;
 
@@ -242,7 +242,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -254,7 +254,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword($password): User
     {
         $this->password = $password;
 
@@ -266,7 +266,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -278,7 +278,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setAvatar($avatar = null)
+    public function setAvatar($avatar = null): User
     {
         $this->avatar = $avatar;
 
@@ -290,7 +290,7 @@ class User extends Entity
      *
      * @return string|null
      */
-    public function getAvatar()
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -302,7 +302,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setGender($gender = null)
+    public function setGender($gender = null): User
     {
         $this->gender = $gender ?: null;
 
@@ -314,7 +314,7 @@ class User extends Entity
      *
      * @return string|null
      */
-    public function getGender()
+    public function getGender(): ?string
     {
         return $this->gender;
     }
@@ -342,7 +342,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): User
     {
         $this->isActive = $isActive ?: false;
 
@@ -354,7 +354,7 @@ class User extends Entity
      *
      * @return bool
      */
-    public function getIsActive()
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }
@@ -366,7 +366,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setLastIp($lastIp = null)
+    public function setLastIp($lastIp = null): User
     {
         $this->lastIp = $lastIp;
 
@@ -378,7 +378,7 @@ class User extends Entity
      *
      * @return string|null
      */
-    public function getLastIp()
+    public function getLastIp(): ?string
     {
         return $this->lastIp;
     }
@@ -390,7 +390,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setRegisteredDatetime($registeredDatetime = null)
+    public function setRegisteredDatetime($registeredDatetime = null): User
     {
         $this->registeredDatetime = $registeredDatetime;
 
@@ -402,7 +402,7 @@ class User extends Entity
      *
      * @return \DateTime|null
      */
-    public function getRegisteredDatetime()
+    public function getRegisteredDatetime(): ?\DateTime
     {
         return $this->registeredDatetime;
     }
@@ -414,7 +414,7 @@ class User extends Entity
      *
      * @return User
      */
-    public function setLastVisitDatetime($lastVisitDatetime = null)
+    public function setLastVisitDatetime($lastVisitDatetime = null): User
     {
         $this->lastVisitDatetime = $lastVisitDatetime;
 
@@ -426,7 +426,7 @@ class User extends Entity
      *
      * @return \DateTime|null
      */
-    public function getLastVisitDatetime()
+    public function getLastVisitDatetime(): ?\DateTime
     {
         return $this->lastVisitDatetime;
     }
@@ -450,7 +450,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('%s %s', $this->firstName, $this->lastName);
     }

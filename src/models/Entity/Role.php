@@ -72,7 +72,7 @@ class Role extends Entity
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ class Role extends Entity
      *
      * @return Role
      */
-    public function setCode($code)
+    public function setCode($code): Role
     {
         $this->code = $code;
 
@@ -96,7 +96,7 @@ class Role extends Entity
      *
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -108,7 +108,7 @@ class Role extends Entity
      *
      * @return Role
      */
-    public function setName($name)
+    public function setName($name): Role
     {
         $this->name = $name;
 
@@ -120,7 +120,7 @@ class Role extends Entity
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -132,7 +132,7 @@ class Role extends Entity
      *
      * @return Role
      */
-    public function setDescription($description = null)
+    public function setDescription($description = null): Role
     {
         $this->description = $description;
 
@@ -144,7 +144,7 @@ class Role extends Entity
      *
      * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -160,7 +160,7 @@ class Role extends Entity
     /**
      * @return PersistentCollection
      */
-    public function getUsers()
+    public function getUsers(): PersistentCollection
     {
         return $this->users;
     }

@@ -82,7 +82,7 @@ class AuditLog extends Entity
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -94,7 +94,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setModifiedEntityName($modifiedEntityName)
+    public function setModifiedEntityName($modifiedEntityName): AuditLog
     {
         $this->modifiedEntityName = $modifiedEntityName;
 
@@ -106,7 +106,7 @@ class AuditLog extends Entity
      *
      * @return string
      */
-    public function getModifiedEntityName()
+    public function getModifiedEntityName(): string
     {
         return $this->modifiedEntityName;
     }
@@ -118,7 +118,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setModifiedEntityId($modifiedEntityId)
+    public function setModifiedEntityId($modifiedEntityId): AuditLog
     {
         $this->modifiedEntityId = $modifiedEntityId;
 
@@ -130,7 +130,7 @@ class AuditLog extends Entity
      *
      * @return int
      */
-    public function getModifiedEntityId()
+    public function getModifiedEntityId(): int
     {
         return $this->modifiedEntityId;
     }
@@ -142,7 +142,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setOperation($operation)
+    public function setOperation($operation): AuditLog
     {
         $this->operation = $operation;
 
@@ -154,7 +154,7 @@ class AuditLog extends Entity
      *
      * @return string
      */
-    public function getOperation()
+    public function getOperation(): string
     {
         return $this->operation;
     }
@@ -166,7 +166,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setOldData($oldData = null)
+    public function setOldData($oldData = null): AuditLog
     {
         $this->oldData = $oldData;
 
@@ -178,7 +178,7 @@ class AuditLog extends Entity
      *
      * @return string|null
      */
-    public function getOldData()
+    public function getOldData(): ?string
     {
         return $this->oldData;
     }
@@ -190,7 +190,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setNewData($newData = null)
+    public function setNewData($newData = null): AuditLog
     {
         $this->newData = $newData;
 
@@ -202,7 +202,7 @@ class AuditLog extends Entity
      *
      * @return string|null
      */
-    public function getNewData()
+    public function getNewData(): ?string
     {
         return $this->newData;
     }
@@ -214,7 +214,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): AuditLog
     {
         $this->timestamp = $timestamp;
 
@@ -226,7 +226,7 @@ class AuditLog extends Entity
      *
      * @return \DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): \DateTime
     {
         return $this->timestamp;
     }
@@ -238,7 +238,7 @@ class AuditLog extends Entity
      *
      * @return AuditLog
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): AuditLog
     {
         $this->user = $user;
 
@@ -250,7 +250,7 @@ class AuditLog extends Entity
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
