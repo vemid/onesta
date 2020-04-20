@@ -25,6 +25,7 @@ $excludeTables = [
     'audit_logs',
     'suppliers',
     'app_schema_versions',
+    'bank_statements',
 ];
 
 /** @var EntityManagerInterface $em */
