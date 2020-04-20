@@ -19,20 +19,20 @@
                     </div>
                 {% endif %}
             </li>
-            <li class="{{ request.getURI().getPath() == '/admin' ? 'active' : '' }}">
+            <li class="{{ request.getURI().getPath() == '/' ? 'active' : '' }}">
                 <a href="/admin">
                     <i class="fa fa-home"></i>
                     <span class="nav-label">Home</span>
                 </a>
             </li>
             <li class="{{ 'user/profile' in url ? 'active' : '' }}">
-                <a href="/admin/user/profile">
+                <a href="/user/profile">
                     <i class="fa fa-user-plus"></i>
                     <span class="nav-label">{{ t('Account Settings') }}</span>
                 </a>
             </li>
             <li class="{{ 'user/management' in url ? 'active' : '' }}">
-                <a href="/admin/user/management">
+                <a href="/user/management">
                     <i class="fa fa-users"></i>
                     <span class="nav-label">{{ t('User Management') }}</span>
                 </a>

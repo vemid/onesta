@@ -10,7 +10,7 @@ require_once __DIR__ . '/../init.php';
 /** @var EntityManagerInterface $entityManager */
 $entityManager = $container->get(EntityManagerInterface::class);
 $entityManager->getConfiguration()->setEntityNamespaces([
-    'Vemid' => 'Vemid\\ProjectOne\\Entity\\',
+    '' => 'Vemid\\ProjectOne\\Entity\\',
 ]);
 
 $conn = $entityManager->getConnection();

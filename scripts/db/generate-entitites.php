@@ -9,33 +9,40 @@ use Doctrine\ORM\Tools\EntityGenerator;
 
 require_once __DIR__ . '/../init.php';
 
-$return = shell_exec(sprintf('%1$s/vendor/bin/doctrine orm:convert-mapping --from-database --namespace=Vemid --force xml %1$s/config/xml', APP_PATH));
+$return = shell_exec(sprintf('%1$s/vendor/bin/doctrine orm:convert-mapping --from-database --namespace=Vemid\\\ProjectOne\\\Entity\\\Entity\\\ --force xml %1$s/config/xml', APP_PATH));
 
 $driver = new XmlDriver([
     APP_PATH . '/config/xml/'
 ]);
-$driver->setGlobalBasename('Vemid\test');
+
+$excludeTables = [
+    'users',
+    'user_role_assignments',
+    'roles',
+    'codes',
+    'code_types',
+    'clients',
+    'audit_logs',
+    'suppliers',
+    'app_schema_versions',
+];
 
 /** @var EntityManagerInterface $em */
 $em = $container->get(EntityManagerInterface::class);
-
-$cmf = new DisconnectedClassMetadataFactory();
-$cmf->setEntityManager($em);
-$cmf->setCacheDriver(new ApcuCache());
-
 $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('set', 'string');
 $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 $em->getConfiguration()->setMetadataDriverImpl($driver);
-$em->getConfiguration()->addEntityNamespace('\\Vemid\\ProjectOne\\Entity', 'Vemid');
 
-$em->getConfiguration()->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
-$em->getConfiguration()->setProxyDir(__DIR__ . '/Proxies');
-$em->getConfiguration()->setProxyNamespace('Proxies');
+$cmf = new DisconnectedClassMetadataFactory();
+$cmf->setEntityManager($em);
+$allMetadata = [];
+foreach ($cmf->getAllMetadata() as $metadata) {
+    if (in_array($metadata->getTableName(), $excludeTables, false)) {
+        continue;
+    }
 
-$driver = new DatabaseDriver(
-    $em->getConnection()->getSchemaManager()
-);
-$em->getConfiguration()->setMetadataDriverImpl($driver);
+    $allMetadata[] = $metadata;
+}
 
 $generator = new EntityGenerator();
 $generator->setUpdateEntityIfExists(false);
@@ -43,7 +50,7 @@ $generator->setRegenerateEntityIfExists(false);
 $generator->setGenerateStubMethods(true);
 $generator->setGenerateAnnotations(true);
 
-$generator->generate($cmf->getAllMetadata(), APP_PATH . '/src/models/Entity');
+$generator->generate($allMetadata, APP_PATH . '/src/models/Entity');
 
 
 print 'Done!';
