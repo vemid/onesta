@@ -5,6 +5,7 @@ declare(strict_types=1);
 use FastRoute\RouteCollector;
 use Vemid\ProjectOne\Admin\Handler\Authentication;
 use Vemid\ProjectOne\Admin\Handler\AuthenticationWrite;
+use Vemid\ProjectOne\Admin\Handler\Product;
 use Vemid\ProjectOne\Admin\Handler\User;
 use Vemid\ProjectOne\Api\Handler\Ping;
 use Vemid\ProjectOne\Main\Handler\Index;
@@ -25,6 +26,7 @@ return [
         $routeCollector->addRoute('GET', '/auth/{method}[/{id:[\w-]+}]', Authentication::class);
         $routeCollector->addRoute('POST', '/auth/{method}[/{id:[\w-]+}]', AuthenticationWrite::class);
         $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', User::class);
+        $routeCollector->addRoute('GET', '/products/{method}[/{id:[\w-]+}]', Product::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);

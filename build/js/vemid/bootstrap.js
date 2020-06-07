@@ -5,3 +5,5 @@ Vemid.datetime.init();
 Vemid.misc.init();
 Vemid.uploader.init();
 Vemid.notification.init();
+console.log();
+Vemid.menu.init();

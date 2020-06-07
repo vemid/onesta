@@ -20,7 +20,7 @@
                 {% endif %}
             </li>
             <li class="{{ request.getURI().getPath() == '/' ? 'active' : '' }}">
-                <a href="/admin">
+                <a href="/">
                     <i class="fa fa-home"></i>
                     <span class="nav-label">Home</span>
                 </a>
@@ -36,6 +36,21 @@
                     <i class="fa fa-users"></i>
                     <span class="nav-label">{{ t('User Management') }}</span>
                 </a>
+            </li>
+            <li class="{{ 'products' in url ? 'active' : '' }}">
+                <a href="/products">
+                    <i class="fa fa-product-hunt"></i>
+                    <span class="nav-label">{{ t('Roba') }}</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse" style="">
+                    <li class="{{ '' ? 'active' : '' }}">
+                        <a href="/products/list">
+                            <i class="fa fa-product-hunt"></i>
+                            <span class="nav-label">{{ t('Pregled Robe') }}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
