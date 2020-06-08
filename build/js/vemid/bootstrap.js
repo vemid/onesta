@@ -7,3 +7,4 @@ Vemid.uploader.init();
 Vemid.notification.init();
 console.log();
 Vemid.menu.init();
+Vemid.dataTable.init();

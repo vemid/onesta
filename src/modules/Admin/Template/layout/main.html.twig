@@ -1,7 +1,7 @@
 {% spaceless %}
 <!DOCTYPE html>
     <html lang="sr">
-        {% include '@layout/title.html.twig' %}
+        {% block title %} {% endblock %}
         {% include '@layout/head.html.twig' %}
 
         <body class="pace-done">
@@ -18,9 +18,7 @@
                             </div>
                         </div>
                     </div>
-
-                    {% block content %}
-                    {% endblock %}
+                    {% block content %}{% endblock %}
                 </div>
 
                 <div class="footer">

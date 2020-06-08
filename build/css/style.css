@@ -9778,6 +9778,13 @@ td.open ul, h3.open ul {
   color: #fff !important;
 }
 
+.dataTables_filter label {
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0;
+}
+
 .flex-column {
   -webkit-box-orient: vertical !important;
   -webkit-flex-direction: column !important;
@@ -9842,6 +9849,10 @@ label {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.table-button-container {
+  margin-top: 5px;
 }
 
 .media {

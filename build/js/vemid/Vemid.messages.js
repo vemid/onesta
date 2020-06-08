@@ -183,7 +183,14 @@
         permissionDenied: {
             en: "Permission denied",
             sr: "Nemate pristupa stranici"
-        }
-
+        },
+        createNew: {
+            en: "Create new",
+            sr: "Dodaj"
+        },
+        print: {
+            en: "Print",
+            sr: "Štampaj"
+        },
     });
 }).call(Vemid, $);

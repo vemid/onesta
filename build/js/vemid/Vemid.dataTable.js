@@ -1,0 +1,53 @@
+(function ($) {
+    "use strict";
+    let Vemid = this;
+
+    Vemid.namespace("dataTable");
+
+    Vemid.dataTable = (function () {
+
+        return {
+            initGrid: function () {
+                let table = $('#dataTable').dataTable({
+                    "scrollCollapse": true,
+                    "sDom": '<"bottom"flp><"clear">',
+                    dom: '<"toolbar">Bfrtip',
+                    buttons: {
+                        dom: {
+                            container: {
+                                className: 'table-button-container pull-left'
+                            },
+                            button: {
+                                tag: 'a',
+                                className: 'mx-auto mt-75'
+                            }
+                        },
+                        buttons: [
+                            {
+                                text: '<i class="fa fa-plus-circle bigger-160 text-default" aria-hidden="true"></i>',
+                                action: function (e, dt, node, config) {
+                                    alert('Button activated');
+                                },
+                                titleAttr: Vemid.language.get("createNew"),
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="fa fa-print bigger-160 text-default" aria-hidden="true"></i>',
+                                titleAttr: Vemid.language.get("print"),
+                            }
+                        ]
+                    }
+                });
+
+                $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + $(table).attr("data-title") + "</b>");
+            },
+            init: function () {
+                this.initGrid();
+            }
+        };
+    })();
+}).call(Vemid, $);
+
+
+
+

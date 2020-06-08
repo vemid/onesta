@@ -8,18 +8,14 @@
 
         return {
             initHamburger : function ()  {
-                // Minimalize menu
                 $('.navbar-minimalize').on('click', function (event) {
                     event.preventDefault();
                     $("body").toggleClass("mini-navbar");
                     SmoothlyMenu();
-
                 });
 
             },
             initMenu : function() {
-                // Popper.Defaults.modifiers.computeStyle.gpuAcceleration = false;
-
 
                 // Add body-small class if window less than 768px
                 if (window.innerWidth < 769) {
@@ -28,7 +24,7 @@
                     $('body').removeClass('body-small')
                 }
 
-                let sideMenu = $('#side-menu').metisMenu();
+                $('#side-menu').metisMenu();
 
                 $('.collapse-link').on('click', function (e) {
                     e.preventDefault();
@@ -45,6 +41,7 @@
                 });
             },
             init: function () {
+                this.initHamburger();
                 this.initMenu();
             }
         };
