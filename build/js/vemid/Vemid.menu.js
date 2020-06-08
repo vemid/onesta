@@ -41,7 +41,7 @@
                 });
             },
             init: function () {
-                this.initHamburger();
+                // this.initHamburger();
                 this.initMenu();
             }
         };

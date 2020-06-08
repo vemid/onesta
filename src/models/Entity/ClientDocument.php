@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * ClientDocuments
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="client_documents", indexes={@ORM\Index(name="client_id", columns={"client_id"})})
  * @ORM\Entity
  */
-class ClientDocument
+class ClientDocument extends Entity
 {
     /**
      * @var string

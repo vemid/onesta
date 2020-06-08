@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Codes
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="codes", uniqueConstraints={@ORM\UniqueConstraint(name="code", columns={"code"})}, indexes={@ORM\Index(name="code_type_id", columns={"code_type_id"}), @ORM\Index(name="parent_id", columns={"parent_id"})})
  * @ORM\Entity
  */
-class Code
+class Code extends Entity
 {
     /**
      * @var int

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * BankStatementItems
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="bank_statement_items", indexes={@ORM\Index(name="bank_statement_id", columns={"bank_statement_id"})})
  * @ORM\Entity
  */
-class BankStatementItem
+class BankStatementItem extends Entity
 {
     /**
      * @var string

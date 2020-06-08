@@ -9783,6 +9783,7 @@ td.open ul, h3.open ul {
   display: inline-flex;
   align-items: center;
   margin-right: 0;
+  float: right;
 }
 
 .flex-column {

@@ -32,7 +32,6 @@
                         }
                     },
                     scrollCollapse: true,
-                    sDom: '<"bottom"flp><"clear">',
                     dom: '<"toolbar">Bfrtip',
                     buttons: {
                         dom: {
@@ -48,7 +47,7 @@
                             {
                                 text: '<i class="fa fa-plus-circle bigger-160 text-default" aria-hidden="true"></i>',
                                 action: function (e, dt, node, config) {
-                                    window.location.href = Vemid.config.formUrl;
+                                    window.location.href = Vemid.config.formUrl + table.attr("data-entity") + "s/create";
                                 },
                                 titleAttr: Vemid.language.get("createNew"),
                             },

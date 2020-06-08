@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Products
@@ -12,12 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="products", indexes={@ORM\Index(name="code_id", columns={"code_id"})})
  * @ORM\Entity
  */
-class Product
+class Product extends Entity
 {
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $name;
 
@@ -25,6 +28,7 @@ class Product
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", length=0, nullable=true)
+     * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
     private $description;
 
@@ -41,6 +45,7 @@ class Product
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @FormAnnotation\FormElement(type="Hidden", required=true)
      */
     private $id;
 
@@ -51,6 +56,7 @@ class Product
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
      * })
+     *
      */
     private $code;
 

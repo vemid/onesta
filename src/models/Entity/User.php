@@ -32,7 +32,7 @@ class User extends Entity
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true, options={"1":"A", "Vemid":"Vemid"})
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $firstName;
 

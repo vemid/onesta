@@ -1,0 +1,45 @@
+{% block title %}
+    <title>{{ t('Product|Create') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ form.render('begin') | raw }}
+                        {{ form.render('errors') | raw }}
+                        {% for element in form.getComponents() %}
+                            {% if not element.getLabel() %}
+                                {{ element.control | raw }}
+                            {% else %}
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-lg-7">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label for="account-username">{{ element.getLabel() | raw }}</label>
+                                                {{ element.control | raw }}
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-xs-12 d-flex flex-sm-row flex-column justify-content-end">
+                                <button type="submit" class="btn btn-default mr-sm-1 mb-1 mb-sm-0">{{ t('Save') }}</button>
+                            </div>
+                        </div>
+                        {{ form.render('end') | raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

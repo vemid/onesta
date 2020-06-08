@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * PurchaseItems
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="purchase_items", indexes={@ORM\Index(name="purchase_id", columns={"purchase_id"}), @ORM\Index(name="supplier_product_id", columns={"supplier_product_id"})})
  * @ORM\Entity
  */
-class PurchaseItem
+class PurchaseItem extends Entity
 {
     /**
      * @var float

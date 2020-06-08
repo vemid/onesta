@@ -32,7 +32,9 @@ class TwigEnvironmentFactory
             }
 
         } else {
-            $loader = new ArrayLoader();
+            $loader = new ArrayLoader([
+                '@error/404.html.twig' => '',
+            ]);
         }
 
         return new Environment($loader, [

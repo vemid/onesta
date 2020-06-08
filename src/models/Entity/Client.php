@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Clients
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="clients", indexes={@ORM\Index(name="guarantor_id", columns={"guarantor_id"})})
  * @ORM\Entity
  */
-class Client
+class Client extends Entity
 {
     /**
      * @var int
