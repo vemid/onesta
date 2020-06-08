@@ -5,34 +5,8 @@
     Vemid.namespace("form");
 
     Vemid.form = (function () {
-
-        let CryptoJSAesJson = {
-            stringify: function (cipherParams) {
-                let j = {ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64)};
-                if (cipherParams.iv) j.iv = cipherParams.iv.toString();
-                if (cipherParams.salt) j.s = cipherParams.salt.toString();
-
-                return JSON.stringify(j);
-            },
-            parse: function (jsonStr) {
-                let j = JSON.parse(jsonStr);
-                let cipherParams = CryptoJS.lib.CipherParams.create({ciphertext: CryptoJS.enc.Base64.parse(j.ct)});
-                if (j.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(j.iv)
-                if (j.s) cipherParams.salt = CryptoJS.enc.Hex.parse(j.s)
-
-                return cipherParams;
-            }
-        };
-
         let _filterName = function (name) {
             return name.replace(/\W+/gi, "-");
-        };
-
-        let _decryptString = function (cipher) {
-            return JSON.parse(CryptoJS.AES.decrypt(
-                cipher, "Vemid", {
-                    format: CryptoJSAesJson
-                }).toString(CryptoJS.enc.Utf8))
         };
 
         let _getFormElements = async function (url) {
@@ -184,6 +158,7 @@
                         });
                     }
                 }, function (reason) {
+                    $(".loader-box").hide();
                     toastr.error('Error processing request', reason.statusText)
                 });
         };
@@ -270,11 +245,11 @@
                         ico = "plus",
                         modal = $("#modal");
 
-                    formUrl = _decryptString(formUrl);
+                    formUrl = Vemid.crypto.decrypt(formUrl);
                     formUrl = "/form" + (formUrl.startsWith("/") ? "" : "/") + formUrl;
 
                     if (typeof postUrl !== "undefined") {
-                        postUrl = _decryptString(postUrl);
+                        postUrl = Vemid.crypto.decrypt(postUrl);
                         postUrl = "/form" + (postUrl.startsWith("/") ? "" : "/") + postUrl;
                     } else {
                         postUrl = formUrl;
@@ -315,7 +290,7 @@
                     let formUrl = $(this).attr("data-form-url");
                     let currentUrl = window.location.href;
 
-                    formUrl = _decryptString(formUrl);
+                    formUrl = Vemid.crypto.decrypt(formUrl);
                     formUrl = "/form" + (formUrl.startsWith("/") ? "" : "/") + formUrl;
 
                     swal({

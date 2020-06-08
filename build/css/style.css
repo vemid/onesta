@@ -9774,6 +9774,9 @@ td.open ul, h3.open ul {
   color: #404E67;
 }
 
+.nav-second-level li:last-child {
+  margin-bottom: 0;
+}
 .nav-second-level li a {
   color: #fff !important;
 }

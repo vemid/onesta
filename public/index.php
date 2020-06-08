@@ -29,6 +29,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     ]);
 }
 
+\Locale::setDefault('sr');
+
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->useAnnotations(false);
 $containerBuilder->addDefinitions(sprintf('%s/config/dependencies.php', APP_PATH));

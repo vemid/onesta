@@ -3,5 +3,7 @@
 
 return [
     'Upload new photo' => 'Okači novu sliku',
-    'Account Settings' => ''
+    'Category' => 'Kategorija',
+    'Save' => 'Snimi',
+    'as'
 ];

@@ -6,9 +6,9 @@ use FastRoute\RouteCollector;
 use Vemid\ProjectOne\Admin\Handler\Authentication;
 use Vemid\ProjectOne\Admin\Handler\AuthenticationWrite;
 use Vemid\ProjectOne\Admin\Handler\Product;
+use Vemid\ProjectOne\Admin\Handler\ProductWrite;
 use Vemid\ProjectOne\Admin\Handler\User;
 use Vemid\ProjectOne\Api\Handler\Ping;
-use Vemid\ProjectOne\Main\Handler\Index;
 use Vemid\ProjectOne\Admin\Handler\Index as AdminIndex;
 use Vemid\ProjectOne\Form\Handler\User as JsonUser;
 use Vemid\ProjectOne\Form\Handler\UserWrite as JsonUserWrite;
@@ -27,6 +27,7 @@ return [
         $routeCollector->addRoute('POST', '/auth/{method}[/{id:[\w-]+}]', AuthenticationWrite::class);
         $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', User::class);
         $routeCollector->addRoute('GET', '/products/{method}[/{id:[\w-]+}]', Product::class);
+        $routeCollector->addRoute('POST', '/products/{method}[/{id:[\w-]+}]', ProductWrite::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);

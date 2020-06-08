@@ -36,8 +36,8 @@ final class FormElement
      */
     public $nullable = false;
 
-    /** @var bool */
-    public $relation  = false;
+    /** @var string */
+    public $relation  = '';
 
     /** @var array */
     public $disabled = [];

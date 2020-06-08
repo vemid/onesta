@@ -219,6 +219,10 @@
         last: {
             en: "Last page",
             sr: "Poslednja stranica"
+        },
+        zeroRecords: {
+            en: "Nothing found - sorry",
+            sr: "Nema rekorda u bazi!"
         }
     });
 }).call(Vemid, $);

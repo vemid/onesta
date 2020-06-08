@@ -52,6 +52,7 @@ class EntityAnnotationReader implements FormBuilderInterface
     {
         $form = new Form(sha1(get_class($entity)));
         $form->addProtection('Security token has expired, please submit the form again');
+        $form->setHtmlAttribute('novalidate');
 
         $filter = new Humanize();
 
@@ -110,7 +111,8 @@ class EntityAnnotationReader implements FormBuilderInterface
                     });
                 } elseif ($formPropertyAnnotation->relation) {
                     /** @var EntityInterface[] $relation */
-                    $relation = $this->entityManager->getRepository(get_class($entity))->findAll();
+                    $relationClass = sprintf('%s\\%s', $reflect->getNamespaceName(), $formPropertyAnnotation->relation);
+                    $relation = $this->entityManager->getRepository($relationClass)->findAll();
 
                     foreach ($relation as $obj) {
                         if (!$obj->getDisplayName()) {

@@ -20,5 +20,4 @@ interface FormBuilderInterface
      * @return Form
      */
     public function build(EntityInterface $entity, array $exclude = []): Form;
-
 }

@@ -13,9 +13,32 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="products", indexes={@ORM\Index(name="code_id", columns={"code_id"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Product extends Entity
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @FormAnnotation\FormElement(type="Hidden", required=true)
+     * @FormAnnotation\FormElement(type="Hidden", required=true, relation="Code")
+     */
+    private $id;
+
+    /**
+     * @var Code
+     *
+     * @ORM\ManyToOne(targetEntity="Code")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Category")
+     */
+    private $code;
+
     /**
      * @var string
      *
@@ -38,28 +61,6 @@ class Product extends Entity
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @FormAnnotation\FormElement(type="Hidden", required=true)
-     */
-    private $id;
-
-    /**
-     * @var Code
-     *
-     * @ORM\ManyToOne(targetEntity="Code")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
-     * })
-     *
-     */
-    private $code;
-
 
     /**
      * Set name.
@@ -110,15 +111,13 @@ class Product extends Entity
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
+     * @ORM\PrePersist
      * @return Product
+     * @throws \Exception
      */
-    public function setCreatedAt($createdAt): Product
+    public function setCreatedAt(): Product
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }

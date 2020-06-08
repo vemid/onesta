@@ -40,27 +40,23 @@ class TranslatorFactory
             $files['filename'] = sprintf('%s/languages/%s.php', APP_PATH, $language);
         }
 
-        $cache = StorageFactory::factory([
-            'adapter' => [
-                'name'    => Apcu::class,
-            ],
-        ]);
+
 
         $translator = Translator::factory([
             'locale' => [array_values($languages)],
             'translation_files' => [$files],
             'event_manager_enabled' => true,
-            'cache' => [
-                'adapter' => [
-                    'name'    => Filesystem::class,
-                    'options' => [
-                        'cache_dir' => APP_PATH . '/var/cache/language',
-                    ],
-                ],
-            ],
         ]);
 
-        $translator->setCache($cache);
+        if ($config->get('environment') !== 'development') {
+            $cache = StorageFactory::factory([
+                'adapter' => [
+                    'name'    => Apcu::class,
+                ],
+            ]);
+
+            $translator->setCache($cache);
+        }
 
         return $translator;
     }
