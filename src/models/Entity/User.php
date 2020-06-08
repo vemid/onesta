@@ -97,7 +97,7 @@ class User extends Entity
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      * @FormAnnotation\FormElement(type="Checkbox", required=false)
      */
-    private $isActive = '0';
+    private $isActive = false;
 
     /**
      * @var string|null
@@ -121,7 +121,7 @@ class User extends Entity
     private $lastVisitDatetime;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserRoleAssignment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserRoleAssignment", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $userRoleAssignments;
 
@@ -146,7 +146,7 @@ class User extends Entity
      *
      * @return int
      */
-    public function getId(): int
+    public function getId():? int
     {
         return $this->id;
     }
@@ -170,7 +170,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName():? string
     {
         return $this->firstName;
     }
@@ -194,7 +194,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName():? string
     {
         return $this->lastName;
     }
@@ -218,7 +218,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail():? string
     {
         return $this->email;
     }
@@ -242,7 +242,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername():? string
     {
         return $this->username;
     }
@@ -266,7 +266,7 @@ class User extends Entity
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword():? string
     {
         return $this->password;
     }
@@ -354,7 +354,7 @@ class User extends Entity
      *
      * @return bool
      */
-    public function getIsActive(): bool
+    public function getIsActive(): ?bool
     {
         return $this->isActive;
     }

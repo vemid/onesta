@@ -9,8 +9,30 @@
         return {
             initGrid: function () {
                 let table = $('#dataTable').dataTable({
-                    "scrollCollapse": true,
-                    "sDom": '<"bottom"flp><"clear">',
+                    pagingType: "full",
+                    language: {
+                        lengthMenu: "Display _MENU_ records per pageaaa",
+                        zeroRecords: "Nothing found - sorry",
+                        info: Vemid.language.get("infoPagination"),
+                        infoEmpty: Vemid.language.get("emptyDatatablePagination"),
+                        emptyTable: Vemid.language.get("emptyDatatable"),
+                        paginate: {
+                            first:    '«',
+                            previous: '‹',
+                            next:     '›',
+                            last:     '»'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: Vemid.language.get("previous"),
+                                next: Vemid.language.get("next"),
+                                first: Vemid.language.get("first"),
+                                last: Vemid.language.get("last"),
+                            }
+                        }
+                    },
+                    scrollCollapse: true,
+                    sDom: '<"bottom"flp><"clear">',
                     dom: '<"toolbar">Bfrtip',
                     buttons: {
                         dom: {
@@ -26,7 +48,7 @@
                             {
                                 text: '<i class="fa fa-plus-circle bigger-160 text-default" aria-hidden="true"></i>',
                                 action: function (e, dt, node, config) {
-                                    alert('Button activated');
+                                    window.location.href = Vemid.config.formUrl;
                                 },
                                 titleAttr: Vemid.language.get("createNew"),
                             },

@@ -192,5 +192,33 @@
             en: "Print",
             sr: "Štampaj"
         },
+        emptyDatatable: {
+            en: "No data available in table",
+            sr: "Nema podataka u tabeli"
+        },
+        previous: {
+            en: "Previous",
+            sr: "Predhodna strana"
+        },
+        next: {
+            en: "Next",
+            sr: "Sledeća strana"
+        },
+        emptyDatatablePagination: {
+            en: "Showing 0 to 0 of 0 entries",
+            sr: ""
+        },
+        infoPagination: {
+            en: "Showing _START_ to _END_ of _TOTAL_ entries",
+            sr: "Prikaz _START_ do _END_ od _TOTAL_ upisa"
+        },
+        first: {
+            en: "First page",
+            sr: "Prva stranica"
+        },
+        last: {
+            en: "Last page",
+            sr: "Poslednja stranica"
+        }
     });
 }).call(Vemid, $);

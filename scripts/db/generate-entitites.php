@@ -28,6 +28,10 @@ $excludeTables = [
     'bank_statements',
     'bank_statement_items',
     'client_documents',
+    'purchases',
+    'products',
+    'supplier_products',
+    'purchase_items'
 ];
 
 /** @var EntityManagerInterface $em */

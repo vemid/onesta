@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Vemid\ProjectOne\Entity\Entity\SupplierProduct" table="supplier_products">
+    <indexes>
+      <index name="product_id" columns="product_id"/>
+      <index name="supplier_id" columns="supplier_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="avgPurchasePrice" type="decimal" column="avg_purchase_price" precision="9" scale="2" nullable="false"/>
+    <field name="retailPrice" type="decimal" column="retail_price" precision="9" scale="2" nullable="false"/>
+    <field name="stockQty" type="integer" column="stock_qty" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+    <many-to-one field="product" target-entity="Vemid\ProjectOne\Entity\Entity\Product" fetch="LAZY">
+      <join-columns>
+        <join-column name="product_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="supplier" target-entity="Vemid\ProjectOne\Entity\Entity\Supplier" fetch="LAZY">
+      <join-columns>
+        <join-column name="supplier_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

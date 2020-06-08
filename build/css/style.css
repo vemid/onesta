@@ -9855,6 +9855,10 @@ label {
   margin-top: 5px;
 }
 
+.dataTables_paginate .pagination {
+  margin: 0;
+}
+
 .media {
   display: flex;
   -webkit-box-align: start;

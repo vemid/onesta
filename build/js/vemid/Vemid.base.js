@@ -18,7 +18,7 @@ var Vemid = {};
     Vemid.config = {};
 
     Vemid.config.root_url = window.location.protocol + "//" + window.location.host + "/";
-    Vemid.config.admin_ajax_url = Vemid.config.root_url + "admin/ajax/";
+    Vemid.config.formUrl = Vemid.config.root_url + "form/";
 
     /**
      * Method taken from the awesome YAHOO.namespace().
