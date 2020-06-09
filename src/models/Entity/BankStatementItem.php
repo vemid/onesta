@@ -20,35 +20,35 @@ class BankStatementItem extends Entity
      *
      * @ORM\Column(name="company_name", type="string", length=255, nullable=false)
      */
-    private $companyName;
+    protected $companyName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="account", type="string", length=255, nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * @var float
      *
      * @ORM\Column(name="amount", type="float", precision=10, scale=0, nullable=false)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var string
      *
      * @ORM\Column(name="purpose", type="string", length=255, nullable=false)
      */
-    private $purpose;
+    protected $purpose;
 
     /**
      * @var string
      *
      * @ORM\Column(name="reference_number", type="string", length=255, nullable=false)
      */
-    private $referenceNumber;
+    protected $referenceNumber;
 
     /**
      * @var int
@@ -57,7 +57,7 @@ class BankStatementItem extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var BankStatement
@@ -67,7 +67,7 @@ class BankStatementItem extends Entity
      *   @ORM\JoinColumn(name="bank_statement_id", referencedColumnName="id")
      * })
      */
-    private $bankStatement;
+    protected $bankStatement;
 
     /**
      * Get id.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Entity\Entity;
 
@@ -22,21 +23,21 @@ class Code extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255, nullable=false)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var CodeType
@@ -51,13 +52,25 @@ class Code extends Entity
     /**
      * @var Code
      *
-     * @ORM\ManyToOne(targetEntity="Code")
+     * @ORM\ManyToOne(targetEntity="Code", inversedBy="children")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      * })
      */
     private $parent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Code", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * Code constructor.
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     /**
      * Get id.

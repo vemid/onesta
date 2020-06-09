@@ -20,14 +20,14 @@ class ClientDocument extends Entity
      *
      * @ORM\Column(name="document_name", type="string", length=255, nullable=false)
      */
-    private $documentName;
+    protected $documentName;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var int
@@ -36,7 +36,7 @@ class ClientDocument extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Client
@@ -46,7 +46,7 @@ class ClientDocument extends Entity
      *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      * })
      */
-    private $client;
+    protected $client;
 
     /**
      * Get id.

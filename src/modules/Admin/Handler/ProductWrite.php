@@ -18,6 +18,11 @@ use Vemid\ProjectOne\Entity\Entity\Role;
  */
 class ProductWrite extends AbstractHandler
 {
+    public function list()
+    {
+
+    }
+
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
     {
         $product = new Product();
@@ -35,9 +40,7 @@ class ProductWrite extends AbstractHandler
             return;
         }
 
-        $product->setCode($code);
-        $product->setName($postData['name']);
-        $product->setDescription($postData['description']);
+        $product->setData($postData);
 
         $entityManager->persist($product);
         $entityManager->flush();

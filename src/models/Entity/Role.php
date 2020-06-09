@@ -25,14 +25,14 @@ class Role extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255, nullable=false)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
@@ -40,7 +40,7 @@ class Role extends Entity
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string|null
@@ -48,12 +48,12 @@ class Role extends Entity
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\OneToMany(targetEntity="UserRoleAssignment", mappedBy="role")
      */
-    private $userRoleAssignments;
+    protected $userRoleAssignments;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="roles")
@@ -61,6 +61,9 @@ class Role extends Entity
      */
     private $users;
 
+    /**
+     * Role constructor.
+     */
     public function __construct()
     {
         $this->userRoleAssignments = new ArrayCollection();

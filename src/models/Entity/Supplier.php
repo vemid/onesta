@@ -22,49 +22,49 @@ class Supplier extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="phone_number", type="string", length=255, nullable=true)
      */
-    private $phoneNumber;
+    protected $phoneNumber;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
-    private $address;
+    protected $address;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="postal_code", type="string", length=255, nullable=true)
      */
-    private $postalCode;
+    protected $postalCode;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Get id.

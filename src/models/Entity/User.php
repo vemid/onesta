@@ -26,7 +26,7 @@ class User extends Entity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @FormAnnotation\FormElement(type="Hidden", required=true)
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -34,7 +34,7 @@ class User extends Entity
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
@@ -42,7 +42,7 @@ class User extends Entity
      * @ORM\Column(name="last_name", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var string
@@ -50,7 +50,7 @@ class User extends Entity
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Email", required=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
@@ -58,7 +58,7 @@ class User extends Entity
      * @ORM\Column(name="username", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
@@ -66,7 +66,7 @@ class User extends Entity
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Password", required=false)
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * @var string|null
@@ -74,7 +74,7 @@ class User extends Entity
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      * @FormAnnotation\FormElement(type="Upload", required=false)
      */
-    private $avatar;
+    protected $avatar;
 
     /**
      * @var string|null
@@ -82,14 +82,14 @@ class User extends Entity
      * @ORM\Column(name="gender", type="string", length=0, nullable=true)
      * @FormAnnotation\FormElement(type="Select", required=false, options={"MALE": "Male", "FEMALE" : "Female"})
      */
-    private $gender;
+    protected $gender;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="secret_key", type="string", length=255, nullable=true)
      */
-    private $secretKey;
+    protected $secretKey;
 
     /**
      * @var bool
@@ -97,33 +97,33 @@ class User extends Entity
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      * @FormAnnotation\FormElement(type="Checkbox", required=false)
      */
-    private $isActive = false;
+    protected $isActive = false;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="last_ip", type="string", length=255, nullable=true)
      */
-    private $lastIp;
+    protected $lastIp;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="registered_datetime", type="datetime", nullable=true)
      */
-    private $registeredDatetime;
+    protected $registeredDatetime;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="last_visit_datetime", type="datetime", nullable=true)
      */
-    private $lastVisitDatetime;
+    protected $lastVisitDatetime;
 
     /**
      * @ORM\OneToMany(targetEntity="UserRoleAssignment", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $userRoleAssignments;
+    protected $userRoleAssignments;
 
     /**
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")

@@ -22,49 +22,49 @@ class BankStatement extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="account", type="string", length=255, nullable=false)
      */
-    private $account;
+    protected $account;
 
     /**
      * @var string
      *
      * @ORM\Column(name="statement_number", type="string", length=255, nullable=false)
      */
-    private $statementNumber;
+    protected $statementNumber;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="statement_path", type="string", length=255, nullable=true)
      */
-    private $statementPath;
+    protected $statementPath;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="file_hash", type="string", length=255, nullable=true)
      */
-    private $fileHash;
+    protected $fileHash;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
-    private $date;
+    protected $date;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Get id.

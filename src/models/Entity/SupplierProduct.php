@@ -20,28 +20,28 @@ class SupplierProduct extends Entity
      *
      * @ORM\Column(name="avg_purchase_price", type="decimal", precision=9, scale=2, nullable=false)
      */
-    private $avgPurchasePrice;
+    protected $avgPurchasePrice;
 
     /**
      * @var float
      *
      * @ORM\Column(name="retail_price", type="decimal", precision=9, scale=2, nullable=false)
      */
-    private $retailPrice;
+    protected $retailPrice;
 
     /**
      * @var int
      *
      * @ORM\Column(name="stock_qty", type="integer", nullable=false)
      */
-    private $stockQty;
+    protected $stockQty;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var int
@@ -50,7 +50,7 @@ class SupplierProduct extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Product
@@ -60,7 +60,7 @@ class SupplierProduct extends Entity
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      * })
      */
-    private $product;
+    protected $product;
 
     /**
      * @var Supplier
@@ -70,7 +70,7 @@ class SupplierProduct extends Entity
      *   @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
      * })
      */
-    private $supplier;
+    protected $supplier;
 
 
     /**

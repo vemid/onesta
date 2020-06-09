@@ -34,7 +34,6 @@ class Authentication extends AbstractHandler
      */
     public function login(UserLoginForm $userLoginForm)
     {
-        $this->session->clear();
         $this->view->setTemplate('auth::login-form.html.twig', ['form' => $userLoginForm->getForm()]);
     }
 

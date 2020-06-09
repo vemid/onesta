@@ -26,7 +26,7 @@ class Product extends Entity
      * @FormAnnotation\FormElement(type="Hidden", required=true)
      * @FormAnnotation\FormElement(type="Hidden", required=true, relation="Code")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Code
@@ -37,7 +37,7 @@ class Product extends Entity
      * })
      * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Category")
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
@@ -45,7 +45,7 @@ class Product extends Entity
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string|null
@@ -53,14 +53,14 @@ class Product extends Entity
      * @ORM\Column(name="description", type="text", length=0, nullable=true)
      * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Set name.
@@ -149,7 +149,7 @@ class Product extends Entity
      *
      * @return Product
      */
-    public function setCode(Code $code = null): Product
+    public function setCode($code = null): Product
     {
         $this->code = $code;
 

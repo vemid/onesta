@@ -60,6 +60,7 @@ class EntityAnnotationReader implements FormBuilderInterface
 
         $reflect = new \ReflectionClass($entity);
         $properties = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $properties = array_merge($properties, $reflect->getProperties(\ReflectionProperty::IS_PROTECTED));
 
         foreach ($properties as $propertyName) {
             if (!$formPropertyAnnotation = $reader->getPropertyAnnotation($propertyName, FormElement::class)) {

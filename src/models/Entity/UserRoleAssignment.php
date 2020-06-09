@@ -24,7 +24,7 @@ class UserRoleAssignment extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var User
@@ -34,7 +34,7 @@ class UserRoleAssignment extends Entity
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $user;
+    protected $user;
 
     /**
      * @var Role
@@ -44,7 +44,7 @@ class UserRoleAssignment extends Entity
      *   @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      * })
      */
-    private $role;
+    protected $role;
 
     /**
      * @ORM\OneToMany(targetEntity="Role", mappedBy="role")

@@ -4,6 +4,8 @@
 
     Vemid.namespace("dataTable");
 
+    let table = $('#dataTable');
+
     let _defaultOptions = {
         pageLength: 50,
         pagingType: "full",
@@ -62,7 +64,6 @@
         return {
             initGrid: function () {
 
-                let table = $('#dataTable');
                 let _ajaxOptions,
                     _options;
 
@@ -73,10 +74,11 @@
                     }
 
                     _ajaxOptions = {
-                        // "processing": true,
+                        "processing": true,
                         serverSide: true,
                         ajax: {
                             url: Vemid.crypto.decrypt(table.attr("data-ajax-url")),
+                            type: "POST",
                             data:  function ( d ) {
                                 return $.extend({}, d, {
 

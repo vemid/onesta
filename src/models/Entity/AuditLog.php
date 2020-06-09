@@ -22,49 +22,49 @@ class AuditLog extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="modified_entity_name", type="string", length=255, nullable=false)
      */
-    private $modifiedEntityName;
+    protected $modifiedEntityName;
 
     /**
      * @var int
      *
      * @ORM\Column(name="modified_entity_id", type="integer", nullable=false, options={"unsigned"=true})
      */
-    private $modifiedEntityId;
+    protected $modifiedEntityId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="operation", type="string", length=0, nullable=false, options={"default"="CREATE"})
      */
-    private $operation = 'CREATE';
+    protected $operation = 'CREATE';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="old_data", type="blob", length=0, nullable=true)
      */
-    private $oldData;
+    protected $oldData;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="new_data", type="blob", length=0, nullable=true)
      */
-    private $newData;
+    protected $newData;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
-    private $timestamp;
+    protected $timestamp;
 
     /**
      * @var User
@@ -74,7 +74,7 @@ class AuditLog extends Entity
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $user;
+    protected $user;
 
 
     /**

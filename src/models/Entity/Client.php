@@ -23,91 +23,91 @@ class Client extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="type", type="string", length=0, nullable=true)
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="phone_number", type="string", length=255, nullable=true)
      */
-    private $phoneNumber;
+    protected $phoneNumber;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
-    private $address;
+    protected $address;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="postal_code", type="string", length=255, nullable=true)
      */
-    private $postalCode;
+    protected $postalCode;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
-    private $city;
+    protected $city;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="jbmg", type="string", length=255, nullable=false)
      */
-    private $jbmg;
+    protected $jbmg;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="pib", type="string", length=255, nullable=true)
      */
-    private $pib;
+    protected $pib;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="country_code", type="string", length=255, nullable=true)
      */
-    private $countryCode;
+    protected $countryCode;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var Client
@@ -117,7 +117,7 @@ class Client extends Entity
      *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
      * })
      */
-    private $guarantor;
+    protected $guarantor;
 
     /**
      * @ORM\OneToMany(targetEntity="Client", mappedBy="guarantor")

@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\Common\EventManager;
 use Vemid\ProjectOne\Common\Entity\Event\Subscriber\LogActivitySubscriber;
+use Vemid\ProjectOne\Common\Entity\Event\Subscriber\SetReferencedObjectField;
 
 /**
  * Class EventManagerFactory
@@ -20,6 +21,7 @@ class EventManagerFactory
     {
         $eventManager = new EventManager();
         $eventManager->addEventSubscriber(new LogActivitySubscriber());
+        $eventManager->addEventSubscriber(new SetReferencedObjectField());
 
         return $eventManager;
     }

@@ -32,7 +32,7 @@ class Entity implements EntityInterface
     {
         $method = 'get' . ucfirst($property);
         if (method_exists($this, $method)) {
-            return  $this->$method();
+            return $this->$method();
         }
 
         return null;
@@ -53,6 +53,18 @@ class Entity implements EntityInterface
         }
 
         return $this;
+    }
+
+    public function setData(array $data)
+    {
+        foreach ($data as $property => $value) {
+            $this->setProperty($property, $value);
+        }
+    }
+
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 
     /**

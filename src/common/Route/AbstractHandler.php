@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Route;
 
-use Delight\I18n\I18n;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -81,7 +80,7 @@ abstract class AbstractHandler implements RequestHandlerInterface
      * @param LoggerInterface $logger
      * @param TemplateRendererInterface $template
      * @param ConfigInterface $config
-     * @param I18n $translator
+     * @param TranslationInterface $translator
      * @param MessageInterface $message
      */
     public function __construct(

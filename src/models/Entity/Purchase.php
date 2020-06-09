@@ -20,63 +20,63 @@ class Purchase extends Entity
      *
      * @ORM\Column(name="plates", type="string", length=255, nullable=false)
      */
-    private $plates;
+    protected $plates;
 
     /**
      * @var string
      *
      * @ORM\Column(name="chassis", type="string", length=255, nullable=false)
      */
-    private $chassis;
+    protected $chassis;
 
     /**
      * @var string
      *
      * @ORM\Column(name="insurance_level", type="string", length=255, nullable=false)
      */
-    private $insuranceLevel;
+    protected $insuranceLevel;
 
     /**
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255, nullable=false)
      */
-    private $model;
+    protected $model;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="note", type="text", length=65535, nullable=true)
      */
-    private $note;
+    protected $note;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="note_2", type="text", length=65535, nullable=true)
      */
-    private $note2;
+    protected $note2;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="registered_until", type="datetime", nullable=false)
      */
-    private $registeredUntil;
+    protected $registeredUntil;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="authorization", type="boolean", nullable=false)
      */
-    private $authorization;
+    protected $authorization;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var int
@@ -85,7 +85,7 @@ class Purchase extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Code
@@ -95,7 +95,7 @@ class Purchase extends Entity
      *   @ORM\JoinColumn(name="payment_type_id", referencedColumnName="id")
      * })
      */
-    private $paymentType;
+    protected $paymentType;
 
     /**
      * @var Code
@@ -105,7 +105,7 @@ class Purchase extends Entity
      *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
      * })
      */
-    private $code;
+    protected $code;
 
     /**
      * @var Client
@@ -115,7 +115,7 @@ class Purchase extends Entity
      *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      * })
      */
-    private $client;
+    protected $client;
 
     /**
      * @var Client
@@ -125,7 +125,7 @@ class Purchase extends Entity
      *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
      * })
      */
-    private $guarantor;
+    protected $guarantor;
 
     /**
      * Get id.

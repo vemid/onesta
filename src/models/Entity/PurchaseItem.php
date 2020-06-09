@@ -20,35 +20,35 @@ class PurchaseItem extends Entity
      *
      * @ORM\Column(name="price", type="decimal", precision=9, scale=2, nullable=false)
      */
-    private $price;
+    protected $price;
 
     /**
      * @var int
      *
      * @ORM\Column(name="qty", type="integer", nullable=false)
      */
-    private $qty;
+    protected $qty;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="note_1", type="text", length=0, nullable=true)
      */
-    private $note1;
+    protected $note1;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="note_2", type="text", length=0, nullable=true)
      */
-    private $note2;
+    protected $note2;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var int
@@ -57,7 +57,7 @@ class PurchaseItem extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Purchase
@@ -67,7 +67,7 @@ class PurchaseItem extends Entity
      *   @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      * })
      */
-    private $purchase;
+    protected $purchase;
 
     /**
      * @var SupplierProduct
@@ -77,7 +77,7 @@ class PurchaseItem extends Entity
      *   @ORM\JoinColumn(name="supplier_product_id", referencedColumnName="id")
      * })
      */
-    private $supplierProduct;
+    protected $supplierProduct;
 
 
     /**
