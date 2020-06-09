@@ -32,13 +32,7 @@ class UserWrite extends AbstractHandler
         }
 
         $postData = $form->getHttpData();
-
-        $user->setUsername($postData['username']);
-        $user->setFirstName($postData['firstName']);
-        $user->setLastName($postData['lastName']);
-        $user->setGender($postData['gender']);
-        $user->setEmail($postData['email']);
-        $user->setIsActive(isset($postData['isActive']) ? 1 : 0);
+        $user->setData($postData);
 
         $entityManager->persist($user);
 
@@ -57,8 +51,10 @@ class UserWrite extends AbstractHandler
                 }
 
                 $userRoleAssignment = new UserRoleAssignment();
-                $userRoleAssignment->setUser($user);
-                $userRoleAssignment->setRole($role);
+                $userRoleAssignment->setData([
+                    'user' => $user,
+                    'role' => $role
+                ]);
                 $entityManager->persist($userRoleAssignment);
             }
         }

@@ -77,7 +77,7 @@ class UserRoleAssignment extends Entity
      *
      * @return UserRoleAssignment
      */
-    public function setUser(User $user = null): UserRoleAssignment
+    public function setUser($user = null): UserRoleAssignment
     {
         $this->user = $user;
 
@@ -101,7 +101,7 @@ class UserRoleAssignment extends Entity
      *
      * @return UserRoleAssignment
      */
-    public function setRole(Role $role = null): UserRoleAssignment
+    public function setRole($role = null): UserRoleAssignment
     {
         $this->role = $role;
 
