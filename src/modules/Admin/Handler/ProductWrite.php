@@ -20,7 +20,26 @@ class ProductWrite extends AbstractHandler
 {
     public function list()
     {
+        $queryParams = $this->request->getParsedBody();
 
+        $page = $queryParams['draw'] ?? 1;
+        $offset = $queryParams['start'] ?? 0;
+        $limit = $queryParams['length'] ?? 50;
+        $search = $queryParams['search']['value'] ?? null;
+
+        $data[] = [
+            'a',
+            'b',
+            'c',
+            'd',
+        ];
+
+       return [
+            'draw' => 1,
+            'recordsTotal' => 2,
+            'recordsFiltered' => 2,
+            'data' => $data
+        ];
     }
 
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
