@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Cache\ApcuCache;
+use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
@@ -51,6 +52,10 @@ class EntityManagerFactory
         $cacheImpl = new ApcuCache();
         $driver = new XmlDriver(APP_PATH . '/config/xml');
 
+        $cacheDriver = new PhpFileCache(
+            APP_PATH . '/var/cache/doctrine'
+        );
+
         $config = Setup::createAnnotationMetadataConfiguration(
             [APP_PATH . '/config/xml'],
             $this->config->get('db')->get('debug'),
@@ -60,7 +65,9 @@ class EntityManagerFactory
         );
 
         $config->addCustomStringFunction('sha1', Sha1::class);
-//        $config->setMetadataCacheImpl($cacheImpl);
+        $config->setMetadataCacheImpl($cacheDriver);
+        $config->setQueryCacheImpl($cacheDriver);
+        $config->setResultCacheImpl($cacheDriver);
         $config->addEntityNamespace('\\Vemid\\ProjectOne\\Entity', 'Vemid');
 //        $config->setMetadataDriverImpl($driver);
 

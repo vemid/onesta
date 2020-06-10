@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'templates' => [
-        'cache' => false,
+        'cache' => true,
         'cache_dir' => APP_PATH . '/var/cache',
         'cache_enabled' => true,
         'external' => [
