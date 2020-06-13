@@ -8,11 +8,8 @@
 
     let _defaultOptions = {
         pageLength: 25,
-        // "draw": 1,
-        // "recordsTotal": 57,
-        // "recordsFiltered": 57,
-        // processing: true,
         deferRender: true,
+        search: true,
         fixedHeader: true,
         orderCellsTop: true,
         pagingType: "full",
@@ -37,7 +34,6 @@
                 }
             }
         },
-        stateSave:      true,
         scrollCollapse: true,
         dom: '<"toolbar">Bfrtip',
         buttons: {
@@ -95,27 +91,54 @@
                     };
                 }
 
-                _options = {..._ajaxOptions, ..._defaultOptions};
+                let filterIndex = table.attr("data-store");
+                let filterValues = JSON.parse(localStorage.getItem(filterIndex));
+                let columnsFilter = [];
+
+                $("thead tr:eq(0) th", table).each( function (i) {
+                    if (filterValues && typeof filterValues[i] !== 'undefined' && filterValues[i]) {
+                        columnsFilter[i] = {search: filterValues[i]};
+                    } else {
+                        columnsFilter[i] = null;
+                    }
+                });
+
+                _options = {..._ajaxOptions, ..._defaultOptions, ...{searchCols: columnsFilter}};
 
                 let dataTable = $('#dataTable').DataTable(_options);
+
                 $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + table.attr("data-title") + "</b>");
 
                 $("thead tr:eq(1) th", table).each( function (i) {
+                    let filterIndex = table.attr("data-store");
                     let parentTh = $("thead tr:eq(0) th:eq("+ i +")", table);
                     let title = parentTh.text();
                     let filter = $(this).children().eq(0);
+                    let filterValues = JSON.parse(localStorage.getItem(filterIndex));
+
                     filter
                         .text(title)
-                        .attr("placeholder", title);
+                        .attr("placeholder", title)
+                        .val(filterValues ? filterValues[i] : '');
 
-                    $( 'input', this ).on( 'keyup change', function () {
+                    $("input", this ).on("keyup change", function () {
+                        filterValues = JSON.parse(localStorage.getItem(filterIndex));
+
+                        if (!filterValues) {
+                            filterValues = {};
+                        }
+
+                        let filterElement = $(this);
+                        filterValues[i] = $(filterElement).val();
                         if ( dataTable.column(i).search() !== this.value ) {
                             dataTable
                                 .column(i)
                                 .search( this.value )
                                 .draw();
+
+                            localStorage.setItem(filterIndex, JSON.stringify(filterValues));
                         }
-                    } );
+                    });
                 });
             },
             init: function () {

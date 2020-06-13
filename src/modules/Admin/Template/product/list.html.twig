@@ -12,21 +12,20 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="space-20"></div>
-                        <table id="dataTable" class="table table-stripped toggle-arrow-tiny" data-entity="product" data-serverside="true" data-ajax-url="{{ cipher('/products/list') }}" data-title="{{ t('Product List') }}">
+                        <table id="dataTable" data-store="productList" class="table table-stripped toggle-arrow-tiny" data-entity="product" data-serverside="true" data-ajax-url="{{ cipher('/products/list') }}" data-title="{{ t('Product List') }}">
                             <thead>
                                 <tr>
                                     <th>Subscriber ID</th>
-                                    <input type="text" id="asdas">
                                     <th>Install Location</th>
                                     <th>Subscriber Name</th>
                                     <th>some data</th>
                                 </tr>
                                 <tr>
-                                    <th><input class="form-control" type="text" id="asdas"></th>
+                                    <th><input class="form-control" type="text" name="subscriber"></th>
 
-                                    <th><input class="form-control" type="text" id="asdas"></th>
-                                    <th><input class="form-control" type="text" id="asdas"></th>
-                                    <th><input class="form-control" type="text" id="asdas"></th>
+                                    <th><input class="form-control" type="text" name="subscriber2"></th>
+                                    <th><input class="form-control" type="text" name="subscriber3"></th>
+                                    <th><input class="form-control" type="text" name="subscriber4"></th>
                                 </tr>
                             </thead>
 {#                            <tbody>#}
