@@ -15,13 +15,18 @@ use \Vemid\ProjectOne\Entity\Entity\Product as EntityProduct;
  */
 class Product extends AbstractHandler
 {
-    public function list()
+    public function list(EntityManagerInterface $entityManager)
     {
-        $this->view->setTemplate('product::list.html.twig', []);
+        $products = $entityManager->getRepository(EntityProduct::class)->findBy([], null, 25, 1);
+
+        $this->view->setTemplate('product::list.html.twig', [
+            'products' => $products
+        ]);
     }
 
-    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
+    public function create(FormBuilderInterface $formBuilder)
     {
+
         $this->view->setTemplate('product::create.html.twig', [
             'form' => $formBuilder->build(new EntityProduct)
         ]);

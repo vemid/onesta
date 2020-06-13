@@ -14,13 +14,31 @@
                         <div class="space-20"></div>
                         <table id="dataTable" class="table table-stripped toggle-arrow-tiny" data-entity="product" data-serverside="true" data-ajax-url="{{ cipher('/products/list') }}" data-title="{{ t('Product List') }}">
                             <thead>
-                            <tr>
-                                <th>Subscriber ID</th>
-                                <th>Install Location</th>
-                                <th>Subscriber Name</th>
-                                <th>some data</th>
-                            </tr>
+                                <tr>
+                                    <th>Subscriber ID</th>
+                                    <input type="text" id="asdas">
+                                    <th>Install Location</th>
+                                    <th>Subscriber Name</th>
+                                    <th>some data</th>
+                                </tr>
+                                <tr>
+                                    <th><input class="form-control" type="text" id="asdas"></th>
+
+                                    <th><input class="form-control" type="text" id="asdas"></th>
+                                    <th><input class="form-control" type="text" id="asdas"></th>
+                                    <th><input class="form-control" type="text" id="asdas"></th>
+                                </tr>
                             </thead>
+{#                            <tbody>#}
+{#                                {% for product in products %}#}
+{#                                    <tr>#}
+{#                                        <td>{{ product.code }}</td>#}
+{#                                        <td>{{ product }}</td>#}
+{#                                        <td>{{ product.description }}</td>#}
+{#                                        <td></td>#}
+{#                                    </tr>#}
+{#                                {% endfor %}#}
+{#                            </tbody>#}
                         </table>
                     </div>
                 </div>

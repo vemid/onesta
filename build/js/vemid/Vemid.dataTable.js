@@ -7,7 +7,14 @@
     let table = $('#dataTable');
 
     let _defaultOptions = {
-        pageLength: 50,
+        pageLength: 25,
+        // "draw": 1,
+        // "recordsTotal": 57,
+        // "recordsFiltered": 57,
+        // processing: true,
+        deferRender: true,
+        fixedHeader: true,
+        orderCellsTop: true,
         pagingType: "full",
         language: {
             lengthMenu: "Display _MENU_ records per pageaaa",
@@ -30,6 +37,7 @@
                 }
             }
         },
+        stateSave:      true,
         scrollCollapse: true,
         dom: '<"toolbar">Bfrtip',
         buttons: {
@@ -74,7 +82,6 @@
                     }
 
                     _ajaxOptions = {
-                        "processing": true,
                         serverSide: true,
                         ajax: {
                             url: Vemid.crypto.decrypt(table.attr("data-ajax-url")),
@@ -90,8 +97,26 @@
 
                 _options = {..._ajaxOptions, ..._defaultOptions};
 
-                let dataTable = $('#dataTable').dataTable(_options);
-                $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + dataTable.attr("data-title") + "</b>");
+                let dataTable = $('#dataTable').DataTable(_options);
+                $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + table.attr("data-title") + "</b>");
+
+                $("thead tr:eq(1) th", table).each( function (i) {
+                    let parentTh = $("thead tr:eq(0) th:eq("+ i +")", table);
+                    let title = parentTh.text();
+                    let filter = $(this).children().eq(0);
+                    filter
+                        .text(title)
+                        .attr("placeholder", title);
+
+                    $( 'input', this ).on( 'keyup change', function () {
+                        if ( dataTable.column(i).search() !== this.value ) {
+                            dataTable
+                                .column(i)
+                                .search( this.value )
+                                .draw();
+                        }
+                    } );
+                });
             },
             init: function () {
                 this.initGrid();

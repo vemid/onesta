@@ -48,7 +48,7 @@
 
             initFootTable: function () {
                 $(".footable").footable({
-                    pageSize: 20,
+                    pageSize: 25,
                 });
             },
 
@@ -70,19 +70,19 @@
                     "preventDuplicates": true
                 };
             },
-            maintainCursorPositionAfterReloadPage: function () {
-                function refreshPage () {
-                    var page_y = document.getElementsByTagName("body")[0].scrollTop;
-                    window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
-                }
-                window.onload = function () {
-                    setTimeout(refreshPage, 35000);
-                    if ( window.location.href.indexOf('page_y') != -1 ) {
-                        var match = window.location.href.split('?')[1].split("&")[0].split("=");
-                        document.getElementsByTagName("body")[0].scrollTop = match[1];
-                    }
-                }
-            },
+            // maintainCursorPositionAfterReloadPage: function () {
+            //     // function refreshPage () {
+            //     //     var page_y = document.getElementsByTagName("body")[0].scrollTop;
+            //     //     window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
+            //     // }
+            //     // window.onload = function () {
+            //     //     setTimeout(refreshPage, 35000);
+            //     //     if ( window.location.href.indexOf('page_y') != -1 ) {
+            //     //         var match = window.location.href.split('?')[1].split("&")[0].split("=");
+            //     //         document.getElementsByTagName("body")[0].scrollTop = match[1];
+            //     //     }
+            //     // }
+            // },
             nextWindow: function (next, container) {
                 $(container).load(next + " #next-step > *", function (responseText, textStatus, XMLHttpRequest) {
                     if (XMLHttpRequest.status === 403) {
@@ -97,7 +97,6 @@
                 this.setupToastr();
                 this.initSwitcherCheckbox();
                 this.readFileFromInput();
-                this.maintainCursorPositionAfterReloadPage();
             }
         };
     })();

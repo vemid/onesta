@@ -238,6 +238,8 @@
 
             initForm: function () {
                 $(document).on("click", "a[data-form]", function (e) {
+                    e.preventDefault();
+
                     let title = $(this).attr("data-title");
                     let formUrl = $(this).attr("data-form-url");
                     let postUrl = $(this).attr("data-post-url");

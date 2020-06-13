@@ -18,7 +18,7 @@ use Vemid\ProjectOne\Entity\Entity\Role;
  */
 class ProductWrite extends AbstractHandler
 {
-    public function list()
+    public function list(EntityManagerInterface $entityManager)
     {
         $queryParams = $this->request->getParsedBody();
 
@@ -27,17 +27,23 @@ class ProductWrite extends AbstractHandler
         $limit = $queryParams['length'] ?? 50;
         $search = $queryParams['search']['value'] ?? null;
 
-        $data[] = [
-            'a',
-            'b',
-            'c',
-            'd',
-        ];
+        /** @var Product[] $products */
+        $products = $entityManager->getRepository(Product::class)->findAll();
+
+        $data = [];
+        foreach ($products as $product) {
+            $data[] = [
+                (string)$product->getCode(),
+                $product->getName(),
+                $product->getDescription(),
+                'd',
+            ];
+        }
 
        return [
             'draw' => 1,
-            'recordsTotal' => 2,
-            'recordsFiltered' => 2,
+            'recordsTotal' => 63,
+            'recordsFiltered' => 63,
             'data' => $data
         ];
     }
