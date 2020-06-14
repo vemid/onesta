@@ -7,25 +7,17 @@ namespace Vemid\ProjectOne\Admin\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
-use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use \Vemid\ProjectOne\Entity\Entity\Product;
-use Vemid\ProjectOne\Entity\Entity\Role;
 
 /**
  * Class ProductWrite
  * @package Vemid\ProjectOne\Admin\Handler
  */
-class ProductWrite extends AbstractHandler
+class ProductWrite extends GridHandler
 {
     public function list(EntityManagerInterface $entityManager)
     {
-        $queryParams = $this->request->getParsedBody();
-
-        $page = $queryParams['draw'] ?? 1;
-        $offset = $queryParams['start'] ?? 0;
-        $limit = $queryParams['length'] ?? 50;
-        $search = $queryParams['search']['value'] ?? null;
 
         /** @var Product[] $products */
         $products = $entityManager->getRepository(Product::class)->findAll();

@@ -18,10 +18,7 @@ class Product extends AbstractHandler
 {
     public function list(EntityManagerInterface $entityManager, ProductFilterForm $productFilterForm)
     {
-        $products = $entityManager->getRepository(EntityProduct::class)->findBy([], null, 25, 1);
-
         $this->view->setTemplate('product::list.html.twig', [
-            'products' => $products,
             'form' => $productFilterForm->generate()
         ]);
     }

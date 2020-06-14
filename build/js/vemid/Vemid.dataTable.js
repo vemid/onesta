@@ -9,7 +9,6 @@
     let _defaultOptions = {
         pageLength: 25,
         searching: true,
-        search: true,
         fixedHeader: true,
         orderCellsTop: true,
         pagingType: "full",
@@ -34,7 +33,7 @@
                 }
             }
         },
-        scrollCollapse: true,
+        // scrollCollapse: true,
         dom: '<"toolbar">Bfrtip',
         buttons: {
             dom: {
@@ -119,6 +118,12 @@
                     filter
                         .attr("placeholder", title)
                         .val(filterValues ? filterValues[i] : '');
+
+                    if (filter.is("select")) {
+                        filter
+                            .trigger("liszt:updated")
+                            .trigger("chosen:updated");
+                    }
 
                     $("input, select", this ).on("keyup change", function () {
                         if ($(this).hasClass("chosen-search-input")) {
