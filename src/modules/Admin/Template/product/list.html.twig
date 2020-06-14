@@ -15,29 +15,18 @@
                         <table id="dataTable" data-store="productList" class="table table-stripped toggle-arrow-tiny" data-entity="product" data-serverside="true" data-ajax-url="{{ cipher('/products/list') }}" data-title="{{ t('Product List') }}">
                             <thead>
                                 <tr>
-                                    <th>Subscriber ID</th>
-                                    <th>Install Location</th>
-                                    <th>Subscriber Name</th>
-                                    <th>some data</th>
+                                    <th class="col-xs-3">Kategorija</th>
+                                    <th class="col-xs-3">Ime</th>
+                                    <th class="col-xs-4">Opis</th>
+                                    <th class="col-xs-2">Akcije</th>
                                 </tr>
                                 <tr>
-                                    <th><input class="form-control" type="text" name="subscriber"></th>
-
-                                    <th><input class="form-control" type="text" name="subscriber2"></th>
-                                    <th><input class="form-control" type="text" name="subscriber3"></th>
-                                    <th><input class="form-control" type="text" name="subscriber4"></th>
+                                    <th>{{ form['code'].control | raw }}</th>
+                                    <th>{{ form['name'].control | raw }}</th>
+                                    <th>{{ form['description'].control | raw }}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
-{#                            <tbody>#}
-{#                                {% for product in products %}#}
-{#                                    <tr>#}
-{#                                        <td>{{ product.code }}</td>#}
-{#                                        <td>{{ product }}</td>#}
-{#                                        <td>{{ product.description }}</td>#}
-{#                                        <td></td>#}
-{#                                    </tr>#}
-{#                                {% endfor %}#}
-{#                            </tbody>#}
                         </table>
                     </div>
                 </div>

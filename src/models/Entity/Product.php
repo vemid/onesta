@@ -12,8 +12,8 @@ use Vemid\ProjectOne\Entity\Entity;
  * Products
  *
  * @ORM\Table(name="products", indexes={@ORM\Index(name="code_id", columns={"code_id"})})
- * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\ProductRepository")
  */
 class Product extends Entity
 {

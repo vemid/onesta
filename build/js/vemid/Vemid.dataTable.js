@@ -8,7 +8,7 @@
 
     let _defaultOptions = {
         pageLength: 25,
-        deferRender: true,
+        searching: true,
         search: true,
         fixedHeader: true,
         orderCellsTop: true,
@@ -93,17 +93,17 @@
 
                 let filterIndex = table.attr("data-store");
                 let filterValues = JSON.parse(localStorage.getItem(filterIndex));
-                let columnsFilter = [];
+                let columnsFilters = [];
 
                 $("thead tr:eq(0) th", table).each( function (i) {
                     if (filterValues && typeof filterValues[i] !== 'undefined' && filterValues[i]) {
-                        columnsFilter[i] = {search: filterValues[i]};
+                        columnsFilters[i] = {search: filterValues[i]};
                     } else {
-                        columnsFilter[i] = null;
+                        columnsFilters[i] = null;
                     }
                 });
 
-                _options = {..._ajaxOptions, ..._defaultOptions, ...{searchCols: columnsFilter}};
+                _options = {..._ajaxOptions, ..._defaultOptions, ...{searchCols: columnsFilters}};
 
                 let dataTable = $('#dataTable').DataTable(_options);
 
@@ -117,11 +117,14 @@
                     let filterValues = JSON.parse(localStorage.getItem(filterIndex));
 
                     filter
-                        .text(title)
                         .attr("placeholder", title)
                         .val(filterValues ? filterValues[i] : '');
 
-                    $("input", this ).on("keyup change", function () {
+                    $("input, select", this ).on("keyup change", function () {
+                        if ($(this).hasClass("chosen-search-input")) {
+                            return;
+                        }
+
                         filterValues = JSON.parse(localStorage.getItem(filterIndex));
 
                         if (!filterValues) {
@@ -130,14 +133,13 @@
 
                         let filterElement = $(this);
                         filterValues[i] = $(filterElement).val();
-                        if ( dataTable.column(i).search() !== this.value ) {
-                            dataTable
+                        localStorage.setItem(filterIndex, JSON.stringify(filterValues));
+
+                        dataTable
                                 .column(i)
                                 .search( this.value )
                                 .draw();
 
-                            localStorage.setItem(filterIndex, JSON.stringify(filterValues));
-                        }
                     });
                 });
             },

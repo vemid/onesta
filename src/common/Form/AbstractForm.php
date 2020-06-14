@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Form;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Nette\Forms\Form;
 use Vemid\ProjectOne\Common\Translator\TranslationInterface;
 use Vemid\ProjectOne\Entity\EntityInterface;
@@ -20,13 +21,19 @@ abstract class AbstractForm
     /** @var TranslationInterface  */
     protected $translator;
 
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
     /**
      * AbstractForm constructor.
+     * @param EntityManagerInterface $entityManager
      * @param TranslationInterface $translator
      */
-    public function __construct(TranslationInterface $translator)
+    public function __construct(EntityManagerInterface $entityManager, TranslationInterface $translator)
     {
         $this->translator = $translator;
+        $this->entityManager = $entityManager;
+
         $this->form = new Form(sha1(static::class));
         $this->form->addProtection('Security token has expired, please submit the form again');
     }
