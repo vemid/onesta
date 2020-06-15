@@ -223,6 +223,10 @@
         zeroRecords: {
             en: "Nothing found - sorry",
             sr: "Nema rekorda u bazi!"
+        },
+        filteredDatatable: {
+            en: "(filteredas from _MAX_ total records)",
+            sr: "(filtrirano od _MAX_ ukupno upisa)"
         }
     });
 }).call(Vemid, $);

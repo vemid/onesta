@@ -18,6 +18,7 @@
             info: Vemid.language.get("infoPagination"),
             infoEmpty: Vemid.language.get("emptyDatatablePagination"),
             emptyTable: Vemid.language.get("emptyDatatable"),
+            infoFiltered: Vemid.language.get("filteredDatatable"),
             paginate: {
                 first:    '«',
                 previous: '‹',

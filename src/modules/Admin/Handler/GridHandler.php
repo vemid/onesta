@@ -18,10 +18,10 @@ class GridHandler extends AbstractHandler
     protected $filterColumns = [];
 
     /** @var int */
-    protected $start = 0;
+    protected $offset = 0;
 
     /** @var int */
-    protected $length = 25;
+    protected $limit = 25;
 
     /** @var int */
     protected $page = 1;
@@ -47,8 +47,8 @@ class GridHandler extends AbstractHandler
 
         }
 
-        $this->start = $queryParams['start'];
-        $this->length = (int)$queryParams['length'];
+        $this->offset = $queryParams['start'];
+        $this->limit = (int)$queryParams['length'];
         $this->page = $queryParams['draw'] ?? 1;
 
         return parent::handle($request);

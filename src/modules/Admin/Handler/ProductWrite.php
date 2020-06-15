@@ -9,6 +9,7 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use \Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Repository\ProductRepository;
 
 /**
  * Class ProductWrite
@@ -18,9 +19,10 @@ class ProductWrite extends GridHandler
 {
     public function list(EntityManagerInterface $entityManager)
     {
-
-        /** @var Product[] $products */
-        $products = $entityManager->getRepository(Product::class)->findAll();
+        /** @var ProductRepository $productRepository */
+        $productRepository = $entityManager->getRepository(Product::class);
+        $products = $productRepository->fetchProducts($this->limit, $this->offset, $this->filterColumns);
+        $totalProducts = $productRepository->fetchProducts(0, 0);
 
         $data = [];
         foreach ($products as $product) {
@@ -33,9 +35,9 @@ class ProductWrite extends GridHandler
         }
 
        return [
-            'draw' => 1,
-            'recordsTotal' => 63,
-            'recordsFiltered' => 63,
+            'draw' => $this->page,
+            'recordsTotal' => count($totalProducts),
+            'recordsFiltered' => count($products),
             'data' => $data
         ];
     }
