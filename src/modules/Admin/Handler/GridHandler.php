@@ -29,7 +29,6 @@ class GridHandler extends AbstractHandler
     /** @var array  */
     protected $order = [];
 
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getParsedBody();
