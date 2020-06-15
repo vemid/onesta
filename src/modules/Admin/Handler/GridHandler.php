@@ -32,24 +32,26 @@ class GridHandler extends AbstractHandler
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getParsedBody();
-        foreach ($queryParams['columns'] as $key => $column) {
-            if (!isset($column['searchable']) || !(bool)$column['searchable'] || !(bool)$column['search']['value']) {
-                continue;
-            }
-
-            $this->filterColumns[$column['name']] = $column['search']['value'];
-
-            foreach ($queryParams['order'] as $order) {
-                if ((int)$order['column'] === $key) {
-                    $this->order[$column['name']] = $order['dir'];
+        if (isset($queryParams['columns']) || isset($queryParams['draw'])) {
+            foreach ($queryParams['columns'] as $key => $column) {
+                if (!isset($column['searchable']) || !(bool)$column['searchable'] || !(bool)$column['search']['value']) {
+                    continue;
                 }
+
+                $this->filterColumns[$column['name']] = $column['search']['value'];
+
+                foreach ($queryParams['order'] as $order) {
+                    if ((int)$order['column'] === $key) {
+                        $this->order[$column['name']] = $order['dir'];
+                    }
+                }
+
             }
 
+            $this->offset = $queryParams['start'];
+            $this->limit = (int)$queryParams['length'];
+            $this->page = $queryParams['draw'] ?? 1;
         }
-
-        $this->offset = $queryParams['start'];
-        $this->limit = (int)$queryParams['length'];
-        $this->page = $queryParams['draw'] ?? 1;
 
         return parent::handle($request);
     }
