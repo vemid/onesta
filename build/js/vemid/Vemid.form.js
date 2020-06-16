@@ -213,7 +213,6 @@
                         html += _renderUpload(elementObject);
                         break;
                     default:
-
                 }
 
                 html += '<div class="help-block m-b-none"></div></div></div>';

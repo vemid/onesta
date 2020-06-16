@@ -45,7 +45,6 @@ class GridHandler extends AbstractHandler
                         $this->order[$column['name']] = $order['dir'];
                     }
                 }
-
             }
 
             $this->offset = $queryParams['start'];

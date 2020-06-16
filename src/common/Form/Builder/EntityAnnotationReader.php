@@ -129,6 +129,10 @@ class EntityAnnotationReader implements FormBuilderInterface
                 }
 
                 $element->setItems($options);
+                if ($value instanceof EntityInterface) {
+                    $value = $value->getEntityId();
+                }
+
                 if (!array_key_exists($value, $options)) {
                     $value = '';
                 }

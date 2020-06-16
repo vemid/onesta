@@ -1,0 +1,21 @@
+{% block title %}
+    <title>{{ t('Product|Create') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% include '@layout/form.html.twig' with {form : form} only %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

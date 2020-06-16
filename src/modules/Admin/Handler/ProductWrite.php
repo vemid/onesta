@@ -7,6 +7,7 @@ namespace Vemid\ProjectOne\Admin\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\Utils\Html;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
+use Vemid\ProjectOne\Common\Helper\Avatar;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
@@ -20,7 +21,7 @@ use Vemid\ProjectOne\Entity\Repository\ProductRepository;
  */
 class ProductWrite extends GridHandler
 {
-    public function list(EntityManagerInterface $entityManager)
+    public function list(EntityManagerInterface $entityManager): array
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $entityManager->getRepository(Product::class);
@@ -71,6 +72,7 @@ class ProductWrite extends GridHandler
             return;
         }
 
+        $postData['code'] = $code;
         $product->setData($postData);
 
         $entityManager->persist($product);
@@ -79,5 +81,37 @@ class ProductWrite extends GridHandler
         $this->messageBag->pushFlashMessage($this->translator->_('Product added!'), null, Builder::SUCCESS);
 
         return $this->redirect('/products/list');
+    }
+
+    public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
+    {
+        /** @var $product Product */
+        if (!$product = $entityManager->find(Product::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, something is wrong'), null, Builder::WARNING);
+            return;
+        }
+
+        $form = $formBuilder->build($product);
+        $postData = $form->getHttpData();
+
+        if (!$form->isSuccess()) {
+            $this->messageBag->pushFormValidationMessages($form);
+            return;
+        }
+
+        if (!$code = $entityManager->find(Code::class, $postData['code'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Category not found!'), null, Builder::DANGER);
+            return;
+        }
+
+        $postData['code'] = $code;
+        $product->setData($postData);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        $this->messageBag->pushFlashMessage($this->translator->_('Record updated'), null, Builder::SUCCESS);
+
+        $this->redirect('/products/list/' . $product->getId());
     }
 }

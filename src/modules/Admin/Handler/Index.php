@@ -19,16 +19,15 @@ class Index extends AbstractHandler
     /**
      * {@inheritDoc}
      */
-    public function index(EntityManagerInterface $entityManager)
+    public function index(EntityManagerInterface $entityManager): void
     {
         $user = $entityManager->find(User::class, $this->session->get('user')['id']);
 
         $this->view->setTemplate('index::index.html.twig', ['user' => $user]);
     }
 
-    public function pdf(PdfBuilderInterface $pdf, ResponseInterface $response)
+    public function pdf(PdfBuilderInterface $pdf, ResponseInterface $response): ResponseInterface
     {
-
         $output = $pdf->render($this->template->render('pdf::test.html.twig'));
 
         $response->getBody()->write($output);
