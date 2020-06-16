@@ -47,6 +47,10 @@ class GridHandler extends AbstractHandler
                 }
             }
 
+            if (!empty($queryParams['search']['value'])) {
+                $this->filterColumns['*'] = $queryParams['search']['value'];
+            }
+
             $this->offset = $queryParams['start'];
             $this->limit = (int)$queryParams['length'];
             $this->page = $queryParams['draw'] ?? 1;
