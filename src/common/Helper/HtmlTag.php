@@ -25,11 +25,12 @@ class HtmlTag
      * @param bool $class
      * @param bool $icon
      * @param bool $newWindow
+     * @param array $dataAttributes
      * @return string
      */
-    public static function link($href, $text = '', $class = false,  $icon = false, $newWindow = false): string
+    public static function link($href, $text = '', $class = false,  $icon = false, $newWindow = false, $dataAttributes = []): string
     {
-        return self::buildLink($href, $text, $class, $icon, $newWindow);
+        return self::buildLink($href, $text, $class, $icon, $newWindow, $dataAttributes);
     }
 
     /**
@@ -38,9 +39,10 @@ class HtmlTag
      * @param bool $class
      * @param bool $icon
      * @param bool $newWindow
+     * @param array $dataAttributes
      * @return string
      */
-    private static function buildLink($href, $text = '', $class = false, $icon = false, $newWindow = false): string
+    private static function buildLink($href, $text = '', $class = false, $icon = false, $newWindow = false, array $dataAttributes = []): string
     {
         $html = <<<HTML
             <a href="$href"
@@ -50,6 +52,10 @@ HTML;
             $html .= <<<HTML
  class="$class"
 HTML;
+        }
+
+        if (count($dataAttributes)) {
+            $html .= self::buildAttributes($dataAttributes);
         }
 
         if ($newWindow) {
@@ -72,5 +78,19 @@ $text</a>
 HTML;
 
         return trim(preg_replace('/\s\s+/', '', $html));
+    }
+
+    /**
+     * @param array $attributes
+     * @return string
+     */
+    private static function buildAttributes(array $attributes)
+    {
+        $attributeString = '';
+        foreach ($attributes as $attributeName => $attributeValue) {
+            $attributeString .= "$attributeName=\"$attributeValue\" ";
+        }
+
+        return ' ' . trim($attributeString);
     }
 }

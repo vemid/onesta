@@ -34,7 +34,7 @@
                 }
             }
         },
-        // scrollCollapse: true,
+        scrollCollapse: true,
         dom: '<"toolbar">Bfrtip',
         buttons: {
             dom: {
@@ -105,7 +105,7 @@
 
                 _options = {..._ajaxOptions, ..._defaultOptions, ...{searchCols: columnsFilters}};
 
-                let dataTable = $('#dataTable').DataTable(_options);
+                var dataTable = $('#dataTable').DataTable(_options);
 
                 $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + table.attr("data-title") + "</b>");
 

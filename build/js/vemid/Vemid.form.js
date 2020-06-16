@@ -310,10 +310,14 @@
                                 Vemid.notification.fromResponse(result);
 
                                 if (!result.error) {
-                                    $("#content").load(currentUrl + " #content > *", function () {
-                                        Vemid.misc.init();
-                                        Vemid.datetime.init();
-                                    });
+                                    if (typeof dataTable !== 'undefined') {
+                                        dataTable.draw();
+                                    } else {
+                                        $("#content").load(currentUrl + " #content > *", function () {
+                                            Vemid.misc.init();
+                                            Vemid.datetime.init();
+                                        });
+                                    }
                                 }
                             });
                     });

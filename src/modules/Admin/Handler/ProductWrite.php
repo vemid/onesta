@@ -9,6 +9,7 @@ use Nette\Utils\Html;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
+use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use \Vemid\ProjectOne\Entity\Entity\Product;
 use Vemid\ProjectOne\Entity\Repository\ProductRepository;
@@ -36,7 +37,11 @@ class ProductWrite extends GridHandler
                 HtmlTag::groupLink([
                     HtmlTag::link('/products/overview/' . $product->getId(), false, 'text-success bigger-120', 'search', false),
                     HtmlTag::link('/products/update/' . $product->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
-                    HtmlTag::link('/products/update/' . $product->getId(), false, 'text-danger bigger-120', 'trash-o', false),
+                    HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
+                        'data-delete' => '',
+                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/product/delete/' . $product->getId())),
+                        'data-title' => $this->translator->_('Obriši proizvod'),
+                    ]),
                 ])
             ];
         }
