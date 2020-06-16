@@ -33,6 +33,9 @@
                     if (messageObject.type === 'danger') {
                         toastr.error(messageObject.message)
                         $(".loader-box").hide();
+                    } if (messageObject.type === 'warning') {
+                        toastr.warning(messageObject.message)
+                        $(".loader-box").hide();
                     } else {
                         toastr.success(messageObject.message)
                     }

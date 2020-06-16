@@ -311,7 +311,7 @@
 
                                 if (!result.error) {
                                     if (typeof dataTable !== 'undefined') {
-                                        dataTable.draw();
+                                        $(dataTable).DataTable().ajax.reload();
                                     } else {
                                         $("#content").load(currentUrl + " #content > *", function () {
                                             Vemid.misc.init();
