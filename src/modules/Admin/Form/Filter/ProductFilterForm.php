@@ -8,7 +8,6 @@ use Nette\Forms\Form;
 use Vemid\ProjectOne\Common\Form\AbstractForm;
 use Vemid\ProjectOne\Entity\Entity\Product;
 use Vemid\ProjectOne\Entity\EntityInterface;
-use Vemid\ProjectOne\Entity\Repository\ProductRepository;
 
 /**
  * Class ProductFilter

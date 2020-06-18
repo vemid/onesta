@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Suppliers
  *
  * @ORM\Table(name="suppliers")
- * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\SupplierRepository")
  */
 class Supplier extends Entity
 {
@@ -28,6 +30,7 @@ class Supplier extends Entity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $name;
 
@@ -35,6 +38,7 @@ class Supplier extends Entity
      * @var string|null
      *
      * @ORM\Column(name="phone_number", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $phoneNumber;
 
@@ -42,6 +46,7 @@ class Supplier extends Entity
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Email", required=true)
      */
     protected $email;
 
@@ -49,6 +54,7 @@ class Supplier extends Entity
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $address;
 
@@ -56,6 +62,7 @@ class Supplier extends Entity
      * @var string|null
      *
      * @ORM\Column(name="postal_code", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $postalCode;
 
@@ -71,7 +78,7 @@ class Supplier extends Entity
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -95,7 +102,7 @@ class Supplier extends Entity
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -197,15 +204,13 @@ class Supplier extends Entity
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Supplier
+     * @ORM\PrePersist
+     * @return Product
+     * @throws \Exception
      */
-    public function setCreatedAt($createdAt): Supplier
+    public function setCreatedAt(): Supplier
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }

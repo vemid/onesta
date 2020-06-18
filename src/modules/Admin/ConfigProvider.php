@@ -37,6 +37,7 @@ class ConfigProvider
                 'email'     => __DIR__ . '/Template/email',
                 'pdf'       => __DIR__ . '/Template/pdf',
                 'product'   => __DIR__ . '/Template/product',
+                'supplier'   => __DIR__ . '/Template/supplier',
             ],
         ];
     }

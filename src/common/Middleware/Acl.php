@@ -94,14 +94,6 @@ class Acl implements MiddlewareAclInterface
     }
 
     /**
-     * @param string $whiteListItem
-     */
-    public function addWhiteListUri($whiteListItem = ''): void
-    {
-        $this->whiteList[] = $whiteListItem;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

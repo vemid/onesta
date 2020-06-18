@@ -42,7 +42,19 @@ class Roles implements RolesInterface
      */
     public function getResources(): array
     {
-        return $this->config->get('acl')->get('resources')->toArray();
+        $aclResources = $this->config->get('acl')->get('resources')->toArray();
+
+        $resources = ['', '/'];
+        foreach ($aclResources as $modules) {
+            foreach ($modules as $module => $moduleResources) {
+                foreach ($moduleResources as $handler => $actions) {
+                    $moduleHandler = sprintf('%s%s', ($module ? '/' . $module  : ''), ($handler ? '/' . $handler : ''));
+                    $resources = array_merge($resources,  preg_filter('/^/', ($moduleHandler . '/'), $actions));
+                }
+            }
+        }
+
+        return $resources;
     }
 
     /**

@@ -5,49 +5,36 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\Supplier;
 
 /**
- * Class ProductRepository
+ * Class SupplierRepository
  * @package Vemid\ProjectOne\Entity\Repository
  */
-class ProductRepository extends EntityRepository
+class SupplierRepository extends EntityRepository
 {
-    /**
-     * @return mixed
-     */
-    public function findByUniqueCode()
-    {
-        return $this->getEntityManager()->createQueryBuilder()
-            ->select('c')
-            ->from(Product::class, 'p')
-            ->leftJoin(Code::class, 'c', Join::WITH, 'p.code = c.id')
-            ->groupBy('p.code')
-            ->getQuery()
-            ->execute();
-    }
-
     /**
      * @param $limit
      * @param $offset
      * @param array $criteria
-     * @return Product[]
+     * @return Supplier[]
      */
-    public function fetchProducts($limit, $offset, $criteria = [])
+    public function fetchSuppliers($limit, $offset, $criteria = [])
     {
-        $metadataProduct = $this->getEntityManager()->getClassMetadata(Product::class);
+        $metadataProduct = $this->getEntityManager()->getClassMetadata(Supplier::class);
         $productProperties = preg_filter('/^/', 'p.', $metadataProduct->getFieldNames());
+
+        $relationProperties = $metadataProduct->getAssociationNames();
 
         $metadataCode = $this->getEntityManager()->getClassMetadata(Code::class);
         $codeProperties = preg_filter('/^/', 'c.', $metadataCode->getFieldNames());
         $properties = array_merge($productProperties, $codeProperties);
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->leftJoin(Code::class, 'c', Join::WITH, 'p.code = c.id')
+            ->select('s')
+            ->from(Supplier::class, 's')
             ->where('1=1');
 
         if (\count($criteria)) {
@@ -55,7 +42,8 @@ class ProductRepository extends EntityRepository
             $counter = 1;
 
             foreach ($criteria as $field => $value) {
-                $number = ctype_digit($value);
+                $relationField = explode('.', $field)[1];
+                $number = ctype_digit($value) && in_array($relationField, $relationProperties, false);
 
                 if ($field !== '*') {
                     $queryBuilder->andWhere(sprintf('%s %s :param%s', $field, $number ? '=' : 'LIKE', $counter));

@@ -37,7 +37,7 @@
                     <span class="nav-label">{{ t('User Management') }}</span>
                 </a>
             </li>
-            <li class="{{ 'products' in url ? 'active' : '' }}">
+            <li class="{{ 'products' in url or 'suppliers' in url ? 'active' : '' }}">
                 <a href="#">
                     <i class="fa fa-product-hunt"></i>
                     <span class="nav-label">{{ t('Roba') }}</span>
@@ -48,6 +48,12 @@
                         <a href="/products/list">
                             <i class="fa fa-product-hunt"></i>
                             <span class="nav-label">{{ t('Pregled Robe') }}</span>
+                        </a>
+                    </li>
+                    <li class="{{ 'suppliers/list' in url ? 'active' : '' }}">
+                        <a href="/suppliers/list">
+                            <i class="fa fa-product-hunt"></i>
+                            <span class="nav-label">{{ t('Pregled Dobavljača') }}</span>
                         </a>
                     </li>
                 </ul>

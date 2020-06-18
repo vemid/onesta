@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Admin\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Nette\Utils\Html;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
-use Vemid\ProjectOne\Common\Helper\Avatar;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;

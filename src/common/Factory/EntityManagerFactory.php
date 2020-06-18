@@ -65,11 +65,11 @@ class EntityManagerFactory
         );
 
         $config->addCustomStringFunction('sha1', Sha1::class);
-        $config->setMetadataCacheImpl($cacheDriver);
-        $config->setQueryCacheImpl($cacheDriver);
-        $config->setResultCacheImpl($cacheDriver);
+//        $config->setMetadataCacheImpl($cacheDriver);
+//        $config->setQueryCacheImpl($cacheDriver);
+//        $config->setResultCacheImpl($cacheDriver);
         $config->addEntityNamespace('\\Vemid\\ProjectOne\\Entity', 'Vemid');
-        $config->setMetadataDriverImpl($driver);
+//        $config->setMetadataDriverImpl($driver);
 
         AnnotationRegistry::registerFile(APP_PATH . '/src/common/Annotation/FormElement.php');
 

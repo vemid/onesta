@@ -1,5 +1,5 @@
 {% block title %}
-    <title>{{ t('Proizvod|Pregled') }}</title>
+    <title>{{ t('Dobavljači|Izmena') }}</title>
 {% endblock %}
 
 {% extends "@layout/main.html.twig" %}
@@ -11,7 +11,7 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-xs-12">
-
+                        {% include '@layout/form.html.twig' with {form : form} only %}
                     </div>
                 </div>
             </div>

@@ -7,6 +7,8 @@ use Vemid\ProjectOne\Admin\Handler\Authentication;
 use Vemid\ProjectOne\Admin\Handler\AuthenticationWrite;
 use Vemid\ProjectOne\Admin\Handler\Product;
 use Vemid\ProjectOne\Admin\Handler\ProductWrite;
+use Vemid\ProjectOne\Admin\Handler\Supplier;
+use Vemid\ProjectOne\Admin\Handler\SupplierWrite;
 use Vemid\ProjectOne\Admin\Handler\User;
 use Vemid\ProjectOne\Api\Handler\Ping;
 use Vemid\ProjectOne\Admin\Handler\Index as AdminIndex;
@@ -28,6 +30,8 @@ return [
         $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', User::class);
         $routeCollector->addRoute('GET', '/products/{method}[/{id:[\w-]+}]', Product::class);
         $routeCollector->addRoute('POST', '/products/{method}[/{id:[\w-]+}]', ProductWrite::class);
+        $routeCollector->addRoute('GET', '/suppliers/{method}[/{id:[\w-]+}]', Supplier::class);
+        $routeCollector->addRoute('POST', '/suppliers/{method}[/{id:[\w-]+}]', SupplierWrite::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);
