@@ -50,13 +50,11 @@ class ProductRepository extends EntityRepository
         }
 
         if ($offset) {
-            $queryBuilder
-                ->setFirstResult($offset);
+            $queryBuilder->setFirstResult($offset);
         }
 
         if ($limit) {
-            $queryBuilder
-                ->setMaxResults($limit);
+            $queryBuilder->setMaxResults($limit);
         }
 
         return $queryBuilder->getQuery()->execute();

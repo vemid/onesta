@@ -24,13 +24,6 @@ class SupplierRepository extends EntityRepository
      */
     public function fetchSuppliers($limit, $offset, $criteria = [])
     {
-        $metadataProduct = $this->getEntityManager()->getClassMetadata(Supplier::class);
-        $productProperties = preg_filter('/^/', 'p.', $metadataProduct->getFieldNames());
-
-        $metadataCode = $this->getEntityManager()->getClassMetadata(Code::class);
-        $codeProperties = preg_filter('/^/', 'c.', $metadataCode->getFieldNames());
-        $properties = array_merge($productProperties, $codeProperties);
-
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Supplier::class, 's')
@@ -41,13 +34,11 @@ class SupplierRepository extends EntityRepository
         }
 
         if ($offset) {
-            $queryBuilder
-                ->setFirstResult($offset);
+            $queryBuilder->setFirstResult($offset);
         }
 
         if ($limit) {
-            $queryBuilder
-                ->setMaxResults($limit);
+            $queryBuilder->setMaxResults($limit);
         }
 
         return $queryBuilder->getQuery()->execute();
