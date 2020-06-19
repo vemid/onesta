@@ -193,6 +193,12 @@ abstract class AbstractHandler implements RequestHandlerInterface
 
         if ($this->response->getBody() !== null && !$this->response->hasHeader('Content-Length')) {
             $this->response->withHeader('Content-Length', (string) $this->response->getBody());
+            $allHeaders = getallheaders();
+
+            if (!empty($allHeaders['Require-Auth'])) {
+                header('Require-Auth: 1');
+                $this->response->withHeader('Require-Auth', 1);
+            }
         }
 
         return $this->response;

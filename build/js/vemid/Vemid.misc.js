@@ -91,12 +91,22 @@
                 }).animate( { "opacity": "show", right:"300"} , 500 );
             },
 
+            redirectLogout: function () {
+
+                $(document).ajaxComplete(function(e, xhr){
+                    if (xhr.getResponseHeader('require-auth') == '1') {
+                        window.location = '/';
+                    }
+                });
+            },
+
             init: function () {
                 this.initChosen();
                 this.initFootTable();
                 this.setupToastr();
                 this.initSwitcherCheckbox();
                 this.readFileFromInput();
+                this.redirectLogout();
             }
         };
     })();

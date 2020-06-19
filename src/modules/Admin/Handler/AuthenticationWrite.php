@@ -77,6 +77,7 @@ class AuthenticationWrite extends AbstractHandler
 
             $flashSession = new FlashSession($this->session);
             $flashSession->success($this->translator->_(sprintf('Welcome %s', (string)$user)));
+            header('Require-Auth: 0');
 
             return $this->redirect('/');
         }

@@ -34,6 +34,7 @@ class Authentication extends AbstractHandler
      */
     public function login(UserLoginForm $userLoginForm)
     {
+        header('Require-Auth: 1');
         $this->view->setTemplate('auth::login-form.html.twig', ['form' => $userLoginForm->getForm()]);
     }
 

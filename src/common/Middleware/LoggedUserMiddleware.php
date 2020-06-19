@@ -38,9 +38,13 @@ class LoggedUserMiddleware implements MiddlewareInterface
 
         if (!$session->has('user') && !in_array($uri, $allowedActions, false)) {
             header('Location: /auth/login ', false, 302);
+            header('Require-Auth: 1');
 
             return (new Response())
+                ->withHeader('Require-Auth', 1)
                 ->withStatus(302, 'Not Authorized');
+        } else {
+            header('Require-Auth: 0');
         }
 
         if ($session->has('user') && in_array($uri, $allowedActions, false)) {
