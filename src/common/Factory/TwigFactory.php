@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Factory;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Laminas\Permissions\Acl\AclInterface;
 use Odan\Twig\TwigAssetsExtension;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
 use Twig\TwigFunction;
+use Vemid\ProjectOne\Common\Acl\Roles;
+use Vemid\ProjectOne\Common\Config\ConfigInterface;
 use Vemid\ProjectOne\Common\Config\ConfigResolvedInterface;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Common\Translator\TranslationInterface;
@@ -33,6 +38,17 @@ class TwigFactory
     private $translator;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /** @var AclInterface */
+    private $acl;
+
+    /** @var ConfigInterface */
+    private $configObject;
+
+    /**
      * TwigFactory constructor.
      * @param ContainerInterface $container
      */
@@ -42,6 +58,9 @@ class TwigFactory
         $this->extension = $container->get(TwigExtension::class);
         $this->config = $container->get(ConfigResolvedInterface::class);
         $this->translator = $container->get(TranslationInterface::class);
+        $this->entityManager = $container->get(EntityManagerInterface::class);
+        $this->acl = $container->get(AclInterface::class);
+        $this->configObject = $container->get(ConfigInterface::class);
     }
 
     /**
@@ -54,14 +73,29 @@ class TwigFactory
         });
 
         $translator = $this->translator;
+        $acl = $this->acl;
+        $roleManager = new Roles($this->configObject, $this->entityManager);
 
         $functionTranslate = new TwigFunction('t', static function ($value) use ($translator) {
             return $translator->translate($value);
         });
 
+        $functionIsAllowed = new TwigFunction('isAllowed', static function ($id, $resource) use ($roleManager, $acl) {
+            $route = preg_replace('/\/\d*$/', '', $resource);
+
+            foreach ($roleManager->getUserRoles($id) as $role) {
+                if ($acl->isAllowed($role, $resource)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
         $this->environment->addExtension($this->extension);
         $this->environment->addExtension(new TwigAssetsExtension($this->environment, $this->config['templates']['external']));
         $this->environment->addFunction($functionCipher);
+        $this->environment->addFunction($functionIsAllowed);
         $this->environment->addFunction($functionTranslate);
 
         return new TwigRenderer($this->environment);
