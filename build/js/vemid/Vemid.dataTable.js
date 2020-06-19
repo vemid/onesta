@@ -105,6 +105,7 @@
 
                 _options = {..._ajaxOptions, ..._defaultOptions, ...{searchCols: columnsFilters}};
 
+                $.fn.dataTable.ext.errMode = 'none';
                 var dataTable = $('#dataTable').DataTable(_options);
 
                 $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + table.attr("data-title") + "</b>");

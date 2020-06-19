@@ -72,13 +72,13 @@
             },
             maintainCursorPositionAfterReloadPage: function () {
                 function refreshPage () {
-                    var page_y = document.getElementsByTagName("body")[0].scrollTop;
+                    let page_y = document.getElementsByTagName("body")[0].scrollTop;
                     window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
                 }
                 window.onload = function () {
                     setTimeout(refreshPage, 35000);
                     if ( window.location.href.indexOf('page_y') != -1 ) {
-                        var match = window.location.href.split('?')[1].split("&")[0].split("=");
+                        let match = window.location.href.split('?')[1].split("&")[0].split("=");
                         document.getElementsByTagName("body")[0].scrollTop = match[1];
                     }
                 }
@@ -92,10 +92,10 @@
             },
 
             redirectLogout: function () {
-
                 $(document).ajaxComplete(function(e, xhr){
                     if (xhr.getResponseHeader('require-auth') == '1') {
-                        window.location = '/';
+                        toastr.error(Vemid.language.get("sessionEnd"));
+                        window.location = Vemid.config.root_url + 'auth/login';
                     }
                 });
             },

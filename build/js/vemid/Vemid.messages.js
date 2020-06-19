@@ -227,6 +227,10 @@
         filteredDatatable: {
             en: "(filteredas from _MAX_ total records)",
             sr: "(filtrirano od _MAX_ ukupno upisa)"
+        },
+        sessionEnd: {
+            en: "You are logged out. Session over!",
+            sr: "Izglovani ste. Istekla je sesija!"
         }
     });
 }).call(Vemid, $);

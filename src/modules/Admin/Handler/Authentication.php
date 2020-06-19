@@ -114,7 +114,7 @@ class Authentication extends AbstractHandler
     public function logout()
     {
         $this->session->unset('user');
-        $this->messageBag->pushFlashMessage($this->translator->_('Bue bue'), null, Builder::SUCCESS);
+        $this->messageBag->pushFlashMessage($this->translator->_('Dovidjenja!'), null, Builder::SUCCESS);
 
         return $this->redirect('/');
     }
