@@ -71,13 +71,14 @@
                 };
             },
             maintainCursorPositionAfterReloadPage: function () {
-                function refreshPage () {
+                function refreshPage() {
                     let page_y = document.getElementsByTagName("body")[0].scrollTop;
                     window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
                 }
+
                 window.onload = function () {
                     setTimeout(refreshPage, 35000);
-                    if ( window.location.href.indexOf('page_y') != -1 ) {
+                    if (window.location.href.indexOf('page_y') != -1) {
                         let match = window.location.href.split('?')[1].split("&")[0].split("=");
                         document.getElementsByTagName("body")[0].scrollTop = match[1];
                     }
@@ -88,16 +89,38 @@
                     if (XMLHttpRequest.status === 403) {
                         toastr.error(Vemid.language.get("permissionDenied"));
                     }
-                }).animate( { "opacity": "show", right:"300"} , 500 );
+                }).animate({"opacity": "show", right: "300"}, 500);
             },
 
             redirectLogout: function () {
-                $(document).ajaxComplete(function(e, xhr){
-                    if (xhr.getResponseHeader('require-auth') == '1') {
+                $(document).ajaxComplete(function (e, xhr) {
+                    if (xhr.getResponseHeader('require-auth') === '1') {
                         toastr.error(Vemid.language.get("sessionEnd"));
                         window.location = Vemid.config.root_url + 'auth/login';
                     }
                 });
+            },
+            checkExpiredStorageItems: function () {
+                let keys = Object.keys(localStorage),
+                    i = keys.length;
+
+                while (i--) {
+                    let storage = JSON.parse(localStorage.getItem(keys[i]));
+
+                    if (typeof storage['expire'] !== 'undefined') {
+                        let expiredDate = new Date(storage['expire']);
+                        if (expiredDate < new Date()) {
+                            localStorage.removeItem(keys[i]);
+                            $(dataTable).DataTable().ajax.reload();
+                        }
+                    }
+                }
+            },
+            removeExpiredStorageItems: function () {
+                let myInterval = 15 * 60 * 1000;
+                setInterval(function () {
+                    Vemid.misc.checkExpiredStorageItems();
+                }, myInterval);
             },
 
             init: function () {
@@ -107,6 +130,7 @@
                 this.initSwitcherCheckbox();
                 this.readFileFromInput();
                 this.redirectLogout();
+                this.removeExpiredStorageItems();
             }
         };
     })();

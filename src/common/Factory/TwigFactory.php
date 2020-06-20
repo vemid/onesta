@@ -84,7 +84,7 @@ class TwigFactory
             $route = preg_replace('/\/\d*$/', '', $resource);
 
             foreach ($roleManager->getUserRoles($id) as $role) {
-                if ($acl->isAllowed($role, $resource)) {
+                if ($acl->isAllowed($role, $route)) {
                     return true;
                 }
             }

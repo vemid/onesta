@@ -14,6 +14,7 @@ return [
                     'auth' => ['logout', 'login', 'g2fa', 'reset-password', 'new-password', 'change-password', 'g2fa-setup'],
                     'products' => ['list', 'create', 'update', 'overview'],
                     'suppliers' => ['list', 'create', 'update', 'overview'],
+                    'codes' => ['list', 'create', 'update']
                 ],
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],

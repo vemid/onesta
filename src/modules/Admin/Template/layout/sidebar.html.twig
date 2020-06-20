@@ -34,18 +34,35 @@
                 <ul class="nav nav-second-level collapse" style="">
                     <li class="{{ 'products/list' in url ? 'active' : '' }}">
                         <a href="/products/list">
-                            <i class="fa fa-product-hunt"></i>
+                            <i class="fa fa-list"></i>
                             <span class="nav-label">{{ t('Pregled Robe') }}</span>
                         </a>
                     </li>
                     <li class="{{ 'suppliers/list' in url ? 'active' : '' }}">
                         <a href="/suppliers/list">
-                            <i class="fa fa-product-hunt"></i>
+                            <i class="fa fa-list-alt"></i>
                             <span class="nav-label">{{ t('Pregled Dobavljača') }}</span>
                         </a>
                     </li>
                 </ul>
             </li>
+            {% if isAllowed(session.get('user')['id'], '/codes/list') %}
+                <li class="{{ 'codes' in url ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-tags"></i>
+                        <span class="nav-label">{{ t('Kategorije') }}</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse" style="">
+                        <li class="{{ 'codes/list' in url ? 'active' : '' }}">
+                            <a href="/codes/list">
+                                <i class="fa fa-list-alt"></i>
+                                <span class="nav-label">{{ t('Pregled Kategorija') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             <li class="{{ 'user/profile' in url ? 'active' : '' }}">
                 <a href="/user/profile">
                     <i class="fa fa-user-plus"></i>

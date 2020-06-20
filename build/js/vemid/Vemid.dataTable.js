@@ -140,6 +140,11 @@
 
                         let filterElement = $(this);
                         filterValues[i] = $(filterElement).val();
+
+                        let date = new Date();
+                        date.setHours(date.getHours() + 1); //one hour from now
+                        filterValues['expire'] = date;
+
                         localStorage.setItem(filterIndex, JSON.stringify(filterValues));
 
                         dataTable
