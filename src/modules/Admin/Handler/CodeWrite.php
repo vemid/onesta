@@ -9,56 +9,55 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
-use \Vemid\ProjectOne\Entity\Entity\Supplier;
-use Vemid\ProjectOne\Entity\Repository\SupplierRepository;
+use Vemid\ProjectOne\Entity\Entity\Code;
+use Vemid\ProjectOne\Entity\Entity\CodeType;
+use Vemid\ProjectOne\Entity\Repository\CodeRepository;
 
 /**
- * Class SupplierWrite
+ * Class CodeWrite
  * @package Vemid\ProjectOne\Admin\Handler
  */
 class CodeWrite extends GridHandler
 {
     public function list(EntityManagerInterface $entityManager): array
     {
-        /** @var SupplierRepository $supplierRepository */
-        $supplierRepository = $entityManager->getRepository(Supplier::class);
-        $suppliers = $supplierRepository->fetchSuppliers($this->limit, $this->offset, $this->filterColumns);
-        $totalSuppliers = $supplierRepository->fetchSuppliers(0, 0);
-        $filteredSuppliers = $supplierRepository->fetchSuppliers(0, 0, $this->filterColumns);
+        /** @var CodeRepository $codeRepository */
+        $codeRepository = $entityManager->getRepository(Code::class);
+        $codes = $codeRepository->fetchCodes($this->limit, $this->offset, $this->filterColumns);
+        $totalCodes = $codeRepository->fetchCodes(0, 0);
+        $filteredCodes = $codeRepository->fetchCodes(0, 0, $this->filterColumns);
 
         $data = [];
-        foreach ($suppliers as $supplier) {
+        foreach ($codes as $code) {
             $data[] = [
-                (string)$supplier->getName(),
-                $supplier->getEmail(),
-                $supplier->getPhoneNumber(),
-                $supplier->getAddress(),
-                $supplier->getPostalCode(),
+                (string)$code->getCodeType(),
+                $code->getCode(),
+                (string)$code->getName(),
+                (string)$code->getParent(),
                 HtmlTag::groupLink([
-                    HtmlTag::link('/suppliers/overview/' . $supplier->getId(), false, 'text-success bigger-120', 'search', false),
-                    HtmlTag::link('/suppliers/update/' . $supplier->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
+                    HtmlTag::link('/codes/update/' . $code->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
                     HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
                         'data-delete' => '',
-                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/suppliers/delete/' . $supplier->getId())),
-                        'data-title' => $this->translator->_('Obriši dobavljača'),
+                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/codes/delete/' . $code->getId())),
+                        'data-title' => $this->translator->_('Obriši Kategoriju'),
                     ]),
                 ])
             ];
         }
 
-       return [
+        return [
             'draw' => $this->page,
-            'recordsTotal' => count($totalSuppliers),
-            'recordsFiltered' => count($filteredSuppliers),
+            'recordsTotal' => count($totalCodes),
+            'recordsFiltered' => count($filteredCodes),
             'data' => $data
         ];
     }
 
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
     {
-        $supplier = new Supplier();
+        $code = new Code();
 
-        $form = $formBuilder->build($supplier);
+        $form = $formBuilder->build($code);
         $postData = $form->getHttpData();
 
         if (!$form->isValid()) {
@@ -66,25 +65,39 @@ class CodeWrite extends GridHandler
             return;
         }
 
-        $supplier->setData($postData);
+        if (!$codeType = $entityManager->find(CodeType::class, $postData['codeType'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Tip ne postoji!'), null, Builder::DANGER);
+            return;
+        }
 
-        $entityManager->persist($supplier);
+        $parent = null;
+        if (!empty($postData['parent']) && !$parent = $entityManager->find(Code::class, $postData['parent'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Podkategorija ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $postData['codeType'] = $codeType;
+        $postData['parent'] = $parent;
+
+        $code->setData($postData);
+
+        $entityManager->persist($code);
         $entityManager->flush();
 
-        $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač dodat!'), null, Builder::SUCCESS);
+        $this->messageBag->pushFlashMessage($this->translator->_('Kategorija dodata!'), null, Builder::SUCCESS);
 
-        return $this->redirect('/suppliers/list');
+        return $this->redirect('/codes/list');
     }
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
     {
-        /** @var $supplier Supplier */
-        if (!$supplier = $entityManager->find(Supplier::class, (int)$id)) {
+        /** @var $code Code */
+        if (!$code = $entityManager->find(Code::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, nesto nije u redu. Ne postoji traženi dobavljač'), null, Builder::WARNING);
             return;
         }
 
-        $form = $formBuilder->build($supplier);
+        $form = $formBuilder->build($code);
         $postData = $form->getHttpData();
 
         if (!$form->isSuccess()) {
@@ -92,13 +105,27 @@ class CodeWrite extends GridHandler
             return;
         }
 
-        $supplier->setData($postData);
+        if (!$codeType = $entityManager->find(CodeType::class, $postData['codeType'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Tip ne postoji!'), null, Builder::DANGER);
+            return;
+        }
 
-        $entityManager->persist($supplier);
+        $parent = null;
+        if (!empty($postData['parent']) && !$parent = $entityManager->find(Code::class, $postData['parent'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Podkategorija ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $postData['codeType'] = $codeType;
+        $postData['parent'] = $parent;
+
+        $code->setData($postData);
+
+        $entityManager->persist($code);
         $entityManager->flush();
 
         $this->messageBag->pushFlashMessage($this->translator->_('Dobaljač izmenjen'), null, Builder::SUCCESS);
 
-        $this->redirect('/suppliers/list');
+        $this->redirect('/codes/list');
     }
 }

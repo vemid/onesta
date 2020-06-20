@@ -6,13 +6,14 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Codes
  *
  * @ORM\Table(name="codes", uniqueConstraints={@ORM\UniqueConstraint(name="code", columns={"code"})}, indexes={@ORM\Index(name="code_type_id", columns={"code_type_id"}), @ORM\Index(name="parent_id", columns={"parent_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\CodeRepository")
  */
 class Code extends Entity
 {
@@ -29,6 +30,7 @@ class Code extends Entity
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $code;
 
@@ -36,6 +38,7 @@ class Code extends Entity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $name;
 
@@ -46,6 +49,7 @@ class Code extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="code_type_id", referencedColumnName="id")
      * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="CodeType", name="Tip")
      */
     private $codeType;
 
@@ -56,6 +60,7 @@ class Code extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Pod kategorija")
      */
     private $parent;
 
@@ -77,7 +82,7 @@ class Code extends Entity
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -101,7 +106,7 @@ class Code extends Entity
      *
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -125,7 +130,7 @@ class Code extends Entity
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -149,7 +154,7 @@ class Code extends Entity
      *
      * @return CodeType|null
      */
-    public function getCodeType(): CodeType
+    public function getCodeType(): ?CodeType
     {
         return $this->codeType;
     }
@@ -183,6 +188,6 @@ class Code extends Entity
      */
     public function __toString()
     {
-        return $this->getName();
+        return (string)$this->getName();
     }
 }

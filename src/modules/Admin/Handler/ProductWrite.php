@@ -38,7 +38,7 @@ class ProductWrite extends GridHandler
                     HtmlTag::link('/products/update/' . $product->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
                     HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
                         'data-delete' => '',
-                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/product/delete/' . $product->getId())),
+                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/products/delete/' . $product->getId())),
                         'data-title' => $this->translator->_('Obriši proizvod'),
                     ]),
                 ])

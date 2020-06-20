@@ -19,6 +19,8 @@ return [
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],
                     'products' => ['delete'],
+                    'codes' => ['delete'],
+                    'suppliers' => ['delete'],
                 ]
             ],
         ],

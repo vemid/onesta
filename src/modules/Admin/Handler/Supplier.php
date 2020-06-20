@@ -17,7 +17,7 @@ use \Vemid\ProjectOne\Entity\Entity\Supplier as EntitySupplier;
  */
 class Supplier extends AbstractHandler
 {
-    public function list(EntityManagerInterface $entityManager, SupplierFilterForm $supplierFilterForm): void
+    public function list(SupplierFilterForm $supplierFilterForm): void
     {
         $this->view->setTemplate('supplier::list.html.twig', [
             'form' => $supplierFilterForm->generate()

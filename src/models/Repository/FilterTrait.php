@@ -39,17 +39,24 @@ trait FilterTrait
                 }
             }
 
-            $relatedProperties = preg_filter('/^/', $relatedAlias .'.', $relatedMetadata->getFieldNames());
-            $properties = array_merge($classProperties, $relatedProperties);
+            $relatedProperties = preg_filter('/^/', $relatedAlias .'.', ($relatedAlias !== $prefix ? $relatedMetadata->getFieldNames(): [$relationProperty]));
+            $properties[] = array_merge($classProperties, $relatedProperties);
+        }
+
+        if (count($properties)) {
+            $properties = array_unique(array_merge(...$properties));
+        } else {
+            $properties = $classProperties;
         }
 
         $params = [];
         $counter = 1;
         foreach ($criteria as $field => $value) {
-            $relationField = explode('.', $field)[1];
-            $number = ctype_digit($value) && in_array($relationField, $relationProperties, false);
-
             if ($field !== '*') {
+                $propertyField = explode('.', $field)[1];
+
+                $number = ctype_digit($value) && in_array($propertyField, $relationProperties, false);
+
                 $queryBuilder->andWhere(sprintf('%s %s :param%s', $field, $number ? '=' : 'LIKE', $counter));
                 $params["param$counter"] = addcslashes(sprintf('%1$s%2$s%1$s', !$number ? '%' : '', $value), '\n');
 
@@ -58,7 +65,13 @@ trait FilterTrait
 
                 $criteria = [];
                 foreach ($properties as $property) {
-                    $exp = $number ? 'eq' : 'like';
+                    $propertyCode = explode('.', $property)[1];
+                    $number = in_array($propertyCode, $relationProperties, false);
+                    if ($number) {
+                        continue;
+                    }
+
+                    $exp = 'like';
                     $criteria[] = $queryBuilder->expr()->{$exp}($property, sprintf('\'%1$s%2$s%1$s\'', !$number ? '%' : '', $value));
                 }
 

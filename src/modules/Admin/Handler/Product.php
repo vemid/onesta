@@ -17,7 +17,7 @@ use \Vemid\ProjectOne\Entity\Entity\Product as EntityProduct;
  */
 class Product extends AbstractHandler
 {
-    public function list(EntityManagerInterface $entityManager, ProductFilterForm $productFilterForm): void
+    public function list(ProductFilterForm $productFilterForm): void
     {
         $this->view->setTemplate('product::list.html.twig', [
             'form' => $productFilterForm->generate()
