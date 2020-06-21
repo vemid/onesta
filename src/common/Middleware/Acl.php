@@ -84,6 +84,7 @@ class Acl implements MiddlewareAclInterface
      */
     public function isAllowedWithRoles(array $roles, $resourceId = ''): bool
     {
+        $resourceId = implode('/', array_slice(explode('/', $resourceId), 0, 4));
         foreach ($roles as $role) {
             if ($this->acl->isAllowed($role, $resourceId)) {
                 return true;

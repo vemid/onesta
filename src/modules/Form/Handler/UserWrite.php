@@ -15,8 +15,8 @@ use Vemid\ProjectOne\Entity\Entity\User as EntityUser;
 use Vemid\ProjectOne\Entity\Entity\UserRoleAssignment;
 
 /**
- * Class UserHandler
- * @package Vemid\ProjectOne\Json\Handler
+ * Class UserWrite
+ * @package Vemid\ProjectOne\Form\Handler
  */
 class UserWrite extends AbstractHandler
 {

@@ -13,8 +13,8 @@ use Vemid\ProjectOne\Entity\Entity\Role;
 use Vemid\ProjectOne\Entity\Entity\User as EntityUser;
 
 /**
- * Class UserHandler
- * @package Vemid\ProjectOne\Json\Handler
+ * Class User
+ * @package Vemid\ProjectOne\Form\Handler
  */
 class User extends AbstractHandler
 {

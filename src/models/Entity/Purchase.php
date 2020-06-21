@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
@@ -19,6 +20,7 @@ class Purchase extends Entity
      * @var string
      *
      * @ORM\Column(name="plates", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $plates;
 
@@ -33,6 +35,7 @@ class Purchase extends Entity
      * @var string
      *
      * @ORM\Column(name="insurance_level", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $insuranceLevel;
 
@@ -40,6 +43,7 @@ class Purchase extends Entity
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $model;
 
@@ -47,6 +51,7 @@ class Purchase extends Entity
      * @var string|null
      *
      * @ORM\Column(name="note", type="text", length=65535, nullable=true)
+     * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
     protected $note;
 
@@ -54,6 +59,7 @@ class Purchase extends Entity
      * @var string|null
      *
      * @ORM\Column(name="note_2", type="text", length=65535, nullable=true)
+     * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
     protected $note2;
 
@@ -61,6 +67,7 @@ class Purchase extends Entity
      * @var \DateTime
      *
      * @ORM\Column(name="registered_until", type="datetime", nullable=false)
+     * @FormAnnotation\FormElement(type="Date", required=true)
      */
     protected $registeredUntil;
 
@@ -68,6 +75,7 @@ class Purchase extends Entity
      * @var bool
      *
      * @ORM\Column(name="authorization", type="boolean", nullable=false)
+     * @FormAnnotation\FormElement(type="Checkbox", required=true)
      */
     protected $authorization;
 
@@ -132,7 +140,7 @@ class Purchase extends Entity
      *
      * @return int
      */
-    public function getId():  int
+    public function getId():  ?int
     {
         return $this->id;
     }
@@ -156,7 +164,7 @@ class Purchase extends Entity
      *
      * @return string
      */
-    public function getPlates(): string
+    public function getPlates(): ?string
     {
         return $this->plates;
     }
@@ -180,7 +188,7 @@ class Purchase extends Entity
      *
      * @return string
      */
-    public function getChassis(): string
+    public function getChassis(): ?string
     {
         return $this->chassis;
     }
@@ -204,7 +212,7 @@ class Purchase extends Entity
      *
      * @return string
      */
-    public function getInsuranceLevel(): string
+    public function getInsuranceLevel(): ?string
     {
         return $this->insuranceLevel;
     }
@@ -228,7 +236,7 @@ class Purchase extends Entity
      *
      * @return string
      */
-    public function getModel(): string
+    public function getModel(): ?string
     {
         return $this->model;
     }
@@ -300,7 +308,7 @@ class Purchase extends Entity
      *
      * @return \DateTime
      */
-    public function getRegisteredUntil(): \DateTime
+    public function getRegisteredUntil(): ?\DateTime
     {
         return $this->registeredUntil;
     }
@@ -324,7 +332,7 @@ class Purchase extends Entity
      *
      * @return bool
      */
-    public function getAuthorization(): bool
+    public function getAuthorization(): ?bool
     {
         return $this->authorization;
     }

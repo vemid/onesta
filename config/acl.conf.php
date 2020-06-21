@@ -14,13 +14,15 @@ return [
                     'auth' => ['logout', 'login', 'g2fa', 'reset-password', 'new-password', 'change-password', 'g2fa-setup'],
                     'products' => ['list', 'create', 'update', 'overview'],
                     'suppliers' => ['list', 'create', 'update', 'overview'],
-                    'codes' => ['list', 'create', 'update']
+                    'codes' => ['list', 'create', 'update'],
+                    'purchases' => ['list', 'create', 'update']
                 ],
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],
                     'products' => ['delete'],
                     'codes' => ['delete'],
                     'suppliers' => ['delete'],
+                    'clients' => ['fetch-by-term', 'fetch-by-id'],
                 ]
             ],
         ],

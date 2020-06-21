@@ -6,13 +6,14 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Clients
  *
  * @ORM\Table(name="clients", indexes={@ORM\Index(name="guarantor_id", columns={"guarantor_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\ClientRepository")
  */
 class Client extends Entity
 {
@@ -26,16 +27,10 @@ class Client extends Entity
     protected $id;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="type", type="string", length=0, nullable=true)
-     */
-    protected $type;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $firstName;
 
@@ -43,13 +38,23 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $lastName;
 
     /**
      * @var string|null
      *
+     * @ORM\Column(name="type", type="string", length=0, nullable=true)
+     * @FormAnnotation\FormElement(type="Select", required=true, options={"NATURAL" : "Fizičko lice", "LEGAL" : "Pravno lice"})
+     */
+    protected $type;
+
+    /**
+     * @var string|null
+     *
      * @ORM\Column(name="phone_number", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $phoneNumber;
 
@@ -57,6 +62,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $address;
 
@@ -64,6 +70,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="postal_code", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $postalCode;
 
@@ -78,6 +85,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Email", required=false)
      */
     protected $email;
 
@@ -92,6 +100,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="pib", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $pib;
 
@@ -137,7 +146,7 @@ class Client extends Entity
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -161,7 +170,7 @@ class Client extends Entity
      *
      * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -185,7 +194,7 @@ class Client extends Entity
      *
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -452,5 +461,13 @@ class Client extends Entity
     public function getGuarantor(): ?Client
     {
         return $this->guarantor;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 }

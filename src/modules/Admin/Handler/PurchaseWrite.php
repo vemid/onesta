@@ -12,14 +12,14 @@ use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use \Vemid\ProjectOne\Entity\Entity\Code as EntityCode;
 
 /**
- * Class Code
+ * Class PurchaseWrite
  * @package Vemid\ProjectOne\Admin\Handler
  */
-class Code extends AbstractHandler
+class PurchaseWrite extends AbstractHandler
 {
     public function list(CodeFilterForm $codeFilterForm): void
     {
-        $this->view->setTemplate('code::list.html.twig', [
+        $this->view->setTemplate('purchase::list.html.twig', [
             'form' => $codeFilterForm->generate()
         ]);
     }

@@ -1,0 +1,39 @@
+{% block title %}
+    <title>{{ t('Prodaja|Lista') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="space-20"></div>
+                        <table id="dataTable" data-entity="purchase" data-store="purchaseList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/purchases/list') }}" data-title="{{ t('Lista prodaje') }}">
+                            <thead>
+                                <tr>
+                                    <th data-name="ct.id" class="col-xs-3">Tip</th>
+                                    <th data-name="c.code" class="col-xs-2">Kod</th>
+                                    <th data-name="c.name" class="col-xs-3">Ime</th>
+                                    <th data-name="c.parent" class="col-xs-3">Pod kategorija</th>
+                                    <th class="col-xs-1">Akcije</th>
+                                </tr>
+                                <tr>
+                                    <th>{{ form['type'].control | raw }}</th>
+                                    <th>{{ form['code'].control | raw }}</th>
+                                    <th>{{ form['name'].control | raw }}</th>
+                                    <th>{{ form['parent'].control | raw }}</th>
+                                    <th data-visible="false"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

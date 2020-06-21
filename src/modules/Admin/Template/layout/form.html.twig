@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <div class="controls">
                         {% set required = '<span class="">*</span>' %}
-                        <label for="account-username">{{ element.getLabel() | raw }}{{ element.isRequired() ? required | raw : '' }}</label>
+                        <label for="account-username" class="inline">{{ element.getLabel() | raw }}{{ element.isRequired() ? required | raw : '' }}</label>
                         {{ element.control | raw }}
                         <div class="help-block"></div>
                     </div>
