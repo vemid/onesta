@@ -34,7 +34,8 @@ class Purchase extends AbstractHandler
 
         foreach ($form->getComponents() as $component) {
             $type = $component->getControl()->getAttribute('type');
-            if ($type === 'hidden' && $component->getControl() !== 'id') {
+            $name = $component->getControl()->getAttribute('name');
+            if ($type === 'hidden' && $name !== 'id') {
                 continue;
             }
 

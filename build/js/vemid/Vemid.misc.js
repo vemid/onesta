@@ -123,6 +123,22 @@
                 }, myInterval);
             },
 
+            initTinyMce: function () {
+                let $textarea = $("textarea");
+                $textarea.summernote({
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['para', ['ul', 'ol', 'paragraph']]
+                    ]
+                });
+
+                $textarea.each(function () {
+                    let html = $(this).next(".note-editor").find(".note-editable").html();
+                    if (html) {
+                        $(this).html(html);
+                    }
+                });
+            },
             init: function () {
                 this.initChosen();
                 this.initFootTable();
@@ -131,6 +147,7 @@
                 this.readFileFromInput();
                 this.redirectLogout();
                 this.removeExpiredStorageItems();
+                this.initTinyMce();
             }
         };
     })();
