@@ -17,6 +17,50 @@ use Vemid\ProjectOne\Entity\Entity;
 class Purchase extends Entity
 {
     /**
+     * @var Code
+     *
+     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Code")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Select", required=true, name="Vrsta kupovine")
+     */
+    protected $code;
+
+    /**
+     * @var Client
+     *
+     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Hidden", required=true)
+     */
+    protected $client;
+
+    /**
+     * @var Code
+     *
+     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Code")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="payment_type_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Select", required=true, name="Način plaćanja")
+     */
+    protected $paymentType;
+
+    /**
+     * @var Client
+     *
+     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Text", required=true, name="Garantor")
+     */
+    protected $guarantor;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="plates", type="string", length=255, nullable=false)
@@ -94,46 +138,6 @@ class Purchase extends Entity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-
-    /**
-     * @var Code
-     *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Code")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="payment_type_id", referencedColumnName="id")
-     * })
-     */
-    protected $paymentType;
-
-    /**
-     * @var Code
-     *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Code")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
-     * })
-     */
-    protected $code;
-
-    /**
-     * @var Client
-     *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Client")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
-     * })
-     */
-    protected $client;
-
-    /**
-     * @var Client
-     *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Client")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
-     * })
-     */
-    protected $guarantor;
 
     /**
      * Get id.
@@ -356,7 +360,7 @@ class Purchase extends Entity
      *
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -380,7 +384,7 @@ class Purchase extends Entity
      *
      * @return Code|null
      */
-    public function getPaymentType(): Code
+    public function getPaymentType(): ?Code
     {
         return $this->paymentType;
     }
@@ -404,7 +408,7 @@ class Purchase extends Entity
      *
      * @return Code|null
      */
-    public function getCode(): Code
+    public function getCode(): ?Code
     {
         return $this->code;
     }
@@ -428,7 +432,7 @@ class Purchase extends Entity
      *
      * @return Client|null
      */
-    public function getClient(): Client
+    public function getClient(): ?Client
     {
         return $this->client;
     }
@@ -452,7 +456,7 @@ class Purchase extends Entity
      *
      * @return Client|null
      */
-    public function getGuarantor(): Client
+    public function getGuarantor(): ?Client
     {
         return $this->guarantor;
     }
