@@ -30,9 +30,11 @@ class Purchase extends AbstractHandler
         $clientForm = $formBuilder->build(new EntityClient());
         $form = $formBuilder->build(new EntityPurchase());
 
+        $clientForm->addHidden('id');
+
         foreach ($form->getComponents() as $component) {
             $type = $component->getControl()->getAttribute('type');
-            if ($type === 'hidden') {
+            if ($type === 'hidden' && $component->getControl() !== 'id') {
                 continue;
             }
 

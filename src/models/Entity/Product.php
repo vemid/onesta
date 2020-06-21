@@ -24,7 +24,6 @@ class Product extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @FormAnnotation\FormElement(type="Hidden", required=true)
-     * @FormAnnotation\FormElement(type="Hidden", required=true, relation="Code")
      */
     protected $id;
 
