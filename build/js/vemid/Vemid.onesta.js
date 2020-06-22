@@ -42,8 +42,24 @@
                 });
             },
 
+            guarantorAutocomplete: function () {
+                $("input[name ='guarantorId']").each(function (index, element) {
+                    let $element = $(element);
+
+                    $element
+                        .autocomplete({
+                            minLength: 3,
+                            source: Vemid.config.formUrl + "form/clients/fetch-by-term",
+                            select: function( event, ui ) {
+                                $("#guarantor").val(ui.item.id);
+                            }
+                        });
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
+                this.guarantorAutocomplete();
             }
         }
     })();

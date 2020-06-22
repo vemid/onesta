@@ -39,6 +39,11 @@ class Purchase extends AbstractHandler
             $clientForm->addComponent($component, $component->getName());
         }
 
+        $guarantorComponent = $clientForm->getComponent('guarantor');
+        $clientForm->removeComponent($guarantorComponent);
+        $clientForm->addComponent($guarantorComponent, 'guarantorId', 'type');
+        $clientForm->addHidden('guarantor')->setHtmlAttribute('id', 'guarantor');
+
         $this->view->setTemplate('code::create.html.twig', [
             'form' => $clientForm
         ]);

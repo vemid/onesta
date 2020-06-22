@@ -37,9 +37,13 @@ class Client extends AbstractHandler
     public function fetchById($id, EntityManagerInterface $entityManager)
     {
         $data = [];
+        /** @var EntityClient $client */
         if ($client = $entityManager->find(EntityClient::class, $id)) {
             $data = $client->toArray();
             $data['client'] = $data['id'];
+            $data['guarantorId'] = (string)$client->getGuarantor() ?: '';
+            $data['guarantor'] = $client->getGuarantor() ? $client->getGuarantor()->getId() : '';
+
             unset($data['id']);
         }
 
