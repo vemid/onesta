@@ -53,12 +53,50 @@
                         window.location.href = Vemid.config.formUrl + table.attr("data-entity") + "s/create";
                     },
                     titleAttr: Vemid.language.get("createNew"),
+                    exportOptions: {
+                        columns: ':visible'
+                    }
                 },
                 {
                     extend: 'print',
                     text: '<i class="fa fa-print bigger-160 text-default" aria-hidden="true"></i>',
                     titleAttr: Vemid.language.get("print"),
-                }
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: '<i class="fa fa-file-text-o bigger-160 text-default" aria-hidden="true"></i>',
+                    titleAttr: Vemid.language.get("print"),
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                // {
+                //     extend: 'excelHtml5',
+                //     createEmptyCells: true,
+                //     extension: 'xls',
+                //     text: '<i class="fa fa-file-excel-o bigger-160 text-default" aria-hidden="true"></i>',
+                //     titleAttr: 'Excel',
+                //     exportOptions: {
+                //         columns: ':visible',
+                //         decodeEntities: true,
+                //         stripHtml: true
+                //     }
+                // },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o bigger-160 text-default" aria-hidden="true"></i>',
+                    titleAttr: 'PDF',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fa fa-filter bigger-160 text-default" aria-hidden="true"></i>',
+                },
             ]
         }
     };

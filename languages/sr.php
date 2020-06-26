@@ -20,4 +20,7 @@ return [
     'Note2' => 'Dodatna beleška',
     'Registered Until' => 'Registrovan do',
     'Authorization' => 'Authorization',
+    'Home' => 'Početna',
+    'Account Settings' => 'Podesavanje profila',
+    'User Management' => 'Podesavanje korisnika',
 ];
