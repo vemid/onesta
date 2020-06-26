@@ -42,6 +42,9 @@ final class FormElement
     /** @var array */
     public $disabled = [];
 
+    /** @var bool */
+    public $hidden = false;
+
     /**
      * @var array
      */

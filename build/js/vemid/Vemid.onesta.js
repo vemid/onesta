@@ -57,9 +57,35 @@
                 });
             },
 
+            purchaseTypeSelect: function () {
+                $(document).on("change", "select[name='code']", function (e) {
+                    let val = $(this).val(),
+                        model = $("input[name='model']"),
+                        insuranceLevel = $("input[name='insuranceLevel']"),
+                        plates = $("input[name='plates']"),
+                        chassis = $("input[name='chassis']");
+
+                    if (val === 'DELOVI') {
+                        $([chassis, plates, model, insuranceLevel]).each(function(index, element) {
+                            element.addClass("hidden")
+                                .parents(".row:first")
+                                .addClass("hidden");
+                        });
+                    } else if (val === 'REGISTRACIJA') {
+                        $([chassis, plates, model, insuranceLevel]).each(function(index, element) {
+                            element
+                                .removeClass("hidden")
+                                .parents(".row:first")
+                                .removeClass("hidden");
+                        });
+                    }
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
                 this.guarantorAutocomplete();
+                this.purchaseTypeSelect();
             }
         }
     })();

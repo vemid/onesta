@@ -7,6 +7,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
+use Vemid\ProjectOne\Common\Misc\StringToCode;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
@@ -14,6 +15,7 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="codes", uniqueConstraints={@ORM\UniqueConstraint(name="code", columns={"code"})}, indexes={@ORM\Index(name="code_type_id", columns={"code_type_id"}), @ORM\Index(name="parent_id", columns={"parent_id"})})
  * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\CodeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Code extends Entity
 {
@@ -30,7 +32,6 @@ class Code extends Entity
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $code;
 
@@ -60,7 +61,7 @@ class Code extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      * })
-     * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Pod kategorija")
+     * @FormAnnotation\FormElement(type="Select", required=false, relation="Code", name="Pod kategorija")
      */
     private $parent;
 
@@ -90,13 +91,12 @@ class Code extends Entity
     /**
      * Set code.
      *
-     * @param string $code
-     *
+     * @ORM\PrePersist
      * @return Code
      */
-    public function setCode($code): Code
+    public function setCode(): Code
     {
-        $this->code = $code;
+        $this->code = StringToCode::filter($this->name);
 
         return $this;
     }

@@ -4,7 +4,9 @@
     {% if not element.getLabel() %}
         {{ element.control | raw }}
     {% else %}
-        <div class="row">
+        {% set control = element.control %}
+        {% set classes = control.getAttribute('class') %}
+        <div class="row{{ 'hidden' in classes ? ' hidden' : '' }}">
             <div class="col-xs-12 col-sm-10 col-lg-7">
                 <div class="form-group">
                     <div class="controls">

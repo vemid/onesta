@@ -79,7 +79,7 @@ class EntityAnnotationReader implements FormBuilderInterface
             /** @var BaseControl|SelectBox|MultiSelectBox $element */
             $element = $form->{'add' . $methodToCall}($propertyName->name, !$inline ? $label : '');
 
-            $cssClass = 'form-control';
+            $cssClass =  sprintf('form-control%s', $formPropertyAnnotation->hidden ? ' hidden' : '');
             if ($formPropertyAnnotation->required) {
                 $element->setRequired($this->translator->_(sprintf('Please fill your %s.', $filter->filter($label))));
                 $cssClass .= ' required';

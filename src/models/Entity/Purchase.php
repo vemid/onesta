@@ -12,7 +12,8 @@ use Vemid\ProjectOne\Entity\Entity;
  * Purchases
  *
  * @ORM\Table(name="purchases", indexes={@ORM\Index(name="client_id", columns={"client_id"}), @ORM\Index(name="code_id", columns={"code_id"}), @ORM\Index(name="guarantor_id", columns={"guarantor_id"}), @ORM\Index(name="payment_type_id", columns={"payment_type_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\PurchaseRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Purchase extends Entity
 {
@@ -56,38 +57,39 @@ class Purchase extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
      * })
-     * @FormAnnotation\FormElement(type="Text", required=true, name="Garantor")
+     * @FormAnnotation\FormElement(type="Text", required=false, name="Garantor")
      */
     protected $guarantor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="plates", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true)
+     * @ORM\Column(name="plates", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $plates;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="chassis", type="string", length=255, nullable=false)
+     * @ORM\Column(name="chassis", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $chassis;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="insurance_level", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true)
+     * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $insuranceLevel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="model", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true)
+     * @ORM\Column(name="model", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $model;
 
@@ -110,16 +112,16 @@ class Purchase extends Entity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="registered_until", type="datetime", nullable=false)
-     * @FormAnnotation\FormElement(type="Date", required=true)
+     * @ORM\Column(name="registered_until", type="datetime", nullable=true)
+     * @FormAnnotation\FormElement(type="Date", required=false)
      */
     protected $registeredUntil;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="authorization", type="boolean", nullable=false)
-     * @FormAnnotation\FormElement(type="Checkbox", required=true)
+     * @ORM\Column(name="authorization", type="boolean", nullable=true)
+     * @FormAnnotation\FormElement(type="Checkbox", required=false)
      */
     protected $authorization;
 
@@ -342,15 +344,13 @@ class Purchase extends Entity
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
      * @return Purchase
+     * @ORM\PrePersist
+     * @throws \Exception
      */
-    public function setCreatedAt($createdAt): Purchase
+    public function setCreatedAt(): Purchase
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }

@@ -27,6 +27,14 @@ class Client extends Entity
     protected $id;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="type", type="string", length=0, nullable=true)
+     * @FormAnnotation\FormElement(type="Select", required=true, options={"NATURAL" : "Fizičko lice", "LEGAL" : "Pravno lice"})
+     */
+    protected $type;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
@@ -38,17 +46,9 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $lastName;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="type", type="string", length=0, nullable=true)
-     * @FormAnnotation\FormElement(type="Select", required=true, options={"NATURAL" : "Fizičko lice", "LEGAL" : "Pravno lice"})
-     */
-    protected $type;
 
     /**
      * @var string|null
@@ -93,6 +93,7 @@ class Client extends Entity
      * @var string
      *
      * @ORM\Column(name="jbmg", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $jbmg;
 
@@ -100,7 +101,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="pib", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false)
+     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
     protected $pib;
 
@@ -362,7 +363,7 @@ class Client extends Entity
      *
      * @return string
      */
-    public function getJbmg(): string
+    public function getJbmg(): ?string
     {
         return $this->jbmg;
     }
@@ -398,7 +399,7 @@ class Client extends Entity
      *
      * @return Client
      */
-    public function setCountryCode($countryCode = null): Client
+    public function setCountryCode($countryCode = null): ?Client
     {
         $this->countryCode = $countryCode;
 
