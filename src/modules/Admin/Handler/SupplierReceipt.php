@@ -51,7 +51,7 @@ class SupplierReceipt extends AbstractHandler
         }
 
         $this->view->setTemplate('supplier-receipt::overview.html.twig', [
-            'product' => $supplierReceipt
+            'supplierReceipt' => $supplierReceipt
         ]);
     }
 }
