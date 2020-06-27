@@ -35,6 +35,7 @@ class SupplierReceipts extends AbstractMigration
         $table->addColumn('supplier_id', 'integer', ['signed' => false])
             ->addColumn('file', 'string', ['default' => null, 'null' => true])
             ->addColumn('date', 'datetime')
+            ->addColumn('payment_date', 'datetime', ['default' => null, 'null' => true])
             ->addColumn('created_at', 'datetime')
             ->addForeignKey('supplier_id', 'suppliers', 'id')
             ->create();

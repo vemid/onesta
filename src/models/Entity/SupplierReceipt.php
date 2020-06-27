@@ -47,6 +47,14 @@ class SupplierReceipt extends Entity
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="payment_date", type="datetime", nullable=false)
+     * @FormAnnotation\FormElement(type="Date", required=true)
+     */
+    protected $paymentDate;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     protected $createdAt;
@@ -101,6 +109,28 @@ class SupplierReceipt extends Entity
     public function getDate(): ?\DateTime
     {
         return $this->date;
+    }
+
+    /**
+     * @param $date
+     * @return $this
+     * @throws \Exception
+     */
+    public function sePaymentDate($date)
+    {
+        $this->paymentDate = new \DateTime($date);
+
+        return $this;
+    }
+
+    /**
+     * Get date.
+     *
+     * @return \DateTime
+     */
+    public function getPaymentDate(): ?\DateTime
+    {
+        return $this->paymentDate;
     }
 
     /**

@@ -54,9 +54,14 @@ trait FilterTrait
         foreach ($criteria as $field => $value) {
             if (strpos($value, ' - ') !== false) {
                 $dateRangeValues = explode(' - ', $value);
-                $queryBuilder->andWhere(sprintf('%s BETWEEN :param%s AND :param%s', $field, $counter, $counter + 1));
                 $startDate = trim($dateRangeValues[0]);
                 $endDate = trim($dateRangeValues[1]);
+
+                if (empty($startDate) && empty($endDate)) {
+                    continue;
+                }
+
+                $queryBuilder->andWhere(sprintf('%s BETWEEN :param%s AND :param%s', $field, $counter, $counter + 1));
                 $params["param$counter"] = (new \DateTime($startDate ?: '1980-01-01'))->format('Y-m-d');
                 $counter++;
                 $params["param$counter"] = (new \DateTime($endDate ?: 'NOW'))->format('Y-m-d');

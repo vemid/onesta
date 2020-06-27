@@ -156,7 +156,8 @@
 
                     let dateRangeFilters = $("input:hidden", this);
 
-                    if (dateRangeFilters.length === 2 && !!filterValues && filterValues[i] !== 'undefined') {
+                    if (dateRangeFilters.length === 2 && !!filterValues && typeof filterValues[i] !== 'undefined') {
+                        console.log(filterValues[i]);
                         let filterRangeValues = filterValues[i].split(" - ");
                         Vemid.datetime.initDate(dateRangeFilters.eq(0), filterRangeValues[0]);
                         Vemid.datetime.initDate(dateRangeFilters.eq(1), filterRangeValues[1]);

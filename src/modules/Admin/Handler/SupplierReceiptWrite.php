@@ -36,8 +36,9 @@ class SupplierReceiptWrite extends GridHandler
                 (string)$supplierReceipt->getSupplier(),
                 HtmlTag::link('/form/files/download/' . $supplierReceipt->getFile(), sprintf('Prijemnica (%s)', (string)$supplierReceipt->getSupplier()), 'text-info'),
                 $supplierReceipt->getDate()->format('m.d.Y'),
+                $supplierReceipt->getPaymentDate() ? $supplierReceipt->getPaymentDate()->format('m.d.Y') : '',
                 HtmlTag::groupLink([
-                    HtmlTag::link('/supplier-receipts/overview/' . $supplierReceipt->getId(), false, 'text-success bigger-120', 'search', false),
+                    HtmlTag::link('/supplier-receipt-items/create/' . $supplierReceipt->getId(), false, 'text-success bigger-120', 'receipt', false),
                     HtmlTag::link('/supplier-receipts/update/' . $supplierReceipt->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
                     HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
                         'data-delete' => '',
