@@ -33,25 +33,25 @@ class SupplierReceipt extends AbstractHandler
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder): void
     {
-        /** @var $product EntitySupplierReceipt */
-        if (!$product = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
+        /** @var $supplierReceipt EntitySupplierReceipt */
+        if (!$supplierReceipt = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena prijemnica'), null, Builder::WARNING);
         }
 
         $this->view->setTemplate('supplier-receipt::update.html.twig', [
-            'form' => $formBuilder->build($product ?: new  EntitySupplierReceipt)
+            'form' => $formBuilder->build($supplierReceipt ?: new  EntitySupplierReceipt)
         ]);
     }
 
     public function overview($id, EntityManagerInterface $entityManager): void
     {
-        /** @var $product EntitySupplierReceipt */
-        if (!$product = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
+        /** @var $supplierReceipt EntitySupplierReceipt */
+        if (!$supplierReceipt = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena prijemnica'), null, Builder::WARNING);
         }
 
         $this->view->setTemplate('supplier-receipt::overview.html.twig', [
-            'product' => $product
+            'product' => $supplierReceipt
         ]);
     }
 }
