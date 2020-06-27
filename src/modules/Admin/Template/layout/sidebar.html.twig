@@ -40,7 +40,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ 'products' in url or 'suppliers' in url ? 'active' : '' }}">
+            <li class="{{ 'products' in url or 'suppliers' in url ? 'active' : '' or 'supplier-receipt' in url ? 'active' }}">
                 <a href="#">
                     <i class="fa fa-product-hunt"></i>
                     <span class="nav-label">{{ t('Roba') }}</span>
@@ -57,6 +57,12 @@
                         <a href="/suppliers/list">
                             <i class="fa fa-list-alt"></i>
                             <span class="nav-label">{{ t('Pregled Dobavljača') }}</span>
+                        </a>
+                    </li>
+                    <li class="{{ 'supplier-receipts/list' in url ? 'active' : '' }}">
+                        <a href="/supplier-receipts/list">
+                            <i class="fa fa-receipt"></i>
+                            <span class="nav-label">{{ t('Pregled Prijemnica') }}</span>
                         </a>
                     </li>
                 </ul>

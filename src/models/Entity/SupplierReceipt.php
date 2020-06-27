@@ -12,31 +12,44 @@ use Vemid\ProjectOne\Entity\Entity;
  * SupplierReceipts
  *
  * @ORM\Table(name="supplier_receipts", indexes={@ORM\Index(name="supplier_id", columns={"supplier_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\SupplierReceiptRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class SupplierReceipt extends Entity
 {
     /**
+     * @var Supplier
+     *
+     * @ORM\ManyToOne(targetEntity="Supplier")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="Supplier")
+     */
+    protected $supplier;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="file", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Upload", required=false)
      */
-    private $file;
+    protected $file;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
+     * @FormAnnotation\FormElement(type="Date", required=true)
      */
-    private $date;
+    protected $date;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var int
@@ -45,18 +58,7 @@ class SupplierReceipt extends Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
-
-    /**
-     * @var Supplier
-     *
-     * @ORM\ManyToOne(targetEntity="Supplier")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
-     * })
-     */
-    private $supplier;
-
+    protected $id;
 
     /**
      * @param string $file
@@ -80,15 +82,13 @@ class SupplierReceipt extends Entity
     }
 
     /**
-     * Set date.
-     *
-     * @param \DateTime $date
-     * @ORM\PrePersist
-     * @return SupplierReceipt
+     * @param $date
+     * @return $this
+     * @throws \Exception
      */
-    public function setDate(\DateTime $date)
+    public function setDate($date)
     {
-        $this->date = $date;
+        $this->date = new \DateTime($date);
 
         return $this;
     }
@@ -106,8 +106,9 @@ class SupplierReceipt extends Entity
     /**
      * @ORM\PrePersist
      * @return SupplierReceipt
+     * @throws \Exception
      */
-    public function setCreatedAt()
+    public function setCreatedAt(): SupplierReceipt
     {
         $this->createdAt = new \DateTime();
 

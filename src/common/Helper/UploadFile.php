@@ -4,58 +4,39 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Helper;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Vemid\ProjectOne\Entity\Entity\User;
 use Zend\Diactoros\UploadedFile;
 
 /**
- * Class Avatar
+ * Class UploadFile
  * @package Vemid\ProjectOne\Common\Helper
  */
-class Avatar
+class UploadFile
 {
     /** @var string */
     private $uploadPath = APP_PATH . '/var/uploads/';
 
-    /** @var EntityManagerInterface|null */
-    private $entityManager;
-
     /**
-     * Avatar constructor.
-     * @param EntityManagerInterface|null $entityManager
+     * @param UploadedFile $file
+     * @param bool $resize
+     * @return string
      */
-    public function __construct(EntityManagerInterface $entityManager = null)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    public function getUserAvatar(User $user)
-    {
-        if (is_file($this->uploadPath . $user->getAvatar())) {
-            return '/uploads/' . $user->getAvatar();
-        }
-
-        return '/img/avatar.png';
-    }
-
-    public function uploadAvatar(UploadedFile $file, User $user)
+    public function uploadFile(UploadedFile $file, $resize = false): string
     {
         $ext = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
 
         $filePath = $this->uploadPath . substr(sha1((string)mt_rand()), 0, 8) . '.' . $ext;
-        $file->moveTo($filePath);
 
-        if (is_file($currentAvatar = $this->uploadPath . $user->getAvatar())) {
-            @unlink($currentAvatar);
+        if (is_file($filePath)) {
+            @unlink($filePath);
         }
 
-        $this->resizeImage(300, $filePath);
+        $file->moveTo($filePath);
 
-        $user->setAvatar(basename($filePath));
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        if ($resize && $this->isImage($filePath)) {
+            $this->resizeImage(300, $filePath);
+        }
 
-        return $user;
+        return basename($filePath);
     }
 
     public function resizeImage($maxDim, $fileName)
@@ -81,5 +62,23 @@ class Avatar
             imagepng($dst, $targetFilename);
             imagedestroy($dst);
         }
+    }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    private function getMimeType($filename)
+    {
+        return mime_content_type($filename);
+    }
+
+    /**
+     * @param $filename
+     * @return bool
+     */
+    private function isImage($filename)
+    {
+        return stripos($filename, 'image') !== false;
     }
 }

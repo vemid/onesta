@@ -33,8 +33,8 @@ class SupplierReceipts extends AbstractMigration
     {
         $table = $this->table('supplier_receipts', ['signed' => false]);
         $table->addColumn('supplier_id', 'integer', ['signed' => false])
-            ->addColumn('file', 'string', ['default' => null, 'null' => false])
-            ->addColumn('date', 'datetime', ['default' => null, 'null' => false])
+            ->addColumn('file', 'string', ['default' => null, 'null' => true])
+            ->addColumn('date', 'datetime')
             ->addColumn('created_at', 'datetime')
             ->addForeignKey('supplier_id', 'suppliers', 'id')
             ->create();

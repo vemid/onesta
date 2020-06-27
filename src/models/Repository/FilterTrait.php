@@ -52,7 +52,16 @@ trait FilterTrait
         $params = [];
         $counter = 1;
         foreach ($criteria as $field => $value) {
-            if ($field !== '*') {
+            if (strpos($value, ' - ') !== false) {
+                $dateRangeValues = explode(' - ', $value);
+                $queryBuilder->andWhere(sprintf('%s BETWEEN :param%s AND :param%s', $field, $counter, $counter + 1));
+                $startDate = trim($dateRangeValues[0]);
+                $endDate = trim($dateRangeValues[1]);
+                $params["param$counter"] = (new \DateTime($startDate ?: '1980-01-01'))->format('Y-m-d');
+                $counter++;
+                $params["param$counter"] = (new \DateTime($endDate ?: 'NOW'))->format('Y-m-d');
+                $counter++;
+            }else if ($field !== '*') {
                 $propertyField = explode('.', $field)[1];
 
                 $number = ctype_digit($value) && in_array($propertyField, $relationProperties, false);

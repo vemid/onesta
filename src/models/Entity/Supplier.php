@@ -205,7 +205,7 @@ class Supplier extends Entity
 
     /**
      * @ORM\PrePersist
-     * @return Product
+     * @return Supplier
      * @throws \Exception
      */
     public function setCreatedAt(): Supplier
@@ -223,5 +223,10 @@ class Supplier extends Entity
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

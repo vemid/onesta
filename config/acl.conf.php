@@ -15,13 +15,15 @@ return [
                     'products' => ['list', 'create', 'update', 'overview'],
                     'suppliers' => ['list', 'create', 'update', 'overview'],
                     'codes' => ['list', 'create', 'update'],
-                    'purchases' => ['list', 'create', 'update']
+                    'purchases' => ['list', 'create', 'update'],
+                    'supplier-receipts' => ['list', 'create', 'update']
                 ],
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],
                     'products' => ['delete'],
                     'codes' => ['delete'],
                     'suppliers' => ['delete'],
+                    'supplier-receipts' => ['delete'],
                     'clients' => ['fetch-by-term', 'fetch-by-id'],
                 ]
             ],

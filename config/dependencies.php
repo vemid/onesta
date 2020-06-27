@@ -32,6 +32,7 @@ use Vemid\ProjectOne\Common\Factory\TwigEnvironmentFactory;
 use Vemid\ProjectOne\Common\Factory\TwigFactory;
 use Vemid\ProjectOne\Common\Form\Builder\EntityAnnotationReader;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
+use Vemid\ProjectOne\Common\Helper\UploadFile;
 use Vemid\ProjectOne\Common\Message\Manager;
 use Vemid\ProjectOne\Common\Message\MessageInterface;
 use Vemid\ProjectOne\Common\Middleware\Acl;
@@ -185,6 +186,7 @@ return [
 
         return new TwigAssetsExtension($env, (array)$config->get('templates')->get('external'));
     },
+    UploadFile::class => autowire(UploadFile::class),
     UrlHelper::class => factory(UrlHelperFactory::class),
     UserLocaleMiddleware::class => autowire(UserLocaleMiddleware::class),
     UserLoginForm::class => autowire(UserLoginForm::class),

@@ -23,4 +23,5 @@ return [
     'Home' => 'Početna',
     'Account Settings' => 'Podesavanje profila',
     'User Management' => 'Podesavanje korisnika',
+    'Record updated' => 'Izmena izvršena'
 ];

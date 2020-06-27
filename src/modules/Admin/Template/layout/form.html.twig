@@ -12,7 +12,14 @@
                     <div class="controls">
                         {% set required = '<span class="">*</span>' %}
                         <label for="account-username" class="inline">{{ element.getLabel() | raw }}{{ element.isRequired() ? required | raw : '' }}</label>
-                        {{ element.control | raw }}
+                        {% if element.getControl().getAttribute('type') == 'file' and file %}
+                            <div class="input-group">
+                                {{ element.control | raw }}
+                                <span class="input-group-addon input-group-btn-vertical auto-wide">{{ file }}</span>
+                            </div>
+                        {% else %}
+                            {{ element.control | raw }}
+                        {% endif %}
                         <div class="help-block"></div>
                     </div>
                 </div>

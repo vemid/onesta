@@ -65,8 +65,8 @@
         };
 
         return {
-            initDate: function ($element) {
-                $element.flatpickr({
+            initDate: function ($element, date) {
+                let fp = $element.flatpickr({
                     altInput: true,
                     static: !$(".modal").is(":hidden"),
                     altFormat: "F j, Y",
@@ -86,6 +86,10 @@
                         // $(instance.element).parents(".form-group").next().find("textarea, select, input").filter(':visible').focus();
                     },
                 });
+
+                if (!!date) {
+                    fp.setDate(date);
+                }
             },
 
             init: function () {

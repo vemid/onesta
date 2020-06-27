@@ -37,9 +37,10 @@ class UserWrite extends AbstractHandler
         $entityManager->persist($user);
 
         $uploadedFiles = $this->request->getUploadedFiles();
-        if (count($uploadedFiles)) {
+        $uploadedFile = array_pop($uploadedFiles);
+        if ($uploadedFile->getSize()) {
             $avatarHelper = new Avatar($entityManager);
-            $avatarHelper->uploadAvatar(array_pop($uploadedFiles), $user);
+            $avatarHelper->uploadAvatar($uploadedFile, $user);
         }
 
         if (isset($postData['roles'])) {
@@ -81,9 +82,10 @@ class UserWrite extends AbstractHandler
         $postData = $form->getHttpData();
 
         $uploadedFiles = $this->request->getUploadedFiles();
-        if (count($uploadedFiles)) {
+        $uploadedFile = array_pop($uploadedFiles);
+        if ($uploadedFile->getSize()) {
             $avatarHelper = new Avatar($entityManager);
-            $user = $avatarHelper->uploadAvatar(array_pop($uploadedFiles), $user);
+            $user = $avatarHelper->uploadAvatar($uploadedFile, $user);
         }
 
         $user->setUsername($postData['username']);

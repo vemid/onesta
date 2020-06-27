@@ -39,7 +39,8 @@ class SupplierReceipt extends AbstractHandler
         }
 
         $this->view->setTemplate('supplier-receipt::update.html.twig', [
-            'form' => $formBuilder->build($supplierReceipt ?: new  EntitySupplierReceipt)
+            'form' => $formBuilder->build($supplierReceipt),
+            'file' => $supplierReceipt->getFile()
         ]);
     }
 

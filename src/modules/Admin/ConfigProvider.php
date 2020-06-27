@@ -40,6 +40,7 @@ class ConfigProvider
                 'supplier'   => __DIR__ . '/Template/supplier',
                 'code'   => __DIR__ . '/Template/code',
                 'purchase'   => __DIR__ . '/Template/purchase',
+                'supplier-receipt'   => __DIR__ . '/Template/supplier-receipt',
             ],
         ];
     }

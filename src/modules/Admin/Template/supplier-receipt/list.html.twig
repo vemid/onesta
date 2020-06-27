@@ -1,0 +1,54 @@
+{% block title %}
+    <title>{{ t('Prijemnica|Lista') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="space-20"></div>
+                        <table id="dataTable" data-entity="supplier-receipt" data-store="supplierReceiptList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/supplier-receipts/list') }}" data-title="{{ t('Lista Prijemnica') }}">
+                            <thead>
+                                <tr>
+                                    <th data-name="sr.supplier" class="col-xs-3">Dobavljac</th>
+                                    <th data-name="sr.file" class="col-xs-3">Prijemnica</th>
+                                    <th data-name="sr.date" class="col-xs-5">Datum prijema</th>
+                                    <th class="col-xs-1">Akcije</th>
+                                </tr>
+                                <tr>
+                                    <th>{{ form['supplier'].control | raw }}</th>
+                                    <th></th>
+                                    <th>
+                                        <div class="col-xs-12 col-sm-6 col-lg-6 no-padding">
+                                            <div class="form-group">
+                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Od:</label>
+                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
+                                                    {{ form['fromDate'].control | raw }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-lg-6 no-padding">
+                                            <div class="form-group">
+                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Do:</label>
+                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
+                                                    {{ form['toDate'].control | raw }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th data-visible="false"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

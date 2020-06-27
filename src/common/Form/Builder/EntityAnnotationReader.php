@@ -139,7 +139,7 @@ class EntityAnnotationReader implements FormBuilderInterface
             }
 
             if ($value) {
-                $element->setValue($value instanceof \DateTime ? $value->format('D m Y') : $value);
+                $element->setValue($value instanceof \DateTime ? $value->format('Y-m-d') : $value);
             }
 
             $element->setHtmlAttribute('class', $cssClass);

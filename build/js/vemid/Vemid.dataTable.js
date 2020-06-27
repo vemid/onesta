@@ -149,15 +149,22 @@
                 $("div.toolbar").addClass("text-center").html("<b class='bigger-140'>" + table.attr("data-title") + "</b>");
 
                 $("thead tr:eq(1) th", table).each( function (i) {
-                    let filterIndex = table.attr("data-store");
                     let parentTh = $("thead tr:eq(0) th:eq("+ i +")", table);
                     let title = parentTh.text();
-                    let filter = $(this).children().eq(0);
+                    let filter = $(this).find("input:visible, select");
                     let filterValues = JSON.parse(localStorage.getItem(filterIndex));
 
-                    filter
-                        .attr("placeholder", title)
-                        .val(filterValues ? filterValues[i] : '');
+                    let dateRangeFilters = $("input:hidden", this);
+
+                    if (dateRangeFilters.length === 2 && !!filterValues && filterValues[i] !== 'undefined') {
+                        let filterRangeValues = filterValues[i].split(" - ");
+                        Vemid.datetime.initDate(dateRangeFilters.eq(0), filterRangeValues[0]);
+                        Vemid.datetime.initDate(dateRangeFilters.eq(1), filterRangeValues[1]);
+                    } else {
+                        filter
+                            .attr("placeholder", title)
+                            .val(filterValues ? filterValues[i] : '');
+                    }
 
                     if (filter.is("select")) {
                         filter
@@ -176,18 +183,29 @@
                             filterValues = {};
                         }
 
-                        let filterElement = $(this);
-                        filterValues[i] = $(filterElement).val();
+                        let filterValue = $(this).val();
+                        if (dateRangeFilters.length === 2) {
+                            filterValue = '';
+                            $.each(dateRangeFilters, function (index, $element) {
+                                if (index === 1) {
+                                    filterValue += " - ";
+                                }
+
+                                filterValue += $($element).val();
+                            });
+                        }
+
+                        filterValues[i] = filterValue;
 
                         let date = new Date();
-                        date.setHours(date.getHours() + 1); //one hour from now
+                        date.setHours(date.getHours() + 1);
                         filterValues['expire'] = date;
 
                         localStorage.setItem(filterIndex, JSON.stringify(filterValues));
 
                         dataTable
                                 .column(i)
-                                .search( this.value )
+                                .search(filterValue)
                                 .draw();
 
                     });
