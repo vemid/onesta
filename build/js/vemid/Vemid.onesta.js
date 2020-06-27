@@ -82,10 +82,29 @@
                 });
             },
 
+            clientTypeSelect: function () {
+                $(document).on("change", "select[name='type']", function (e) {
+                    let val = $(this).val(),
+                        pib = $("input[name='pib']");
+
+                    if (val === 'NATURAL') {
+                        pib.addClass("hidden")
+                            .parents(".row:first")
+                            .addClass("hidden");
+                    } else if (val === 'LEGAL') {
+                        pib
+                            .removeClass("hidden")
+                            .parents(".row:first")
+                            .removeClass("hidden");
+                    }
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
                 this.guarantorAutocomplete();
                 this.purchaseTypeSelect();
+                this.clientTypeSelect();
             }
         }
     })();
