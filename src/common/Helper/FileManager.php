@@ -10,7 +10,7 @@ use Zend\Diactoros\UploadedFile;
  * Class UploadFile
  * @package Vemid\ProjectOne\Common\Helper
  */
-class UploadFile
+class FileManager
 {
     /** @var string */
     private $uploadPath = APP_PATH . '/var/uploads/';
@@ -39,6 +39,28 @@ class UploadFile
         return basename($filePath);
     }
 
+    /**
+     * @param $fileName
+     * @return false|int
+     */
+    public function downloadFile($fileName)
+    {
+        $filePath = $this->uploadPath . $fileName;
+        if (!file_exists($filePath)) {
+            throw new \LogicException('File not found!');
+        }
+
+        header('Content-Type: application/octet-stream');
+        header('Content-Transfer-Encoding: Binary');
+        header('Content-disposition: attachment; filename="' . basename($filePath) . '"');
+        readfile($filePath);
+        exit;
+    }
+
+    /**
+     * @param $maxDim
+     * @param $fileName
+     */
     public function resizeImage($maxDim, $fileName)
     {
         list($width, $height, $type, $attr) = getimagesize($fileName);

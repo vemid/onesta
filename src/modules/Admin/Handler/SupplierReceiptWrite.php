@@ -7,7 +7,7 @@ namespace Vemid\ProjectOne\Admin\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
-use Vemid\ProjectOne\Common\Helper\UploadFile;
+use Vemid\ProjectOne\Common\Helper\FileManager;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Entity\Entity\Code;
@@ -34,7 +34,7 @@ class SupplierReceiptWrite extends GridHandler
         foreach ($supplierReceipts as $supplierReceipt) {
             $data[] = [
                 (string)$supplierReceipt->getSupplier(),
-                $supplierReceipt->getFile(),
+                HtmlTag::link('/form/files/download/' . $supplierReceipt->getFile(), sprintf('Prijemnica (%s)', (string)$supplierReceipt->getSupplier()), 'text-info'),
                 $supplierReceipt->getDate()->format('m.d.Y'),
                 HtmlTag::groupLink([
                     HtmlTag::link('/supplier-receipts/overview/' . $supplierReceipt->getId(), false, 'text-success bigger-120', 'search', false),
@@ -56,7 +56,7 @@ class SupplierReceiptWrite extends GridHandler
         ];
     }
 
-    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager, UploadFile $uploadFile)
+    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager, FileManager $uploadFile)
     {
         $supplierReceipt = new SupplierReceipt();
 
@@ -90,7 +90,7 @@ class SupplierReceiptWrite extends GridHandler
         return $this->redirect('/supplier-receipts/list');
     }
 
-    public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder, UploadFile $uploadFile)
+    public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder, FileManager $uploadFile)
     {
         /** @var $supplierReceipt SupplierReceipt */
         if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, (int)$id)) {

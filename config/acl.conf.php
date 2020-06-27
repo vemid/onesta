@@ -23,6 +23,7 @@ return [
                     'products' => ['delete'],
                     'codes' => ['delete'],
                     'suppliers' => ['delete'],
+                    'files' => ['download'],
                     'supplier-receipts' => ['delete'],
                     'clients' => ['fetch-by-term', 'fetch-by-id'],
                 ]
