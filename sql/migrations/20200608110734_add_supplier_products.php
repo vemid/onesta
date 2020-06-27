@@ -36,7 +36,6 @@ class AddSupplierProducts extends AbstractMigration
             ->addColumn('supplier_id', 'integer', ['signed' => false])
             ->addColumn('avg_purchase_price', 'decimal', ['default' => null, 'null' => false, 'precision' => 9, 'scale' => 2])
             ->addColumn('retail_price', 'decimal', ['default' => null, 'null' => false, 'precision' => 9, 'scale' => 2])
-            ->addColumn('stock_qty', 'integer')
             ->addColumn('created_at', 'datetime')
             ->addForeignKey('product_id', 'products', 'id')
             ->addForeignKey('supplier_id', 'suppliers', 'id')

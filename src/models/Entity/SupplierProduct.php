@@ -30,13 +30,6 @@ class SupplierProduct extends Entity
     protected $retailPrice;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="stock_qty", type="integer", nullable=false)
-     */
-    protected $stockQty;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -119,30 +112,6 @@ class SupplierProduct extends Entity
     public function getRetailPrice(): ?float
     {
         return $this->retailPrice;
-    }
-
-    /**
-     * Set stockQty.
-     *
-     * @param int $stockQty
-     *
-     * @return SupplierProduct
-     */
-    public function setStockQty($stockQty): SupplierProduct
-    {
-        $this->stockQty = $stockQty;
-
-        return $this;
-    }
-
-    /**
-     * Get stockQty.
-     *
-     * @return int
-     */
-    public function getStockQty(): ?int
-    {
-        return $this->stockQty;
     }
 
     /**
