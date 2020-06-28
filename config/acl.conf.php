@@ -16,7 +16,8 @@ return [
                     'suppliers' => ['list', 'create', 'update', 'overview'],
                     'codes' => ['list', 'create', 'update'],
                     'purchases' => ['list', 'create', 'update'],
-                    'supplier-receipts' => ['list', 'create', 'update']
+                    'supplier-receipts' => ['list', 'create', 'update', 'overview'],
+                    'supplier-receipt-items' => ['create', 'update']
                 ],
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],

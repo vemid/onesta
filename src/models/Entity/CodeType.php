@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
@@ -38,6 +40,18 @@ class CodeType extends Entity
      */
     protected $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Code", mappedBy="codeType")
+     */
+    protected $codes;
+
+    /**
+     * Role constructor.
+     */
+    public function __construct()
+    {
+        $this->codes = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -95,6 +109,14 @@ class CodeType extends Entity
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getCodes(): ?PersistentCollection
+    {
+        return $this->codes;
     }
 
     /**

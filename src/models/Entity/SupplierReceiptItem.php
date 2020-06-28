@@ -18,16 +18,48 @@ use Vemid\ProjectOne\Entity\Entity;
 class SupplierReceiptItem extends Entity
 {
     /**
+     * @var SupplierReceipt
+     *
+     * @ORM\ManyToOne(targetEntity="SupplierReceipt")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="supplier_receipt_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Hidden", required=true, name="Prijemnica")
+     */
+    private $supplierReceipt;
+
+    /**
+     * @var Product
+     *
+     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="Product", name="Proizvod")
+     */
+    private $product;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=9, scale=2, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true, name="Prodajna Cena")
      */
     private $price;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="retail_price", type="decimal", precision=9, scale=2, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true, name="Nabavna Cena")
+     */
+    private $retailPrice;
 
     /**
      * @var int
      *
      * @ORM\Column(name="qty", type="integer", nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true, name="Količina")
      */
     private $qty;
 
@@ -48,27 +80,6 @@ class SupplierReceiptItem extends Entity
     private $id;
 
     /**
-     * @var SupplierReceipt
-     *
-     * @ORM\ManyToOne(targetEntity="SupplierReceipt")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="supplier_receipt_id", referencedColumnName="id")
-     * })
-     */
-    private $supplierReceipt;
-
-    /**
-     * @var Product
-     *
-     * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     * })
-     */
-    private $product;
-
-
-    /**
      * @param float $price
      * @return SupplierReceiptItem
      */
@@ -87,6 +98,27 @@ class SupplierReceiptItem extends Entity
     public function getPrice(): ?float
     {
         return $this->price;
+    }
+
+    /**
+     * @param float $retailPrice
+     * @return SupplierReceiptItem
+     */
+    public function setRetailPrice(float $retailPrice): SupplierReceiptItem
+    {
+        $this->retailPrice = $retailPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return float
+     */
+    public function getRetailPrice(): ?float
+    {
+        return $this->retailPrice;
     }
 
     /**
@@ -111,11 +143,11 @@ class SupplierReceiptItem extends Entity
     }
 
     /**
-     * @param $createdAt
-     * @return $this
+     * @return SupplierReceiptItem|null
+     * @throws \Exception
      * @ORM\PrePersist
      */
-    public function setCreatedAt($createdAt): ?SupplierReceiptItem
+    public function setCreatedAt(): ?SupplierReceiptItem
     {
         $this->createdAt = new \DateTime();
 

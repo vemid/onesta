@@ -28,19 +28,20 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                '__main__'  => __DIR__ . '/Template',
-                'index'     => __DIR__ . '/Template/index',
-                'auth'      => __DIR__ . '/Template/auth',
-                'error'     => __DIR__ . '/Template/error',
-                'user'      => __DIR__ . '/Template/user',
-                'layout'    => __DIR__ . '/Template/layout',
-                'email'     => __DIR__ . '/Template/email',
-                'pdf'       => __DIR__ . '/Template/pdf',
-                'product'   => __DIR__ . '/Template/product',
-                'supplier'   => __DIR__ . '/Template/supplier',
-                'code'   => __DIR__ . '/Template/code',
-                'purchase'   => __DIR__ . '/Template/purchase',
-                'supplier-receipt'   => __DIR__ . '/Template/supplier-receipt',
+                '__main__'  =>  __DIR__ . '/Template',
+                'index'     =>  __DIR__ . '/Template/index',
+                'auth'      =>  __DIR__ . '/Template/auth',
+                'error'     =>  __DIR__ . '/Template/error',
+                'user'      =>  __DIR__ . '/Template/user',
+                'layout'    =>  __DIR__ . '/Template/layout',
+                'email'     =>  __DIR__ . '/Template/email',
+                'pdf'       =>  __DIR__ . '/Template/pdf',
+                'product'   =>  __DIR__ . '/Template/product',
+                'supplier'  =>  __DIR__ . '/Template/supplier',
+                'code'      =>  __DIR__ . '/Template/code',
+                'purchase'  =>  __DIR__ . '/Template/purchase',
+                'supplier-receipt'      => __DIR__ . '/Template/supplier-receipt',
+                'supplier-receipt-item' => __DIR__ . '/Template/supplier-receipt-item',
             ],
         ];
     }

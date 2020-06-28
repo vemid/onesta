@@ -34,7 +34,8 @@ class SupplierReceiptItems extends AbstractMigration
         $table = $this->table('supplier_receipt_items', ['signed' => false]);
         $table->addColumn('supplier_receipt_id', 'integer', ['signed' => false])
             ->addColumn('product_id', 'integer', ['signed' => false])
-            ->addColumn('price', 'decimal', ['default' => null, 'null' => false, 'precision' => 9, 'scale' => 2])
+            ->addColumn('price', 'decimal', ['precision' => 9, 'scale' => 2])
+            ->addColumn('retail_price', 'decimal', ['default' => null, 'null' => true, 'precision' => 9, 'scale' => 2])
             ->addColumn('qty', 'integer')
             ->addColumn('created_at', 'datetime')
             ->addForeignKey('supplier_receipt_id', 'supplier_receipts', 'id')

@@ -10,6 +10,7 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use \Vemid\ProjectOne\Entity\Entity\Product as EntityProduct;
+use \Vemid\ProjectOne\Entity\Entity\CodeType;
 
 /**
  * Class Product
@@ -24,10 +25,28 @@ class Product extends AbstractHandler
         ]);
     }
 
-    public function create(FormBuilderInterface $formBuilder): void
+    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager): void
     {
+        /** @var CodeType $codeType */
+        $codeType = $entityManager->getRepository(CodeType::class)->findOneByCode([
+            'code' => 'PRODUCT_TYPE'
+        ]);
+
+        if (!$codeType) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Kategorija ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $options = ['' => '-- Izaberite --'];
+        foreach ($codeType->getCodes() as $code) {
+            $options[$code->getId()] = (string)$code;
+        }
+
+        $form = $formBuilder->build(new EntityProduct);
+        $form->getComponent('code')->setItems($options);
+
         $this->view->setTemplate('product::create.html.twig', [
-            'form' => $formBuilder->build(new EntityProduct)
+            'form' => $form
         ]);
     }
 

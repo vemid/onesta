@@ -34,7 +34,7 @@ class Product extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
      * })
-     * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Category")
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="Code", name="Kategorija")
      */
     protected $code;
 
@@ -42,7 +42,7 @@ class Product extends Entity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     * @FormAnnotation\FormElement(type="Text", required=true)
+     * @FormAnnotation\FormElement(type="Text", required=true, name="Ime")
      */
     protected $name;
 
@@ -50,7 +50,7 @@ class Product extends Entity
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", length=0, nullable=true)
-     * @FormAnnotation\FormElement(type="TextArea", required=false)
+     * @FormAnnotation\FormElement(type="TextArea", required=false, name="Opis")
      */
     protected $description;
 
