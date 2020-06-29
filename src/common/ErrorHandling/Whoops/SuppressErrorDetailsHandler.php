@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\ErrorHandling\Whoops;
 
-use Arbor\Exception\ClientErrorInterface;
+use \Vemid\ProjectOne\Common\Exception\ClientErrorInterface;
 use \Exception;
 use Whoops\Handler\Handler;
 
@@ -43,7 +43,7 @@ final class SuppressErrorDetailsHandler extends Handler
 
     private function suppress(): void
     {
-        $suppressedError = new Exception($this->options['error_message']);
+        $suppressedError = new \Exception($this->options['error_message']);
 
         $this->setException($suppressedError);
 

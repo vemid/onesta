@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\ErrorHandling\Whoops;
 
-use Arbor\Exception\ClientErrorInterface;
 use Whoops\Handler\Handler;
 use Vemid\ProjectOne\Common\Exception\ProvidesHttpStatusCodeInterface;
+use \Vemid\ProjectOne\Common\Exception\ClientErrorInterface;
 
 /**
  * Class SetHttpStatusCodeHandler
