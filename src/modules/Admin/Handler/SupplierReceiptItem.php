@@ -26,8 +26,11 @@ class SupplierReceiptItem extends AbstractHandler
             return;
         }
 
+        $form = $formBuilder->build(new EntitySupplierReceiptItem());
+        $form->getComponent('supplierReceipt')->setDefaultValue($supplierReceipt->getId());
+
         $this->view->setTemplate('supplier-receipt-item::create.html.twig', [
-            'form' => $formBuilder->build(new EntitySupplierReceiptItem())
+            'form' => $form
         ]);
     }
 

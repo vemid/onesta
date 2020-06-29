@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\Supplier;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
 /**
  * Class ProductRepository
@@ -58,5 +61,24 @@ class ProductRepository extends EntityRepository
         }
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    public function fetchProductAveragePurchasePriceBySupplier(Product $product, Supplier $supplier)
+    {
+        $avgPriceResult = $this->getEntityManager()->createQueryBuilder()
+            ->select('SUM(sri.price * sri.qty) / SUM(sri.qty) as avgPrice')
+            ->from(Product::class, 'p')
+            ->leftJoin(SupplierReceiptItem::class, 'sri', Join::WITH, 'p.id = sri.product')
+            ->leftJoin(SupplierReceipt::class, 'sr', Join::WITH, 'sr.id = sri.supplierReceipt')
+            ->where('p.id = :product')
+            ->andWhere('sr.supplier = :supplier')
+            ->setParameters([
+                'product' => $product->getId(),
+                'supplier' => $supplier->getId()
+            ])
+            ->getQuery()
+            ->execute();
+
+        return (float)$avgPriceResult[0]['avgPrice'];
     }
 }

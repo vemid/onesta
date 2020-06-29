@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\Common\EventManager;
+use Doctrine\ORM\Events;
+use Vemid\ProjectOne\Common\Entity\Event\Listener\InsertProductSupplierAfterReceiptItemAdded;
 use Vemid\ProjectOne\Common\Entity\Event\Subscriber\LogActivitySubscriber;
 use Vemid\ProjectOne\Common\Entity\Event\Subscriber\SetReferencedObjectField;
 
@@ -20,6 +22,7 @@ class EventManagerFactory
     public function create()
     {
         $eventManager = new EventManager();
+        $eventManager->addEventListener([Events::postPersist], new InsertProductSupplierAfterReceiptItemAdded());
         $eventManager->addEventSubscriber(new LogActivitySubscriber());
         $eventManager->addEventSubscriber(new SetReferencedObjectField());
 

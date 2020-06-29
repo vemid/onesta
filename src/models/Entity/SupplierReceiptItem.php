@@ -12,7 +12,7 @@ use Vemid\ProjectOne\Entity\Entity;
  * SupplierReceiptItems
  *
  * @ORM\Table(name="supplier_receipt_items", indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="supplier_receipt_id", columns={"supplier_receipt_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\SupplierProductRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class SupplierReceiptItem extends Entity
@@ -83,9 +83,9 @@ class SupplierReceiptItem extends Entity
      * @param float $price
      * @return SupplierReceiptItem
      */
-    public function setPrice(float $price): SupplierReceiptItem
+    public function setPrice($price): SupplierReceiptItem
     {
-        $this->price = $price;
+        $this->price = (float)$price;
 
         return $this;
     }
@@ -104,9 +104,9 @@ class SupplierReceiptItem extends Entity
      * @param float $retailPrice
      * @return SupplierReceiptItem
      */
-    public function setRetailPrice(float $retailPrice): SupplierReceiptItem
+    public function setRetailPrice($retailPrice): SupplierReceiptItem
     {
-        $this->retailPrice = $retailPrice;
+        $this->retailPrice = (float)$retailPrice;
 
         return $this;
     }
@@ -139,7 +139,7 @@ class SupplierReceiptItem extends Entity
      */
     public function getQty(): ?int
     {
-        return $this->qty;
+        return (int)$this->qty;
     }
 
     /**

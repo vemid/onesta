@@ -44,6 +44,15 @@ else
   echo "doctrine folder exists"
 fi
 
+if [ ! -d "${HOME_DIR}/var/cache/assets-cache" ];
+then
+  echo "creating doctrine folder in $HOME_DIR/var/assets-cache"
+  mkdir -p var/cache/assets-cache
+  chmod 777 var/cache/assets-cache
+else
+  echo "assets-cache folder exists"
+fi
+
 if [ ! -d "${HOME_DIR}/var/cache/language" ];
 then
   echo "creating language folder in $HOME_DIR/var/cache"

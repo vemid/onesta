@@ -12,6 +12,7 @@ use Vemid\ProjectOne\Admin\Handler\ProductWrite;
 use Vemid\ProjectOne\Admin\Handler\Supplier;
 use Vemid\ProjectOne\Admin\Handler\SupplierReceipt;
 use Vemid\ProjectOne\Admin\Handler\SupplierReceiptItem;
+use Vemid\ProjectOne\Admin\Handler\SupplierReceiptItemWrite;
 use Vemid\ProjectOne\Admin\Handler\SupplierReceiptWrite;
 use Vemid\ProjectOne\Admin\Handler\SupplierWrite;
 use Vemid\ProjectOne\Admin\Handler\User;
@@ -46,7 +47,7 @@ return [
         $routeCollector->addRoute('GET', '/supplier-receipts/{method}[/{id:[\w-]+}]', SupplierReceipt::class);
         $routeCollector->addRoute('POST', '/supplier-receipts/{method}[/{id:[\w-]+}]', SupplierReceiptWrite::class);
         $routeCollector->addRoute('GET', '/supplier-receipt-items/{method}[/{id:[\w-]+}]', SupplierReceiptItem::class);
-        $routeCollector->addRoute('POST', '/supplier-receipt-items/{method}[/{id:[\w-]+}]', SupplierReceiptWrite::class);
+        $routeCollector->addRoute('POST', '/supplier-receipt-items/{method}[/{id:[\w-]+}]', SupplierReceiptItemWrite::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);

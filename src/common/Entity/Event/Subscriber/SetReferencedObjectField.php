@@ -65,7 +65,7 @@ class SetReferencedObjectField implements EventSubscriber
 
             $relationClass = sprintf('%s\\%s', $reflect->getNamespaceName(), ucfirst($field['fieldName']));
             if (!$reference = $entityManager->getReference($relationClass, $value)) {
-                throw new \DomainException(sprintf('For property %s not found relation', $field['fieldName']));
+                throw new \DomainException(sprintf('For property %s relation not found', $field['fieldName']));
             }
 
             $entity->setProperty($field['fieldName'], $reference);

@@ -62,7 +62,7 @@ class BankStatementItem extends Entity
     /**
      * @var BankStatement
      *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\BankStatement")
+     * @ORM\ManyToOne(targetEntity="BankStatement")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="bank_statement_id", referencedColumnName="id")
      * })

@@ -31,7 +31,9 @@ $excludeTables = [
     'purchases',
     'products',
     'supplier_products',
-    'purchase_items'
+    'purchase_items',
+    'supplier_receipts',
+    'supplier_receipt_items',
 ];
 
 /** @var EntityManagerInterface $em */

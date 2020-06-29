@@ -10,11 +10,9 @@ use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Helper\FileManager;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
-use Vemid\ProjectOne\Entity\Entity\Code;
 use \Vemid\ProjectOne\Entity\Entity\Supplier as EntitySupplier;
 use \Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
 use Vemid\ProjectOne\Entity\Repository\SupplierReceiptRepository;
-use Zend\Diactoros\UploadedFile;
 
 /**
  * Class SupplierReceiptWrite
@@ -59,7 +57,7 @@ class SupplierReceiptWrite extends GridHandler
 
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager, FileManager $uploadFile)
     {
-        $supplierReceipt = new SupplierReceipt();
+        $supplierReceipt = new \Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem();
 
         $form = $formBuilder->build($supplierReceipt);
         $postData = $form->getHttpData();

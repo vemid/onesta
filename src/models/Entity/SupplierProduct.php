@@ -12,6 +12,7 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="supplier_products", indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="supplier_id", columns={"supplier_id"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class SupplierProduct extends Entity
 {
@@ -117,13 +118,13 @@ class SupplierProduct extends Entity
     /**
      * Set createdAt.
      *
-     * @param \DateTime $createdAt
-     *
+     * @ORM\PrePersist
      * @return SupplierProduct
+     * @throws \Exception
      */
-    public function setCreatedAt($createdAt): SupplierProduct
+    public function setCreatedAt(): SupplierProduct
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
