@@ -45,7 +45,6 @@
                         if (formElement.length > 0) {
                             $.each(formElement, function (index, el) {
                                 let $el = $(el);
-                                let value = $el.val();
                                 $el.val("");
 
                                 if ($el.is("select")) {
@@ -102,7 +101,7 @@
                         let $td = $(td);
                         let formElement = $td.find("input, select, textarea");
                         if (formElement.length > 0 && !formElement.hasClass(".chosen-search-input")) {
-                            formData.append(formElement.attr("name") + "["+ index +"]", formElement.val());
+                            formData.append("supplierReceiptItem["+ index +"][" + formElement.attr("name") + "]", formElement.val());
                         }
                     });
                 }
@@ -168,20 +167,25 @@
 
                 if (nonValidRows.length === 0) {
                     let formData = _composeFormData(table);
+                    let currentUrl = window.location.href;
 
-                    Vemid.misc.makeAjaxCall("", "POST", formData)
+                    $(".loader-box").show();
+
+                    Vemid.misc.makeAjaxCall(Vemid.crypto.decrypt(table.attr("data-action")), "POST", formData)
                         .then(function (respJson) {
-                            if (typeof respJson.url !== "undefined") {
-                                window.location = respJson.url;
-                                return;
-                            }
-
-                            if (typeof respJson.next !== "undefined") {
-                                Vemid.misc.nextWindow(respJson.next, form.parent());
-                                return;
-                            }
+                            $(".loader-box").hide();
 
                             Vemid.notification.fromResponse(respJson);
+
+                            if (typeof respJson.rowMessages !== 'undefined') {
+                                $.each(respJson.rowMessages, function (index, messageObject) {
+                                    $("tr", table)
+                                        .eq(index)
+                                        .find("[name ='"+ messageObject.field +"']")
+                                        .parents("td")
+                                        .addClass("has-error");
+                                });
+                            }
 
                             if (!respJson.error) {
                                 $("#content").load(currentUrl + " #content > *", function () {
@@ -194,6 +198,7 @@
                                     $(".loader-box").hide();
                                 });
                             }
+
                         }, function (reason) {
                             $(".loader-box").hide();
                             toastr.error('Error processing request', reason.statusText)

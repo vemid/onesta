@@ -138,7 +138,6 @@ class User extends Entity
     {
         $this->userRoleAssignments = new ArrayCollection();
         $this->roles = new ArrayCollection();
-
     }
 
     /**

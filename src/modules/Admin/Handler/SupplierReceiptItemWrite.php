@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\FileManager;
 use Vemid\ProjectOne\Common\Message\Builder;
-use \Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
-use \Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
-use \Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
 /**
  * Class SupplierReceiptWrite
@@ -19,39 +19,59 @@ use \Vemid\ProjectOne\Entity\Entity\Product;
 class SupplierReceiptItemWrite extends GridHandler
 {
 
-    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
+    public function create($supplierReceiptId, FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
     {
-        $supplierReceiptItem = new SupplierReceiptItem();
-
-        $form = $formBuilder->build($supplierReceiptItem);
-        $postData = $form->getHttpData();
-
-        if (!$form->isValid()) {
-            $this->messageBag->pushFormValidationMessages($form);
-            return;
-        }
-
-        if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, $postData['supplierReceipt'])) {
+        if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, $supplierReceiptId)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač ne postoji!'), null, Builder::DANGER);
             return;
         }
 
-        if (!$product = $entityManager->find(Product::class, $postData['product'])) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Proizvod ne postoji!'), null, Builder::DANGER);
+        $postData = $this->request->getParsedBody();
+
+        if (!isset($postData['supplierReceiptItem'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Podaci ne postoji!'), null, Builder::DANGER);
             return;
         }
 
+        $errorMessages = [];
+        foreach ($postData['supplierReceiptItem'] as $row => &$data) {
+            $supplierReceiptItem = new SupplierReceiptItem();
+            $form = $formBuilder->build($supplierReceiptItem, [], false);
+            $form->setValues($data, true);
 
-        $postData['supplierReceipt'] = $supplierReceipt;
-        $postData['product'] = $product;
-        $supplierReceiptItem->setData($postData);
+            $form->validate();
+            foreach ($form->getControls() as $control) {
+                foreach ($control->getErrors() as $error) {
+                    $errorMessages[$row] = ['field' => $control->getName(), 'message' => $error];
+                }
+            }
 
-        $entityManager->persist($supplierReceiptItem);
-        $entityManager->flush();
+            if (!$product = $entityManager->find(Product::class, $data['product'])) {
+                $errorMessages[$row] = ['field' => 'product', 'message' => $this->translator->_('Proizvod ne postoji!')];
+            } else {
+                $data['supplierReceipt'] = $supplierReceipt;
+                $data['product'] = $product;
+            }
+        }
 
-        $this->messageBag->pushFlashMessage($this->translator->_('Prijemnica dodata!'), null, Builder::SUCCESS);
+        if (count($errorMessages) === 0) {
+            foreach ($postData['supplierReceiptItem'] as $row => &$data) {
+                $supplierReceiptItem = new SupplierReceiptItem();
+                $supplierReceiptItem->setData($data);
+                $entityManager->persist($supplierReceiptItem);
+            }
 
-        return $this->redirect('/supplier-receipts/list');
+            $entityManager->flush();
+            $this->messageBag->pushFlashMessage($this->translator->_('Prijemnice dodate!'), null, Builder::SUCCESS);
+
+            return ['error' => false];
+        } else {
+            $this->messageBag->pushFlashMessage($this->translator->_('Greška u podacima!'), null, Builder::DANGER);
+
+            return ['error' => true, 'rowMessages' => $errorMessages];
+        }
+
+        return $this->redirect('/supplier-receipts/overview/' . $supplierReceiptId);
     }
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder, FileManager $uploadFile)

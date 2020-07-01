@@ -41,17 +41,18 @@ class EntityAnnotationReader implements FormBuilderInterface
     }
 
     /**
-     * @param EntityInterface $entity
-     * @param array $exclude
-     * @param bool $inline
-     * @return Form
+     * {@inheritDoc}
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \ReflectionException
      */
-    public function build(EntityInterface $entity, array $exclude = [], $inline = false): Form
+    public function build(EntityInterface $entity, array $exclude = [], $enableCsrf = true, $inline = false): Form
     {
         $form = new Form(sha1(get_class($entity)));
-        $form->addProtection('Security token has expired, please submit the form again');
+
+        if ($enableCsrf) {
+            $form->addProtection('Security token has expired, please submit the form again');
+        }
+
         $form->setHtmlAttribute('novalidate');
 
         $filter = new Humanize();

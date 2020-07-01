@@ -17,7 +17,9 @@ interface FormBuilderInterface
     /**
      * @param EntityInterface $entity
      * @param array $exclude
+     * @param bool $enableCsrf
+     * @param bool $inline
      * @return Form
      */
-    public function build(EntityInterface $entity, array $exclude = []): Form;
+    public function build(EntityInterface $entity, array $exclude = [], $enableCsrf = true, $inline = false): Form;
 }

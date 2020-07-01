@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
@@ -67,6 +69,19 @@ class SupplierReceipt extends Entity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SupplierReceiptItem", mappedBy="supplierReceipt", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $supplierReceiptItems;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->supplierReceiptItems = new ArrayCollection();
+    }
 
     /**
      * @param string $file
@@ -188,5 +203,13 @@ class SupplierReceipt extends Entity
     public function getSupplier(): ?Supplier
     {
         return $this->supplier;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getSupplierReceiptItems(): ?PersistentCollection
+    {
+        return $this->supplierReceiptItems;
     }
 }

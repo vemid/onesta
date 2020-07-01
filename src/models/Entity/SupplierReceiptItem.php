@@ -97,7 +97,7 @@ class SupplierReceiptItem extends Entity
      */
     public function getPrice(): ?float
     {
-        return $this->price;
+        return (float)$this->price;
     }
 
     /**
@@ -118,7 +118,7 @@ class SupplierReceiptItem extends Entity
      */
     public function getRetailPrice(): ?float
     {
-        return $this->retailPrice;
+        return (float)$this->retailPrice;
     }
 
     /**
