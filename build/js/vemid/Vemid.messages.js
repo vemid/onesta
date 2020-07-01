@@ -231,6 +231,22 @@
         sessionEnd: {
             en: "You are logged out. Session over!",
             sr: "Izglovani ste. Istekla je sesija!"
+        },
+        save: {
+            en: "Save",
+            sr: "Sačuvaj"
+        },
+        addNewRow: {
+            en: "Add new row",
+            sr: "Dodaj novi red"
+        },
+        action: {
+            en: "Action",
+            sr: "Akcija"
+        },
+        notPermittedOperation: {
+            en: "You are not permitted to do that",
+            sr: "Nije dozvoljeno da se izvrši zadata akcija"
         }
     });
 }).call(Vemid, $);

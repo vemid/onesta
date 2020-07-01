@@ -105,6 +105,7 @@
                 this.guarantorAutocomplete();
                 this.purchaseTypeSelect();
                 this.clientTypeSelect();
+                Vemid.tableForm.init($(".tableForm"));
             }
         }
     })();

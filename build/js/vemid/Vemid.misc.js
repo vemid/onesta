@@ -23,6 +23,19 @@
             initChosen: function () {
                 $(".chosen-search").chosen({
                     placeholder_text_multiple: Vemid.language.get('choose')
+                }).on('chosen:updated', function () {
+                    if (select.attr('readonly')) {
+                        let wasDisabled = select.is(':disabled');
+
+                        select.attr('disabled', 'disabled');
+                        select.data('chosen').search_field_disabled();
+
+                        if (wasDisabled) {
+                            select.attr('disabled', 'disabled');
+                        } else {
+                            select.removeAttr('disabled');
+                        }
+                    }
                 });
             },
 

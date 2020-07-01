@@ -31,13 +31,13 @@
             fromResponse: function (response) {
                 $.each(response.messages, function (index, messageObject) {
                     if (messageObject.type === 'danger') {
-                        toastr.error(messageObject.message)
+                        toastr.error(messageObject.message);
                         $(".loader-box").hide();
                     } if (messageObject.type === 'warning') {
-                        toastr.warning(messageObject.message)
+                        toastr.warning(messageObject.message);
                         $(".loader-box").hide();
                     } else {
-                        toastr.success(messageObject.message)
+                        toastr.success(messageObject.message);
                     }
                 });
             },
