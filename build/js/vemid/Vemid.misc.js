@@ -21,22 +21,26 @@
             },
 
             initChosen: function () {
-                $(".chosen-search").chosen({
+                let $chosen = $(".chosen-search");
+                $chosen.chosen({
                     placeholder_text_multiple: Vemid.language.get('choose')
                 }).on('chosen:updated', function () {
-                    if (select.attr('readonly')) {
-                        let wasDisabled = select.is(':disabled');
+                    if ($chosen.attr('readonly')) {
 
-                        select.attr('disabled', 'disabled');
-                        select.data('chosen').search_field_disabled();
+                        let wasDisabled = $chosen.is(':disabled');
+
+                        $chosen.attr('disabled', 'disabled');
+                        $chosen.data('chosen').search_field_disabled();
 
                         if (wasDisabled) {
-                            select.attr('disabled', 'disabled');
+                            $chosen.attr('disabled', 'disabled');
                         } else {
-                            select.removeAttr('disabled');
+                            $chosen.removeAttr('disabled');
                         }
                     }
                 });
+
+                $chosen.trigger('chosen:updated');
             },
 
             initSwitcherCheckbox: function () {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Admin\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Nette\Forms\IControl;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
@@ -36,14 +37,15 @@ class SupplierReceiptItem extends AbstractHandler
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder): void
     {
-        /** @var $supplierReceipt EntitySupplierReceipt */
-        if (!$supplierReceipt = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
+        /** @var $supplierReceipt EntitySupplierReceiptItem */
+        if (!$supplierReceiptItem = $entityManager->find(EntitySupplierReceiptItem::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena prijemnica'), null, Builder::WARNING);
         }
 
+        $form = $formBuilder->build($supplierReceiptItem);
+        $form->getComponent('product')->setAttribute('readonly', true);
         $this->view->setTemplate('supplier-receipt::update.html.twig', [
-            'form' => $formBuilder->build($supplierReceipt),
-            'file' => $supplierReceipt->getFile()
+            'form' => $form,
         ]);
     }
 }

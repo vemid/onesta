@@ -315,9 +315,12 @@
                                         $("#content").load(currentUrl + " #content > *", function () {
                                             Vemid.misc.init();
                                             Vemid.datetime.init();
+                                            Vemid.tableForm.init($(".tableForm"));
                                         });
                                     }
                                 }
+                            }, function (reason) {
+                                toastr.error('Error processing request', reason.statusText)
                             });
                     });
                 });

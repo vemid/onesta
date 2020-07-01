@@ -76,13 +76,13 @@ class SupplierReceiptItemWrite extends GridHandler
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder, FileManager $uploadFile)
     {
-        /** @var $supplierReceipt SupplierReceipt */
-        if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, (int)$id)) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Hm, prijemnica ne postoji'), null, Builder::WARNING);
+        /** @var $supplierReceiptItem SupplierReceiptItem */
+        if (!$supplierReceiptItem = $entityManager->find(SupplierReceiptItem::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, stavka prijemnice ne postoji'), null, Builder::WARNING);
             return;
         }
 
-        $form = $formBuilder->build($supplierReceipt);
+        $form = $formBuilder->build($supplierReceiptItem);
         $postData = $form->getHttpData();
 
         if (!$form->isSuccess()) {
@@ -90,27 +90,25 @@ class SupplierReceiptItemWrite extends GridHandler
             return;
         }
 
-        if (!$supplier = $entityManager->find(EntitySupplier::class, $postData['supplier'])) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač ne postoji!'), null, Builder::DANGER);
+        if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, $postData['supplierReceipt'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Prijemnica ne postoji!'), null, Builder::DANGER);
             return;
         }
 
-        $uploadedFiles = $this->request->getUploadedFiles();
-        $uploadedFile = array_pop($uploadedFiles);
-        if ($uploadedFile->getSize()) {
-            $postData['file'] = $uploadFile->uploadFile($uploadedFile);
-        } else {
-            $postData['file'] = $supplierReceipt->getFile();
+        if (!$product = $entityManager->find(Product::class, $postData['product'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Proizvod ne postoji!'), null, Builder::DANGER);
+            return;
         }
 
-        $postData['supplier'] = $supplier;
-        $supplierReceipt->setData($postData);
+        $postData['supplierReceipt'] = $supplierReceipt;
+        $postData['product'] = $product;
+        $supplierReceiptItem->setData($postData);
 
-        $entityManager->persist($supplierReceipt);
+        $entityManager->persist($supplierReceiptItem);
         $entityManager->flush();
 
         $this->messageBag->pushFlashMessage($this->translator->_('Record updated'), null, Builder::SUCCESS);
 
-        $this->redirect('/supplier-receipts/list/' . $supplierReceipt->getId());
+        $this->redirect('/supplier-receipts/overview/' . $supplierReceipt->getId());
     }
 }

@@ -120,12 +120,14 @@
             } else {
                 column = "<td class='text-center'>";
 
-
                 if (_checkIfRowIsForm($row)) {
                     column += "<a href='#' onclick='return false;' id='delete-cloned-row' class='text-danger bigger-140 text-center'><i class='fa fa-minus'></i></a>";
                 }else if (_ifActionMode($row)) {
-                    column += "<a href='#' class='text-info bigger-120 text-center'><i class='fa fa-edit'></i></a>";
-                    column += "&nbsp;<a href='#' class='text-danger bigger-120 text-center'><i class='fa fa-remove'></i></a>";
+                    let entityEdit = $row.attr("data-edit");
+                    let entityDelete = $row.attr("data-delete");
+
+                    column += "<a href='"+ Vemid.crypto.decrypt(entityEdit) +"' class='text-info bigger-120 text-center'><i class='fa fa-edit'></i></a>";
+                    column += "&nbsp;<a href='#' data-delete data-form-url='"+ entityDelete +"' class='text-danger bigger-120 text-center'><i class='fa fa-remove'></i></a>";
                 }
 
                 column += "<td>";
@@ -149,7 +151,7 @@
         };
 
         let _ifActionMode = function (row) {
-            if (row.attr("data-primary")) {
+            if (row.attr("data-edit") && row.attr("data-delete")) {
                 return true;
             }
 
@@ -195,8 +197,10 @@
                                     $("body").removeClass("modal-open");
                                     Vemid.misc.init();
                                     Vemid.datetime.init();
+                                    Vemid.tableForm.init($("#content table"));
                                     $(".loader-box").hide();
                                 });
+
                             }
 
                         }, function (reason) {
@@ -218,6 +222,7 @@
                 }
 
                 let lastRow = $("tr:last", table);
+
 
                 if (_checkIfRowIsForm(lastRow)) {
                     let footerHtml = _initActionFoot();

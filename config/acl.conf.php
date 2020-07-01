@@ -26,6 +26,7 @@ return [
                     'suppliers' => ['delete'],
                     'files' => ['download'],
                     'supplier-receipts' => ['delete'],
+                    'supplier-receipt-items' => ['delete'],
                     'clients' => ['fetch-by-term', 'fetch-by-id'],
                 ]
             ],

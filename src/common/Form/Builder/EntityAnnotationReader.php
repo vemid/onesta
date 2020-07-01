@@ -56,7 +56,6 @@ class EntityAnnotationReader implements FormBuilderInterface
         $form->setHtmlAttribute('novalidate');
 
         $filter = new Humanize();
-
         $reader = new AnnotationReader();
 
         $reflect = new \ReflectionClass($entity);
@@ -73,6 +72,10 @@ class EntityAnnotationReader implements FormBuilderInterface
             }
 
             $value = $entity->{'get' . ucfirst($propertyName->name)}();
+            if ($value instanceof EntityInterface) {
+                $value = $value->getEntityId();
+            }
+
             $label = $this->translator->_($formPropertyAnnotation->name ?: ucwords($filter->filter($propertyName->name)));
             $type = $formPropertyAnnotation->type !== 'Date' || $formPropertyAnnotation->type !== 'DateTime' ? $formPropertyAnnotation->type : 'Text';
             $methodToCall = in_array($type, ['Date', 'DateTime'], false) ? 'Text' : $type;
@@ -130,9 +133,6 @@ class EntityAnnotationReader implements FormBuilderInterface
                 }
 
                 $element->setItems($options);
-                if ($value instanceof EntityInterface) {
-                    $value = $value->getEntityId();
-                }
 
                 if (!array_key_exists($value, $options)) {
                     $value = '';
