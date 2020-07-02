@@ -83,7 +83,7 @@ class UserWrite extends AbstractHandler
 
         $uploadedFiles = $this->request->getUploadedFiles();
         $uploadedFile = array_pop($uploadedFiles);
-        if ($uploadedFile->getSize()) {
+        if ($uploadedFile && $uploadedFile->getSize()) {
             $avatarHelper = new Avatar($entityManager);
             $user = $avatarHelper->uploadAvatar($uploadedFile, $user);
         }

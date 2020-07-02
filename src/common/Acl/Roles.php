@@ -84,7 +84,9 @@ class Roles implements RolesInterface
         }
 
         $roles = [];
-        foreach ($user->getRoles() as $role) {
+        foreach ($user->getUserRoleAssignments() as $userRoleAssignment) {
+            $role = $userRoleAssignment->getRole();
+
             $roles[] = $role->getCode();
         }
 

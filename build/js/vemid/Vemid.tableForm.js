@@ -69,17 +69,26 @@
         };
 
         let _deleteClonedRow = function() {
-            $(document).on("click", "#delete-cloned-row", function() {
+            $(".delete-cloned-row").click(function() {
                 let tr = $(this).parents("tr");
                 let table = tr.parents("table");
+                let select = tr.find("select");
+                $.each(select, function(index, selectElement){
+                    let value = selectElement.value;
+                    let sameSelect = table.find("[name ='"+ $(selectElement).attr("name") +"']");
+                    $("option[value='" + value + "']", sameSelect).attr("disabled", false);
+                    sameSelect
+                        .trigger("liszt:updated")
+                        .trigger("chosen:updated");
+                });
 
-                if ($(".fa-minus", table).length > 1) {
+                if ($(".delete-cloned-row", table).length > 1) {
                     tr.remove();
                 } else {
                     toastr.error(Vemid.language.get("notPermittedOperation"));
                 }
 
-                if ($("tr", table).find("#delete-cloned-row").length === 0 ){
+                if ($("tr", table).find(".delete-cloned-row").length === 0){
                     $(".action-foot").hide();
                 }
             });
@@ -121,7 +130,7 @@
                 column = "<td class='text-center'>";
 
                 if (_checkIfRowIsForm($row)) {
-                    column += "<a href='#' onclick='return false;' id='delete-cloned-row' class='text-danger bigger-140 text-center'><i class='fa fa-minus'></i></a>";
+                    column += "<a href='#' onclick='return false;' class='text-danger bigger-140 text-center delete-cloned-row'><i class='fa fa-minus'></i></a>";
                 }else if (_ifActionMode($row)) {
                     let entityEdit = $row.attr("data-edit");
                     let entityDelete = $row.attr("data-delete");

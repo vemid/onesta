@@ -49,8 +49,7 @@ class EntityManagerFactory
      */
     public function create(): EntityManager
     {
-        $cacheImpl = new ApcuCache();
-        $driver = new XmlDriver(APP_PATH . '/config/xml');
+//        $cacheDriver = new ApcuCache();
 
         $cacheDriver = new PhpFileCache(
             APP_PATH . '/var/cache/doctrine'
@@ -65,11 +64,10 @@ class EntityManagerFactory
         );
 
         $config->addCustomStringFunction('sha1', Sha1::class);
-//        $config->setMetadataCacheImpl($cacheImpl);
-//        $config->setQueryCacheImpl($cacheImpl);
-//        $config->setResultCacheImpl($cacheDriver);
+        $config->setMetadataCacheImpl($cacheDriver);
+        $config->setQueryCacheImpl($cacheDriver);
+        $config->setResultCacheImpl($cacheDriver);
         $config->addEntityNamespace('\\Vemid\\ProjectOne\\Entity', 'Vemid');
-//        $config->setMetadataDriverImpl($driver);
 
         AnnotationRegistry::registerFile(APP_PATH . '/src/common/Annotation/FormElement.php');
 

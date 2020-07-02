@@ -24,8 +24,9 @@ class CodeFilterForm extends AbstractForm
     {
         /** @var Code $entity */
 
-        $parentCodes = $this->entityManager->getRepository(Code::class)->findParentByUniqueCode();
-        $codeTypes = $this->entityManager->getRepository(Code::class)->findByUniqueCodeType();
+        $objectRepository = $this->entityManager->getRepository(Code::class);
+        $parentCodes = $objectRepository->findParentByUniqueCode();
+        $codeTypes = $objectRepository->findByUniqueCodeType();
 
         $options = ['' => '-- Izaberite --'];
         foreach ($codeTypes as $codeType) {
