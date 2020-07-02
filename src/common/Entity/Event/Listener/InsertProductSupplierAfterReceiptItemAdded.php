@@ -24,4 +24,15 @@ class InsertProductSupplierAfterReceiptItemAdded
             $supplierHelper->setProductSuplierAndStockQty($entity);
         }
     }
+
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getObject();
+        $entityManager = $args->getEntityManager();
+
+        if ($entity instanceof SupplierReceiptItem) {
+            $supplierHelper = new PostSupplierReceiptItem($entityManager);
+            $supplierHelper->removeProductSupplier($entity);
+        }
+    }
 }

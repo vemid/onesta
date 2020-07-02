@@ -22,7 +22,7 @@ class EventManagerFactory
     public function create()
     {
         $eventManager = new EventManager();
-        $eventManager->addEventListener([Events::postPersist], new InsertProductSupplierAfterReceiptItemAdded());
+        $eventManager->addEventListener([Events::postPersist, Events::postRemove], new InsertProductSupplierAfterReceiptItemAdded());
         $eventManager->addEventSubscriber(new LogActivitySubscriber());
         $eventManager->addEventSubscriber(new SetReferencedObjectField());
 

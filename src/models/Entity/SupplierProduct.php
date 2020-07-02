@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
@@ -65,6 +67,19 @@ class SupplierProduct extends Entity
      * })
      */
     protected $supplier;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="supplierProduct", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $stocks;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->stocks = new ArrayCollection();
+    }
 
 
     /**
@@ -195,5 +210,13 @@ class SupplierProduct extends Entity
     public function getSupplier(): ?Supplier
     {
         return $this->supplier;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getStocks(): ?PersistentCollection
+    {
+        return $this->stocks;
     }
 }

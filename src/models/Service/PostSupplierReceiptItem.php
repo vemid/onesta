@@ -62,4 +62,28 @@ class PostSupplierReceiptItem
 
         $this->entityManager->flush();
     }
+
+    public function removeProductSupplier(SupplierReceiptItem $supplierReceiptItem)
+    {
+        if (!$supplier = $supplierReceiptItem->getSupplierReceipt()->getSupplier()) {
+            throw new \LogicException('Supplier do not exist!');
+        }
+
+        /** @var SupplierProduct $supplierProduct */
+        $supplierProduct = $this->entityManager->getRepository(SupplierProduct::class)->findOneBy([
+            'product' => $supplierReceiptItem->getProduct(),
+            'supplier' => $supplier
+        ]);
+
+        if (!$supplierProduct) {
+            throw new \LogicException('SupplierProduct not found!');
+        }
+
+        foreach ($supplierProduct->getStocks() as $stock) {
+            $this->entityManager->remove($stock);
+        }
+
+        $this->entityManager->remove($supplierProduct);
+        $this->entityManager->flush();
+    }
 }
