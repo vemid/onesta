@@ -12,12 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getAllAdminUsers($all)
-    {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT * FROM User'
-            )
-            ->getResult();
-    }
+
 }

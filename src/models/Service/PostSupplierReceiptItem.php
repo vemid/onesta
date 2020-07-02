@@ -28,6 +28,9 @@ class PostSupplierReceiptItem
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param SupplierReceiptItem $supplierReceiptItem
+     */
     public function setProductSuplierAndStockQty(SupplierReceiptItem $supplierReceiptItem)
     {
         if (!$supplier = $supplierReceiptItem->getSupplierReceipt()->getSupplier()) {
@@ -63,6 +66,9 @@ class PostSupplierReceiptItem
         $this->entityManager->flush();
     }
 
+    /**
+     * @param SupplierReceiptItem $supplierReceiptItem
+     */
     public function removeProductSupplier(SupplierReceiptItem $supplierReceiptItem)
     {
         if (!$supplier = $supplierReceiptItem->getSupplierReceipt()->getSupplier()) {
