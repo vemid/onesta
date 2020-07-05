@@ -56,12 +56,12 @@ class PostSupplierReceiptItem
         $supplierProduct->setRetailPrice($supplierReceiptItem->getRetailPrice());
         $this->entityManager->persist($supplierProduct);
 
-        $stock = new Stock();
-        $stock->setSupplierProduct($supplierProduct);
-        $stock->setPurchasePrice($supplierReceiptItem->getPrice());
-        $stock->setQty($supplierReceiptItem->getQty());
-        $stock->setType(Stock::INCOME);
-        $this->entityManager->persist($stock);
+//        $stock = new Stock();
+//        $stock->setSupplierProduct($supplierProduct);
+//        $stock->setPurchasePrice($supplierReceiptItem->getPrice());
+//        $stock->setQty($supplierReceiptItem->getQty());
+//        $stock->setType(Stock::INCOME);
+//        $this->entityManager->persist($stock);
 
         $this->entityManager->flush();
     }
@@ -85,11 +85,22 @@ class PostSupplierReceiptItem
             throw new \LogicException('SupplierProduct not found!');
         }
 
-        foreach ($supplierProduct->getStocks() as $stock) {
-            $this->entityManager->remove($stock);
+        $productRepository = $this->entityManager->getRepository(EntityProduct::class);
+        $avgPrice = $productRepository
+            ->fetchProductAveragePurchasePriceBySupplier($supplierReceiptItem->getProduct(), $supplier);
+
+        $objectRepository = $this->entityManager->getRepository(SupplierReceiptItem::class);
+        $retailPrice =  $objectRepository->fetchLastRetailPrice($supplier, $supplierReceiptItem->getProduct());
+
+
+        if ($avgPrice > 0 || $retailPrice > 0) {
+            $supplierProduct->setAvgPurchasePrice($avgPrice);
+            $supplierProduct->setRetailPrice($retailPrice);
+            $this->entityManager->persist($supplierProduct);
+        } else {
+            $this->entityManager->remove($supplierProduct);
         }
 
-        $this->entityManager->remove($supplierProduct);
         $this->entityManager->flush();
     }
 }

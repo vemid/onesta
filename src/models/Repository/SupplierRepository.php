@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Supplier;
 
 /**

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Vemid\ProjectOne\Entity\Entity;
 
 /**
@@ -12,18 +15,15 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="stocks", indexes={@ORM\Index(name="supplier_product_id", columns={"supplier_product_id"})})
  * @ORM\Entity
+ * @InheritanceType("JOINED")
+ * @DiscriminatorColumn(name="entity_type", type="string")
+ * @DiscriminatorMap({"stock" = "Stock", "supplierReceiptItem" = "SupplierReceiptItem", "purchaseItem" = "PurchaseItem"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Stock extends Entity
 {
     public const INCOME = 'INCOME';
     public const OUTCOME = 'OUTCOME';
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="qty", type="integer", nullable=false)
-     */
-    private $qty;
 
     /**
      * @var string
@@ -31,20 +31,6 @@ class Stock extends Entity
      * @ORM\Column(name="type", type="string", length=0, nullable=false)
      */
     private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="purchase_price", type="decimal", precision=9, scale=2, nullable=false)
-     */
-    private $purchasePrice;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
 
     /**
      * @var int
@@ -64,31 +50,6 @@ class Stock extends Entity
      * })
      */
     private $supplierProduct;
-
-
-    /**
-     * Set qty.
-     *
-     * @param int $qty
-     *
-     * @return Stock
-     */
-    public function setQty($qty)
-    {
-        $this->qty = $qty;
-
-        return $this;
-    }
-
-    /**
-     * Get qty.
-     *
-     * @return int
-     */
-    public function getQty()
-    {
-        return $this->qty;
-    }
 
     /**
      * Set type.
@@ -114,51 +75,25 @@ class Stock extends Entity
         return $this->type;
     }
 
-    /**
-     * Set purchasePrice.
-     *
-     * @param string $purchasePrice
-     *
-     * @return Stock
-     */
-    public function setPurchasePrice($purchasePrice): Stock
-    {
-        $this->purchasePrice = $purchasePrice;
+//    /**
+//     * @return string
+//     */
+//    public function getEntityType(): string
+//    {
+//        return $this->entityType;
+//    }
+//
+//    /**
+//     * @param string $entityType
+//     * @return Stock
+//     */
+//    public function setEntityType(string $entityType): Stock
+//    {
+//        $this->entityType = $entityType;
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
-
-    /**
-     * Get purchasePrice.
-     *
-     * @return string
-     */
-    public function getPurchasePrice()
-    {
-        return $this->purchasePrice;
-    }
-
-    /**
-     * @ORM\PrePersist
-     * @return Stock
-     * @throws \Exception
-     */
-    public function setCreatedAt(): Stock
-    {
-        $this->createdAt = new \DateTime();
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 
     /**
      * Get id.

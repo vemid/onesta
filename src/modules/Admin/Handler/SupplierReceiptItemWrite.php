@@ -9,6 +9,8 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\FileManager;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\Stock;
+use Vemid\ProjectOne\Entity\Entity\SupplierProduct;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
@@ -21,6 +23,7 @@ class SupplierReceiptItemWrite extends GridHandler
 
     public function create($supplierReceiptId, FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)
     {
+        /** @var $supplierReceipt SupplierReceipt */
         if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, $supplierReceiptId)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač ne postoji!'), null, Builder::DANGER);
             return;
@@ -56,8 +59,32 @@ class SupplierReceiptItemWrite extends GridHandler
 
         if (count($errorMessages) === 0) {
             foreach ($postData['supplierReceiptItem'] as $row => &$data) {
+
+                $supplier = $supplierReceipt->getSupplier();
+                $supplierProduct = $entityManager->getRepository(SupplierProduct::class)->findOneBy([
+                    'product' => $data['product'],
+                    'supplier' => $supplier
+                ]);
+
+                if (!$supplierProduct) {
+                    $supplierProduct = new SupplierProduct();
+                    $supplierProduct->setProduct($data['product']);
+                    $supplierProduct->setSupplier($supplier);
+                }
+
+                $avgPrice = $entityManager->getRepository(EntityProduct::class)
+                    ->fetchProductAveragePurchasePriceBySupplier($data['product'], $supplier, $data['price'], $data['qty']);
+
+                $avgPrice = $avgPrice > 0  ? $avgPrice : $data['price'];
+
+                $supplierProduct->setAvgPurchasePrice($avgPrice);
+                $supplierProduct->setRetailPrice($data['retailPrice']);
+                $entityManager->persist($supplierProduct);
+
                 $supplierReceiptItem = new SupplierReceiptItem();
                 $supplierReceiptItem->setData($data);
+                $supplierReceiptItem->setSupplierProduct($supplierProduct);
+                $supplierReceiptItem->setType(Stock::INCOME);
                 $entityManager->persist($supplierReceiptItem);
             }
 
@@ -105,6 +132,25 @@ class SupplierReceiptItemWrite extends GridHandler
         $supplierReceiptItem->setData($postData);
 
         $entityManager->persist($supplierReceiptItem);
+        $entityManager->flush();
+
+        $supplier = $supplierReceipt->getSupplier();
+        $supplierProduct = $entityManager->getRepository(SupplierProduct::class)->findOneBy([
+            'product' => $product,
+            'supplier' => $supplier
+        ]);
+
+        if (!$supplierProduct) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $avgPrice = $entityManager->getRepository(Product::class)
+            ->fetchProductAveragePurchasePriceBySupplier($product, $supplier);
+
+        $supplierProduct->setAvgPurchasePrice($avgPrice);
+        $supplierProduct->setRetailPrice($supplierReceiptItem->getRetailPrice());
+        $entityManager->persist($supplierProduct);
         $entityManager->flush();
 
         $this->messageBag->pushFlashMessage($this->translator->_('Record updated'), null, Builder::SUCCESS);

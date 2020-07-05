@@ -6,9 +6,10 @@ namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\Supplier;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
 /**
  * Class PurchaseRepository

@@ -32,7 +32,7 @@
         };
 
         let _cloneLastRow = function (table) {
-            $(document).on("click", "#clone-row", function (e) {
+            $("#clone-row").click(function (e) {
                 let row = $("tr:last", table);
 
                 if (!_checkIfRowIsForm(row) || !_validateRow(row)) {
@@ -168,7 +168,7 @@
         };
 
         let _processTableForm = function (table) {
-            $(document).on("click", "#process-table-form", function(){
+            $("#process-table-form").click(function(){
                 let nonValidRows = [];
                 $.each($("tr", table), function(index, row){
                     if (!_validateRow($(row))) {

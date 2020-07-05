@@ -6,16 +6,15 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
-use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * SupplierReceiptItems
  *
  * @ORM\Table(name="supplier_receipt_items", indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="supplier_receipt_id", columns={"supplier_receipt_id"})})
- * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\SupplierProductRepository")
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\SupplierReceiptItemRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class SupplierReceiptItem extends Entity
+class SupplierReceiptItem extends Stock
 {
     /**
      * @var SupplierReceipt
@@ -69,15 +68,6 @@ class SupplierReceiptItem extends Entity
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
     /**
      * @param float $price
@@ -147,7 +137,7 @@ class SupplierReceiptItem extends Entity
      * @throws \Exception
      * @ORM\PrePersist
      */
-    public function setCreatedAt(): ?SupplierReceiptItem
+    public function setCreatedAt()
     {
         $this->createdAt = new \DateTime();
 
@@ -162,16 +152,6 @@ class SupplierReceiptItem extends Entity
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**

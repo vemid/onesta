@@ -63,10 +63,17 @@ class ProductRepository extends EntityRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    public function fetchProductAveragePurchasePriceBySupplier(Product $product, Supplier $supplier)
+    /**
+     * @param Product $product
+     * @param Supplier $supplier
+     * @param float $additionalPrice
+     * @param int $additionalQty
+     * @return float
+     */
+    public function fetchProductAveragePurchasePriceBySupplier(Product $product, Supplier $supplier, $additionalPrice = 0.00, $additionalQty = 0)
     {
         $avgPriceResult = $this->getEntityManager()->createQueryBuilder()
-            ->select('SUM(sri.price * sri.qty) / SUM(sri.qty) as avgPrice')
+            ->select('SUM(sri.price * sri.qty) as totalPrice, SUM(sri.qty) as totalQty')
             ->from(Product::class, 'p')
             ->leftJoin(SupplierReceiptItem::class, 'sri', Join::WITH, 'p.id = sri.product')
             ->leftJoin(SupplierReceipt::class, 'sr', Join::WITH, 'sr.id = sri.supplierReceipt')
@@ -74,11 +81,15 @@ class ProductRepository extends EntityRepository
             ->andWhere('sr.supplier = :supplier')
             ->setParameters([
                 'product' => $product->getId(),
-                'supplier' => $supplier->getId()
+                'supplier' => $supplier->getId(),
             ])
             ->getQuery()
             ->execute();
 
-        return (float)$avgPriceResult[0]['avgPrice'];
+        if (empty($avgPriceResult[0]['totalPrice'])) {
+            return 0;
+        }
+
+        return ($avgPriceResult[0]['totalPrice'] + $additionalPrice * $additionalQty) / ($avgPriceResult[0]['totalQty'] + $additionalQty);
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Vemid\ProjectOne\Entity\Entity\AuditLog;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 use Vemid\ProjectOne\Entity\Entity\User;
 
 /**
@@ -76,7 +77,7 @@ class LogActivitySubscriber implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if (!$entity instanceof AuditLog) {
+        if (!$entity instanceof AuditLog && !$entity instanceof SupplierReceiptItem) {
             $entityManager = $args->getEntityManager();
             $uow = $entityManager->getUnitOfWork();
 

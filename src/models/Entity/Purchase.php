@@ -6,7 +6,6 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
-use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Purchases
@@ -15,7 +14,7 @@ use Vemid\ProjectOne\Entity\Entity;
  * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\PurchaseRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Purchase extends Entity
+class Purchase extends Stock
 {
     /**
      * @var Code

@@ -32,7 +32,7 @@ class SupplierReceiptWrite extends GridHandler
         foreach ($supplierReceipts as $supplierReceipt) {
             $data[] = [
                 (string)$supplierReceipt->getSupplier(),
-                HtmlTag::link('/form/files/download/' . $supplierReceipt->getFile(), sprintf('Prijemnica (%s)', (string)$supplierReceipt->getSupplier()), 'text-info'),
+                $supplierReceipt->getFile() ? HtmlTag::link('/form/files/download/' . $supplierReceipt->getFile(), sprintf('Prijemnica (%s)', (string)$supplierReceipt->getSupplier()), 'text-info') : '',
                 $supplierReceipt->getDate()->format('m.d.Y'),
                 $supplierReceipt->getPaymentDate() ? $supplierReceipt->getPaymentDate()->format('m.d.Y') : '',
                 HtmlTag::groupLink([
