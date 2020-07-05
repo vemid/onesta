@@ -247,6 +247,14 @@
         notPermittedOperation: {
             en: "You are not permitted to do that",
             sr: "Nije dozvoljeno da se izvrši zadata akcija"
+        },
+        filter: {
+            en: "Filer settings",
+            sr: "Filtriranje kolona"
+        },
+        applyFilters: {
+            en: "Apply filter",
+            sr: "Primeni filter"
         }
     });
 }).call(Vemid, $);

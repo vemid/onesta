@@ -52,6 +52,10 @@ trait FilterTrait
         $params = [];
         $counter = 1;
         foreach ($criteria as $field => $value) {
+            if (!$value) {
+                continue;
+            }
+
             if (strpos($value, ' - ') !== false) {
                 $dateRangeValues = explode(' - ', $value);
                 $startDate = trim($dateRangeValues[0]);

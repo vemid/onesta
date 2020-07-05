@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="space-20"></div>
-                        <table id="dataTable" data-entity="supplier-receipt" data-store="supplierReceiptList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/supplier-receipts/list') }}" data-title="{{ t('Lista Prijemnica') }}">
+                        <table width="100%" id="dataTable" data-entity="supplier-receipt" data-store="supplierReceiptList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/supplier-receipts/list') }}" data-title="{{ t('Lista Prijemnica') }}">
                             <thead>
                                 <tr>
                                     <th data-name="sr.supplier" class="col-xs-2">Dobavljač</th>
@@ -21,43 +21,23 @@
                                     <th data-name="sr.paymentDate" class="col-xs-3">Datum plaćanja</th>
                                     <th class="col-xs-1">Akcije</th>
                                 </tr>
-                                <tr>
+                                <tr class="hidden">
                                     <th>{{ form['supplier'].control | raw }}</th>
                                     <th></th>
                                     <th>
-                                        <div class="col-xs-12 no-padding">
-                                            <div class="form-group">
-                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Od:</label>
-                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
-                                                    {{ form['fromDate'].control | raw }}
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['fromDate'].control | raw }}
                                         </div>
-                                        <div class="col-xs-12 no-padding">
-                                            <div class="form-group">
-                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Do:</label>
-                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
-                                                    {{ form['toDate'].control | raw }}
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['toDate'].control | raw }}
                                         </div>
                                     </th>
                                     <th>
-                                        <div class="col-xs-12 no-padding">
-                                            <div class="form-group">
-                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Od:</label>
-                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
-                                                    {{ form['fromDate'].control | raw }}
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['fromDate'].control | raw }}
                                         </div>
-                                        <div class="col-xs-12 no-padding">
-                                            <div class="form-group">
-                                                <label for="fromDate" class="col-xs-12 col-sm-3 col-lg-2 no-padding">Do:</label>
-                                                <div class="col-xs-12 col-sm-9 col-lg-8 no-padding">
-                                                    {{ form['toDate'].control | raw }}
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['toDate'].control | raw }}
                                         </div>
                                     </th>
                                     <th data-visible="false"></th>

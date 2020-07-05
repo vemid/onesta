@@ -10140,4 +10140,21 @@ table th {
   line-height: initial;
 }
 
+.filter-absolute {
+  position: absolute;
+  top: 68px;
+  background: #3c3c3c;
+  z-index: 200;
+  padding: 20px 5px 20px 20px;
+  color: #fff;
+  display: none;
+}
+.filter-absolute .filter-group {
+  float: left;
+  margin-bottom: 20px;
+}
+.filter-absolute .chosen-single, .filter-absolute .form-control, .filter-absolute .single-line {
+  color: #999 !important;
+}
+
 /*# sourceMappingURL=style.css.map */

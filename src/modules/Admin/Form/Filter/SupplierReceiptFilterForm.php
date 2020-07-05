@@ -38,11 +38,13 @@ class SupplierReceiptFilterForm extends AbstractForm
 
         $this->form
             ->addText('fromDate', $this->translator->_('Od datuma'))
-            ->setHtmlAttribute('class', 'form-control datepicker');
+            ->setHtmlAttribute('class', 'form-control datepicker')
+            ->setHtmlAttribute('placeholder', $this->translator->_('Od datuma'));
 
         $this->form
             ->addText('toDate', $this->translator->_('Do datuma'))
-            ->setHtmlAttribute('class', 'form-control datepicker');
+            ->setHtmlAttribute('class', 'form-control datepicker')
+            ->setHtmlAttribute('placeholder', $this->translator->_('Do datuma'));
 
         return $this->form;
     }
