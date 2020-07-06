@@ -83,7 +83,6 @@
                         },
                     },
                     onChange: function (selectedDates, dateStr, instance) {
-                        // $(instance.element).parents(".form-group").next().find("textarea, select, input").filter(':visible').focus();
                     },
                 });
 

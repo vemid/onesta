@@ -165,7 +165,6 @@
             filterDivAbs = $(".filter-absolute");
 
         body.addEventListener("keyup", function(event) {
-            console.log(event);
             if (event.keyCode === 13) {
                 event.preventDefault();
                 if (filterDivAbs.is(":visible")) {
@@ -181,20 +180,18 @@
 
             $.each(block, function (index, element) {
                 let $field = $("input, select", element);
-                let dateRangeFilters = $("input:hidden", element);
+                let dateRangeFilters = $("input", element).filter(".input");
                 let filterValue = $field.val();
 
                 if (dateRangeFilters.length === 2) {
                     filterValue = '';
                     $.each(dateRangeFilters, function (index, filedElement) {
                         let $filedElement = $(filedElement);
-                        if ($filedElement.attr("type") === "hidden") {
-                            if (index === 1) {
-                                filterValue += " - ";
-                            }
-
-                            filterValue += $filedElement.val();
+                        if (index === 1) {
+                            filterValue += " - ";
                         }
+
+                        filterValue += $filedElement.val();
                     });
                 }
 
@@ -203,7 +200,7 @@
                 $("th", headerTr)
                     .eq(columnIndex)
                     .find("[name ='" + name + "']")
-                    .val(filterValue)
+                    .val(filterValue ? filterValue : "")
                     .trigger("change");
 
                 $field
@@ -220,26 +217,32 @@
         $("thead tr:eq(1) th", table).each(function (i) {
             let parentTh = $("thead tr:eq(0) th:eq(" + i + ")", table);
             let title = parentTh.text();
-            let filter = $(this).find("input:visible, select");
+            let filter = $(this).find("input, select");
+            if (filter.length === 0) {
+                return;
+            }
+
             let filterValues = JSON.parse(localStorage.getItem(filterIndex));
 
-            let dateRangeFilters = $("input", $(this)).filter(":hidden");
-
+            let dateRangeFilters = $("input:hidden", $(this)).filter(":not(.input)");
             if (dateRangeFilters.length === 2 && !!filterValues && typeof filterValues[i] !== 'undefined') {
                 let filterRangeValues = filterValues[i].split(" - ");
 
-                dateRangeFilters.eq(0).val(filterRangeValues[0]);
-                dateRangeFilters.eq(1).val(filterRangeValues[1]);
-            } else {
-                filter
-                    .attr("placeholder", title)
-                    .val(filterValues ? filterValues[i] : '');
-            }
+                dateRangeFilters.eq(0).val(filterRangeValues[0]).attr("value", filterRangeValues[0]);
+                dateRangeFilters.eq(1).val(filterRangeValues[1]).attr("value", filterRangeValues[1]);
+            } else if (filter.is("select")) {
+                if (!!filterValues && typeof filterValues[i] !== 'undefined') {
+                    $("option[value="+ filterValues[i] +"]", filter).attr('selected','selected');
+                }
 
-            if (filter.is("select")) {
                 filter
                     .trigger("liszt:updated")
                     .trigger("chosen:updated");
+            } else {
+                filter
+                    .attr("placeholder", title)
+                    .attr("value", filterValues ? filterValues[i] : '')
+                    .val(filterValues ? filterValues[i] : '');
             }
 
             $("input, select", this).on("keyup change", function () {
