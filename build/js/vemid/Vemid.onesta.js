@@ -21,19 +21,22 @@
                                 let $id =  ui.item.id;
                                 Vemid.misc.makeAjaxCall("/form/clients/fetch-by-id/" + $id, "GET")
                                     .then(function (respJson) {
-                                        $.each(respJson, function (property, value) {
-                                            let $el = $("[name ='"+ property +"']");
-                                            if ($el.length) {
-                                                $el.val(value);
+                                        if (respJson.length) {
+                                            $.each(respJson, function (property, value) {
+                                                let $el = $("[name ='"+ property +"']");
+                                                if ($el.length) {
+                                                    $el.val(value);
 
-                                                if ($el.is("select")) {
-                                                    $el
-                                                        .trigger("liszt:updated")
-                                                        .trigger("chosen:updated");
+                                                    if ($el.is("select")) {
+                                                        $el
+                                                            .trigger("liszt:updated")
+                                                            .trigger("chosen:updated");
+                                                    }
                                                 }
-                                            }
-                                        })
-
+                                            })
+                                        } else {
+                                            $("[name ='client']").val("");
+                                        }
                                     }, function (reason) {
                                         toastr.error("Error in processing your request", reason);
                                     });
@@ -49,7 +52,10 @@
                     $element
                         .autocomplete({
                             minLength: 3,
-                            source: Vemid.config.formUrl + "form/clients/fetch-by-term",
+                            source: function (request, response) {
+                                request['clientId'] = $("input[name='client']").val();
+                                $.post(Vemid.config.formUrl + "form/clients/fetch-by-term", request, response);
+                            },
                             select: function( event, ui ) {
                                 $("#guarantor").val(ui.item.id);
                             }
@@ -85,17 +91,26 @@
             clientTypeSelect: function () {
                 $(document).on("change", "select[name='type']", function (e) {
                     let val = $(this).val(),
-                        pib = $("input[name='pib']");
+                        pib = $("input[name='pib']"),
+                        jmbg = $("input[name='jmbg']");
 
                     if (val === 'NATURAL') {
                         pib.addClass("hidden")
                             .parents(".row:first")
                             .addClass("hidden");
+
+                        jmbg.removeClass("hidden")
+                            .parents(".row:first")
+                            .removeClass("hidden");
                     } else if (val === 'LEGAL') {
                         pib
                             .removeClass("hidden")
                             .parents(".row:first")
                             .removeClass("hidden");
+
+                        jmbg.addClass("hidden")
+                            .parents(".row:first")
+                            .addClass("hidden");
                     }
                 });
             },

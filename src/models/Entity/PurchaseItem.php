@@ -13,7 +13,7 @@ use Vemid\ProjectOne\Entity\Entity;
  * @ORM\Table(name="purchase_items", indexes={@ORM\Index(name="purchase_id", columns={"purchase_id"}), @ORM\Index(name="supplier_product_id", columns={"supplier_product_id"})})
  * @ORM\Entity
  */
-class PurchaseItem extends Entity
+class PurchaseItem extends Stock
 {
     /**
      * @var float

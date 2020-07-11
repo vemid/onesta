@@ -38,7 +38,8 @@ class TwigEnvironmentFactory
         }
 
         return new Environment($loader, [
-            'cache' => $config['templates']['cache'] ? $config['templates']['cache_dir'] : false
+            'cache' => $config['templates']['cache'] ? $config['templates']['cache_dir'] : false,
+            'auto_reload' => true
         ]);
     }
 }

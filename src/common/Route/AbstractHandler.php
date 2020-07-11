@@ -186,9 +186,9 @@ abstract class AbstractHandler implements RequestHandlerInterface
             $body = json_encode($body);
         }
 
-        $this->response->withHeader('Content-Type', $this->switchContext($moduleConfig['context']));
         $this->response->withHeader('Content-Encoding', 'gzip');
         $this->response->getBody()->write((string)trim(preg_replace('/\s\s+/', ' ', $body)));
+        header('Content-Type: '. $this->switchContext($moduleConfig['context']));
         $this->response->getBody()->rewind();
 
         if ($this->response->getBody() !== null && !$this->response->hasHeader('Content-Length')) {

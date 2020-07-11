@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Purchases
@@ -14,7 +15,7 @@ use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
  * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\PurchaseRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Purchase extends Stock
+class Purchase extends Entity
 {
     /**
      * @var Code
@@ -34,7 +35,7 @@ class Purchase extends Stock
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      * })
-     * @FormAnnotation\FormElement(type="Hidden", required=true)
+     * @FormAnnotation\FormElement(type="Hidden", required=false)
      */
     protected $client;
 
@@ -61,68 +62,12 @@ class Purchase extends Stock
     protected $guarantor;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="plates", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
-     */
-    protected $plates;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="chassis", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
-     */
-    protected $chassis;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
-     */
-    protected $insuranceLevel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="model", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
-     */
-    protected $model;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="note", type="text", length=65535, nullable=true)
      * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
     protected $note;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="note_2", type="text", length=65535, nullable=true)
-     * @FormAnnotation\FormElement(type="TextArea", required=false)
-     */
-    protected $note2;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="registered_until", type="datetime", nullable=true)
-     * @FormAnnotation\FormElement(type="Date", required=false)
-     */
-    protected $registeredUntil;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="authorization", type="boolean", nullable=true)
-     * @FormAnnotation\FormElement(type="Checkbox", required=false)
-     */
-    protected $authorization;
 
     /**
      * @var \DateTime
@@ -151,102 +96,6 @@ class Purchase extends Stock
     }
 
     /**
-     * Set plates.
-     *
-     * @param string $plates
-     *
-     * @return Purchase
-     */
-    public function setPlates($plates): Purchase
-    {
-        $this->plates = $plates;
-
-        return $this;
-    }
-
-    /**
-     * Get plates.
-     *
-     * @return string
-     */
-    public function getPlates(): ?string
-    {
-        return $this->plates;
-    }
-
-    /**
-     * Set chassis.
-     *
-     * @param string $chassis
-     *
-     * @return Purchase
-     */
-    public function setChassis($chassis): Purchase
-    {
-        $this->chassis = $chassis;
-
-        return $this;
-    }
-
-    /**
-     * Get chassis.
-     *
-     * @return string
-     */
-    public function getChassis(): ?string
-    {
-        return $this->chassis;
-    }
-
-    /**
-     * Set insuranceLevel.
-     *
-     * @param string $insuranceLevel
-     *
-     * @return Purchase
-     */
-    public function setInsuranceLevel($insuranceLevel): Purchase
-    {
-        $this->insuranceLevel = $insuranceLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get insuranceLevel.
-     *
-     * @return string
-     */
-    public function getInsuranceLevel(): ?string
-    {
-        return $this->insuranceLevel;
-    }
-
-    /**
-     * Set model.
-     *
-     * @param string $model
-     *
-     * @return Purchase
-     */
-    public function setModel($model): Purchase
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * Get model.
-     *
-     * @return string
-     */
-    public function getModel(): ?string
-    {
-        return $this->model;
-    }
-
-    /**
      * Set note.
      *
      * @param string|null $note
@@ -268,78 +117,6 @@ class Purchase extends Stock
     public function getNote(): ?string
     {
         return $this->note;
-    }
-
-    /**
-     * Set note2.
-     *
-     * @param string|null $note2
-     *
-     * @return Purchase
-     */
-    public function setNote2($note2 = null): Purchase
-    {
-        $this->note2 = $note2;
-
-        return $this;
-    }
-
-    /**
-     * Get note2.
-     *
-     * @return string|null
-     */
-    public function getNote2(): ?string
-    {
-        return $this->note2;
-    }
-
-    /**
-     * Set registeredUntil.
-     *
-     * @param \DateTime $registeredUntil
-     *
-     * @return Purchase
-     */
-    public function setRegisteredUntil($registeredUntil): Purchase
-    {
-        $this->registeredUntil = $registeredUntil;
-
-        return $this;
-    }
-
-    /**
-     * Get registeredUntil.
-     *
-     * @return \DateTime
-     */
-    public function getRegisteredUntil(): ?\DateTime
-    {
-        return $this->registeredUntil;
-    }
-
-    /**
-     * Set authorization.
-     *
-     * @param bool $authorization
-     *
-     * @return Purchase
-     */
-    public function setAuthorization($authorization): Purchase
-    {
-        $this->authorization = $authorization;
-
-        return $this;
-    }
-
-    /**
-     * Get authorization.
-     *
-     * @return bool
-     */
-    public function getAuthorization(): ?bool
-    {
-        return $this->authorization;
     }
 
     /**

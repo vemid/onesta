@@ -1,0 +1,120 @@
+{% block title %}
+    <title>{{ t('Prijemnica|Pregled') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+{% set client = purchase.client %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card ibox float-e-margins box-shadow">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="space-20"></div>
+                            <h1 class="text-center text-default m-b-lg m-t-lg">Prodaja - {{ purchase.client }}</h1>
+                            <ul class="list-group clear-list m-t">
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Garantor:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.guarantor }}
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Telefon:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.phoneNumber }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Tip klijenta:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.type == 'NATURAL' ? 'Fizičko lice' : 'PRavno lice' }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Grad:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.city }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Email:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.email }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Adresa:</div>
+                                        <div class="col-xs-8">{{ client.address }}</div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">{{ client.type == 'NATURAL' ? 'Jmbg' : 'PIB' }}:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.type == 'NATURAL' ? client.jmbg : client.pib }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                                    <div class="">
+                                        <div class="col-xs-4">Postanski broj:</div>
+                                        <div class="col-xs-8">{{ client.postalCode }}</div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item col-xs-12"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="space-20"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="text-center m-b-lg">Stavke prijemnice</h2>
+                            <table class="table table-stripped tableForm" data-entity="supplier-receipt-items" data-action="{{ cipher('/supplier-receipt-items/create/' ~ supplierReceipt.id) }}">
+                                <thead>
+                                <tr>
+                                    <th class="col-xs-3">Proizvod</th>
+                                    <th class="col-xs-3">Nabavna cena</th>
+                                    <th class="col-xs-3">Prodajna cena</th>
+                                    <th class="col-xs-3">Količina</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for supplierReceiptItem in supplierReceipt.getSupplierReceiptItems() %}
+                                    <tr data-edit="{{ cipher('/supplier-receipt-items/update/' ~ supplierReceiptItem.id) }}" data-delete="{{ cipher('/supplier-receipt-items/delete/' ~ supplierReceiptItem.id) }}">
+                                        <td>{{ supplierReceiptItem.product }}</td>
+                                        <td>{{ supplierReceiptItem.price }}</td>
+                                        <td>{{ supplierReceiptItem.retailPrice }}</td>
+                                        <td>{{ supplierReceiptItem.qty }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                        {{ form['product'].control | raw }}</td>
+                                    <td>{{ form['price'].control | raw }}</td>
+                                    <td>{{ form['retailPrice'].control | raw }}</td>
+                                    <td>{{ form['qty'].control | raw }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

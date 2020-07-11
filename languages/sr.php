@@ -23,5 +23,6 @@ return [
     'Home' => 'Početna',
     'Account Settings' => 'Podesavanje profila',
     'User Management' => 'Podesavanje korisnika',
-    'Record updated' => 'Izmena izvršena'
+    'Record updated' => 'Izmena izvršena',
+    'Save client and add items' => 'Sačuvaj kupca i predji na stavke kupovine'
 ];

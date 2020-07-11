@@ -14,6 +14,7 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="clients", indexes={@ORM\Index(name="guarantor_id", columns={"guarantor_id"})})
  * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\ClientRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Client extends Entity
 {
@@ -92,10 +93,10 @@ class Client extends Entity
     /**
      * @var string
      *
-     * @ORM\Column(name="jbmg", type="string", length=255, nullable=false)
+     * @ORM\Column(name="jmbg", type="string", length=255, nullable=true)
      * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
      */
-    protected $jbmg;
+    protected $jmbg;
 
     /**
      * @var string|null
@@ -347,13 +348,13 @@ class Client extends Entity
     /**
      * Set jbmg.
      *
-     * @param string $jbmg
+     * @param string $jmbg
      *
      * @return Client
      */
-    public function setJbmg($jbmg): Client
+    public function setJmbg($jmbg): Client
     {
-        $this->jbmg = $jbmg;
+        $this->jmbg = $jmbg;
 
         return $this;
     }
@@ -363,9 +364,9 @@ class Client extends Entity
      *
      * @return string
      */
-    public function getJbmg(): ?string
+    public function getJmbg(): ?string
     {
-        return $this->jbmg;
+        return $this->jmbg;
     }
 
     /**
@@ -417,15 +418,13 @@ class Client extends Entity
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
      * @return Client
+     * @throws \Exception
+     * @ORM\PrePersist
      */
-    public function setCreatedAt($createdAt): Client
+    public function setCreatedAt(): Client
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
