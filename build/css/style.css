@@ -10175,4 +10175,8 @@ table th {
   color: #3f3f3f;
 }
 
+.ibox-title {
+  border-style: none !important;
+}
+
 /*# sourceMappingURL=style.css.map */
