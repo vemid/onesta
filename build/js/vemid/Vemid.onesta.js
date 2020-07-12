@@ -102,7 +102,9 @@
                             }
 
                             let qtyElement = $this.parents("table").find("input[name='qty']");
+                            let priceElement = $this.parents("table").find("input[name='price']");
                             qtyElement.trigger("touchspin.updatesettings", {max: respJson.qty});
+                            priceElement.val(respJson.price);
                         }, function (reason) {
                             toastr.error('Error processing request', reason.statusText)
                         });

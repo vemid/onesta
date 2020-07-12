@@ -127,7 +127,7 @@ class SupplierProduct extends Entity
      */
     public function getRetailPrice(): ?float
     {
-        return $this->retailPrice;
+        return (float)$this->retailPrice;
     }
 
     /**

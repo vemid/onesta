@@ -35,6 +35,6 @@ class SupplierProductWrite extends AbstractHandler
             }
         }
 
-        return ['qty' => $stockQty];
+        return ['qty' => $stockQty, 'price' => $supplierProduct->getRetailPrice()];
     }
 }
