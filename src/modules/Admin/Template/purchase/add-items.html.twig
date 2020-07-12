@@ -20,7 +20,9 @@
                                     <div class="">
                                         <div class="col-xs-4">Garantor:</div>
                                         <div class="col-xs-8">
-                                            <a href="/clients/overview/{{ client.id }}" class="text-warning">{{ client.guarantor }}</a>
+                                            {% if purchase.guarantor %}
+                                            <a href="/clients/overview/{{ purchase.guarantor.id }}" class="text-warning">{{ purchase.guarantor }}</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </li>

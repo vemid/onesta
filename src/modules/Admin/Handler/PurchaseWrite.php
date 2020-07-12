@@ -29,6 +29,8 @@ class PurchaseWrite extends AbstractHandler
         $form = $formBuilder->build($purchase);
 
         $postData = $form->getHttpData();
+        $guarantorId = $postData['guarantor'] ?? null;
+
         if (empty($postData['client'])) {
             $client = new Client();
             $clientForm = $formBuilder->build($client, [], false);
@@ -38,14 +40,18 @@ class PurchaseWrite extends AbstractHandler
                 $this->messageBag->pushFormValidationMessages($clientForm);
                 return;
             }
+
+            $postData['guarantor'] = $client->getGuarantor();
+
+            $client->setData($postData);
+
+            $entityManager->persist($client);
+            $entityManager->flush();
+
         } else if (!$client = $entityManager->find(Client::class, $postData['client'])) {
             $this->messageBag->pushFlashMessage($this->translator->_('Client not found!'), null, Builder::DANGER);
             return;
         }
-
-        $client->setData($postData);
-        $entityManager->persist($client);
-        $entityManager->flush();
 
         if (!$paymentType = $entityManager->getRepository(Code::class)->findOneByCode($postData['paymentType'])) {
             $this->messageBag->pushFlashMessage($this->translator->_('Payment type not found!'), null, Builder::DANGER);
@@ -57,6 +63,15 @@ class PurchaseWrite extends AbstractHandler
             return;
         }
 
+        $guarantor = null;
+        if ($guarantorId) {
+            if (!$guarantor = $entityManager->find(Client::class, $guarantorId)) {
+                $this->messageBag->pushFlashMessage($this->translator->_('Guarantor not found!'), null, Builder::DANGER);
+                return;
+            }
+        }
+
+        $postData['guarantor'] = $guarantor;
         $postData['code'] = $code;
         $postData['client'] = $client;
         $postData['paymentType'] = $paymentType;

@@ -79,6 +79,7 @@ class Client extends Entity
      * @var string|null
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     protected $city;
 
