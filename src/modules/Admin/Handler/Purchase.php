@@ -89,6 +89,7 @@ class Purchase extends AbstractHandler
         /** @var $purchase EntityPurchase */
         if (!$purchase = $entityManager->find(EntityPurchase::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
+            return;
         }
 
         $form = $formBuilder->build(new PurchaseItem());

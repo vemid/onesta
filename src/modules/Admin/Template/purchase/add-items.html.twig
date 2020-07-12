@@ -19,7 +19,7 @@
                                     <div class="">
                                         <div class="col-xs-4">Garantor:</div>
                                         <div class="col-xs-8">
-                                            {{ client.guarantor }}
+                                            <a href="/clients/overview/{{ client.id }}" class="text-warning">{{ client.guarantor }}</a>
                                         </div>
                                     </div>
                                 </li>
@@ -83,14 +83,14 @@
                     <div class="space-20"></div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <h2 class="text-center m-b-lg">Stavke prijemnice</h2>
+                            <h2 class="text-center m-b-lg">Stavke kupovine</h2>
                             <table class="table table-stripped tableForm" data-entity="supplier-receipt-items" data-action="{{ cipher('/supplier-receipt-items/create/' ~ supplierReceipt.id) }}">
                                 <thead>
                                 <tr>
                                     <th class="col-xs-3">Proizvod</th>
-                                    <th class="col-xs-3">Nabavna cena</th>
-                                    <th class="col-xs-3">Prodajna cena</th>
-                                    <th class="col-xs-3">Količina</th>
+                                    <th class="col-xs-2">Cena</th>
+                                    <th class="col-xs-2">Količina</th>
+                                    <th class="col-xs-4">Beleška</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -103,11 +103,10 @@
                                     </tr>
                                 {% endfor %}
                                 <tr>
-                                    <td>
-                                        {{ form['product'].control | raw }}</td>
+                                    <td>{{ form['supplierProduct'].control | raw }}</td>
                                     <td>{{ form['price'].control | raw }}</td>
-                                    <td>{{ form['retailPrice'].control | raw }}</td>
                                     <td>{{ form['qty'].control | raw }}</td>
+                                    <td>{{ form['note1'].control | raw }}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -88,6 +88,27 @@
                 });
             },
 
+            supplierProductChange: function () {
+                $(document).on("change", "select[name='supplierProduct']", function (e) {
+                    let formData = new FormData();
+                    let $this = $(this);
+                    formData.append('id', $(this).val());
+
+                    Vemid.misc.makeAjaxCall('/form/supplier-products/get-qty',"POST", formData)
+                        .then(function (respJson) {
+                            if (typeof respJson.qty === "undefined") {
+                                toastr.error('Server error');
+                                return;
+                            }
+
+                            let qtyElement = $this.parents("table").find("input[name='qty']");
+                            qtyElement.trigger("touchspin.updatesettings", {max: respJson.qty});
+                        }, function (reason) {
+                            toastr.error('Error processing request', reason.statusText)
+                        });
+                });
+            },
+
             clientTypeSelect: function () {
                 $(document).on("change", "select[name='type']", function (e) {
                     let val = $(this).val(),
@@ -120,6 +141,7 @@
                 this.guarantorAutocomplete();
                 this.purchaseTypeSelect();
                 this.clientTypeSelect();
+                this.supplierProductChange();
                 Vemid.tableForm.init($(".tableForm"));
             }
         }

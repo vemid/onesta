@@ -43,6 +43,15 @@
                 $chosen.trigger('chosen:updated');
             },
 
+            initTouchSpin: function () {
+                $(".touchSpin").TouchSpin({})
+                    .on("touchspin.on.max", function (e, r) {
+                        $(e.currentTarget).parents("td").addClass("has-error");
+                        let val = $(e.currentTarget).val();
+                        toastr.error(Vemid.language.get("limitReached"), 'Preotala količina u magacinu: ' + val);
+                });
+            },
+
             initSwitcherCheckbox: function () {
                 $(".switcher").each(function (key, elem) {
                     if (!elem.hasAttribute("data-switchery")) {
@@ -165,6 +174,7 @@
                 this.redirectLogout();
                 this.removeExpiredStorageItems();
                 this.initTinyMce();
+                this.initTouchSpin();
             }
         };
     })();

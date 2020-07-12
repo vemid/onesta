@@ -255,6 +255,10 @@
         applyFilters: {
             en: "Apply filter",
             sr: "Primeni filter"
+        },
+        limitReached: {
+            en: "Limit reached",
+            sr: "Limit dostignut"
         }
     });
 }).call(Vemid, $);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Entity\Entity;
 
@@ -19,6 +20,7 @@ class PurchaseItem extends Stock
      * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=9, scale=2, nullable=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     protected $price;
 
@@ -26,6 +28,7 @@ class PurchaseItem extends Stock
      * @var int
      *
      * @ORM\Column(name="qty", type="integer", nullable=false)
+     * @FormAnnotation\FormElement(type="Number", required=true)
      */
     protected $qty;
 
@@ -33,6 +36,7 @@ class PurchaseItem extends Stock
      * @var string|null
      *
      * @ORM\Column(name="note_1", type="text", length=0, nullable=true)
+     * @FormAnnotation\FormElement(type="TextArea", required=false, name="Note")
      */
     protected $note1;
 
@@ -76,6 +80,7 @@ class PurchaseItem extends Stock
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="supplier_product_id", referencedColumnName="id")
      * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="SupplierProduct")
      */
     protected $supplierProduct;
 

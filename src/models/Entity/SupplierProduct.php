@@ -219,4 +219,9 @@ class SupplierProduct extends Entity
     {
         return $this->stocks;
     }
+
+    public function __toString()
+    {
+        return sprintf('%s - %s', (string)$this->getProduct(), (string)$this->getSupplier());
+    }
 }

@@ -69,7 +69,7 @@
         };
 
         let _deleteClonedRow = function() {
-            $(".delete-cloned-row").click(function() {
+            $(document).on("click", ".delete-cloned-row", function() {
                 let tr = $(this).parents("tr");
                 let table = tr.parents("table");
                 let select = tr.find("select");
@@ -230,8 +230,11 @@
                     throw new Error('Selector must be a table element');
                 }
 
-                let lastRow = $("tr:last", table);
-
+                let firstRow = $("tbody tr:first", table);
+                let lastRow = firstRow.siblings(":last");
+                if (lastRow.length === 0) {
+                    lastRow = firstRow;
+                }
 
                 if (_checkIfRowIsForm(lastRow)) {
                     let footerHtml = _initActionFoot();

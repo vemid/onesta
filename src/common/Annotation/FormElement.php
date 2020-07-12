@@ -22,7 +22,7 @@ final class FormElement
      *
      * @var string
      *
-     * @Enum({"Text", "Select", "TextArea", "Checkbox", "Hidden", "Date", "DateTime", "Email", "Password", "Upload", "MultiSelect"})
+     * @Enum({"Text", "Select", "TextArea", "Checkbox", "Hidden", "Date", "DateTime", "Email", "Password", "Upload", "MultiSelect", "Number"})
      */
     public $type = 'Text';
 
