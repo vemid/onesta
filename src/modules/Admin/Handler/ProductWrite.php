@@ -81,6 +81,10 @@ class ProductWrite extends GridHandler
         $entityManager->persist($product);
         $entityManager->flush();
 
+        if ($product->getType() === Product::SERVICE) {
+            //Add onesta supplier
+        }
+
         $this->messageBag->pushFlashMessage($this->translator->_('Product added!'), null, Builder::SUCCESS);
 
         return $this->redirect('/products/list/' . ($product->getType() === Product::MERCHANDISE ? 1 : 2));

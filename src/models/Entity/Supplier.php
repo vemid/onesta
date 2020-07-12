@@ -29,6 +29,13 @@ class Supplier extends Entity
     /**
      * @var string
      *
+     * @ORM\Column(name="owner", type="boolean", length=1, nullable=false)
+     */
+    protected $owner;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
@@ -81,6 +88,30 @@ class Supplier extends Entity
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param boolean $owner
+     * @ORM\PrePersist
+     * @return Supplier
+     */
+    public function setOwner(): Supplier
+    {
+        $this->owner = 0;
+
+        return $this;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getOwner(): ?string
+    {
+        return $this->owner;
     }
 
     /**

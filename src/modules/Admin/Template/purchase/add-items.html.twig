@@ -95,14 +95,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for supplierReceiptItem in supplierReceipt.getSupplierReceiptItems() %}
-                                    <tr data-edit="{{ cipher('/supplier-receipt-items/update/' ~ supplierReceiptItem.id) }}" data-delete="{{ cipher('/supplier-receipt-items/delete/' ~ supplierReceiptItem.id) }}">
-                                        <td>{{ supplierReceiptItem.product }}</td>
-                                        <td>{{ supplierReceiptItem.price }}</td>
-                                        <td>{{ supplierReceiptItem.retailPrice }}</td>
-                                        <td>{{ supplierReceiptItem.qty }}</td>
-                                    </tr>
-                                {% endfor %}
+{#                                {% for supplierReceiptItem in supplierReceipt.getSupplierReceiptItems() %}#}
+{#                                    <tr data-edit="{{ cipher('/supplier-receipt-items/update/' ~ supplierReceiptItem.id) }}" data-delete="{{ cipher('/supplier-receipt-items/delete/' ~ supplierReceiptItem.id) }}">#}
+{#                                        <td>{{ supplierReceiptItem.product }}</td>#}
+{#                                        <td>{{ supplierReceiptItem.price }}</td>#}
+{#                                        <td>{{ supplierReceiptItem.retailPrice }}</td>#}
+{#                                        <td>{{ supplierReceiptItem.qty }}</td>#}
+{#                                    </tr>#}
+{#                                {% endfor %}#}
                                 <tr>
                                     <td>{{ form['supplierProduct'].control | raw }}</td>
                                     <td>{{ form['price'].control | raw }}</td>

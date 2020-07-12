@@ -26,11 +26,14 @@ class SupplierRepository extends EntityRepository
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Supplier::class, 's')
-            ->where('1=1');
+            ->where('1=1')
+            ->andWhere('s.owner = :owner');
 
         if (\count($criteria)) {
             $this->filterCriteriaBuilder($queryBuilder, $criteria, Supplier::class);
         }
+
+        $queryBuilder->setParameter('owner', 0);
 
         if ($offset) {
             $queryBuilder->setFirstResult($offset);

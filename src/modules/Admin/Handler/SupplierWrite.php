@@ -59,6 +59,8 @@ class SupplierWrite extends GridHandler
         $supplier = new Supplier();
 
         $form = $formBuilder->build($supplier);
+        $form->setValues($_POST);
+
         $postData = $form->getHttpData();
 
         if (!$form->isValid()) {
