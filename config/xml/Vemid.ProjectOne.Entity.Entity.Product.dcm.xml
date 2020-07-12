@@ -7,6 +7,11 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    <field name="type" type="string" column="name" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <field name="name" type="string" column="name" length="255" nullable="false">
       <options>
         <option name="fixed"/>

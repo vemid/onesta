@@ -17,6 +17,9 @@ use Vemid\ProjectOne\Entity\Entity;
  */
 class Product extends Entity
 {
+    public const SERVICE = 'SERVICE';
+    public const MERCHANDISE = 'MERCHANDISE';
+
     /**
      * @var int
      *
@@ -26,6 +29,14 @@ class Product extends Entity
      * @FormAnnotation\FormElement(type="Hidden", required=true)
      */
     protected $id;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @FormAnnotation\FormElement(type="Hidden", required=true)
+     */
+    protected $type;
 
     /**
      * @var Code
@@ -60,6 +71,30 @@ class Product extends Entity
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     protected $createdAt;
+
+    /**
+     * Get type.
+     *
+     * @return Product
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string|null $type
+     *
+     * @return Product
+     */
+    public function setType($type = null): Product
+    {
+        $this->type = $type;
+
+        return $this;
+    }
 
     /**
      * Set name.

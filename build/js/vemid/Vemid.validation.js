@@ -51,7 +51,9 @@
                 $.each($elements, function (index, element) {
                     let isValidElement = _validateElement(element);
                     if (!isValidElement) {
+                        console.log(element);
                         isValidForm = false;
+                        return;
                     }
                 });
 

@@ -128,6 +128,7 @@
             let isValid = Vemid.validation.validateForm(form);
 
             if (!isValid) {
+                console.log("adsa");
                 return;
             }
 

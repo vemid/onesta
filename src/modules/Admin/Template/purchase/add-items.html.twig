@@ -13,7 +13,8 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="space-20"></div>
-                            <h1 class="text-center text-default m-b-lg m-t-lg">Prodaja - {{ purchase.client }}</h1>
+                            <h1 class="text-center m-b-lg m-t-lg">Prodaja -
+                                <a class="text-warning" href="/clients/overiview/{{ client.id }}">{{ client }}</a></h1>
                             <ul class="list-group clear-list m-t">
                                 <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                                     <div class="">
@@ -83,7 +84,7 @@
                     <div class="space-20"></div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <h2 class="text-center m-b-lg">Stavke kupovine</h2>
+                            <h2 class="text-center m-b-lg">Proizvodi i Usluge</h2>
                             <table class="table table-stripped tableForm" data-entity="supplier-receipt-items" data-action="{{ cipher('/supplier-receipt-items/create/' ~ supplierReceipt.id) }}">
                                 <thead>
                                 <tr>

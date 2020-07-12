@@ -49,7 +49,7 @@ class Purchase extends AbstractHandler
         }
 
         $purchaseCodeType = $entityManager->getRepository(CodeType::class)->findOneByCode([
-            'code' => 'PURCHASE_TYPE'
+            'code' => 'SHOP'
         ]);
 
         $purchaseCodes = $entityManager->getRepository(Code::class)->findByCodeType([

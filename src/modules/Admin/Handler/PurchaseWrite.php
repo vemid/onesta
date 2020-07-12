@@ -38,7 +38,7 @@ class PurchaseWrite extends AbstractHandler
                 $this->messageBag->pushFormValidationMessages($clientForm);
                 return;
             }
-        } else if (!$client = $entityManager->find(Client::class, $postData['clientId'])) {
+        } else if (!$client = $entityManager->find(Client::class, $postData['client'])) {
             $this->messageBag->pushFlashMessage($this->translator->_('Client not found!'), null, Builder::DANGER);
             return;
         }

@@ -17,7 +17,8 @@
         {
             text: '<i class="fa fa-plus-circle bigger-160 text-default" aria-hidden="true"></i>',
             action: function (e, dt, node, config) {
-                window.location.href = Vemid.config.formUrl + table.attr("data-entity") + "s/create";
+                let type = table.attr("data-type");
+                window.location.href = Vemid.config.formUrl + table.attr("data-entity") + "s/create" + (typeof type !== 'undefined' && !!type ? "/" + type : '');
             },
             titleAttr: Vemid.language.get("createNew"),
             exportOptions: {

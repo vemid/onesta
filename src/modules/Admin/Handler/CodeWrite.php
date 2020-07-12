@@ -59,6 +59,7 @@ class CodeWrite extends GridHandler
 
         $form = $formBuilder->build($code);
         $postData = $form->getHttpData();
+        $form->setValues($_POST);
 
         if (!$form->isValid()) {
             $this->messageBag->pushFormValidationMessages($form);

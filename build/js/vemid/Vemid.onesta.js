@@ -21,9 +21,11 @@
                                 let $id =  ui.item.id;
                                 Vemid.misc.makeAjaxCall("/form/clients/fetch-by-id/" + $id, "GET")
                                     .then(function (respJson) {
-                                        if (respJson.length) {
+                                        console.log(respJson);
+                                        if (Object.keys(respJson).length) {
                                             $.each(respJson, function (property, value) {
                                                 let $el = $("[name ='"+ property +"']");
+                                                console.log($el);
                                                 if ($el.length) {
                                                     $el.val(value);
 

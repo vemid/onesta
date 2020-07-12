@@ -139,7 +139,7 @@
                     column += "&nbsp;<a href='#' data-delete data-form-url='"+ entityDelete +"' class='text-danger bigger-120 text-center'><i class='fa fa-remove'></i></a>";
                 }
 
-                column += "<td>";
+                column += "</td>";
             }
 
             $row.append(column);

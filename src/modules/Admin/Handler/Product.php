@@ -18,15 +18,17 @@ use \Vemid\ProjectOne\Entity\Entity\CodeType;
  */
 class Product extends AbstractHandler
 {
-    public function list(ProductFilterForm $productFilterForm): void
+    public function list($id, ProductFilterForm $productFilterForm): void
     {
         $this->view->setTemplate('product::list.html.twig', [
-            'form' => $productFilterForm->generate()
+            'form' => $productFilterForm->generate(),
+            'id' => $id
         ]);
     }
 
-    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager): void
+    public function create($type, FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager): void
     {
+        $type = (int)$type === 1 ? EntityProduct::MERCHANDISE : EntityProduct::SERVICE;
         /** @var CodeType $codeType */
         $codeType = $entityManager->getRepository(CodeType::class)->findOneByCode([
             'code' => 'PRODUCT_TYPE'
@@ -43,6 +45,8 @@ class Product extends AbstractHandler
         }
 
         $form = $formBuilder->build(new EntityProduct);
+        $form->removeComponent($form->getComponent('id'));
+        $form->getComponent('type')->setValue($type);
         $form->getComponent('code')->setItems($options);
 
         $this->view->setTemplate('product::create.html.twig', [

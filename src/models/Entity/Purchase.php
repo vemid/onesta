@@ -24,7 +24,7 @@ class Purchase extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="code_id", referencedColumnName="id")
      * })
-     * @FormAnnotation\FormElement(type="Select", required=true, name="Vrsta kupovine")
+     * @FormAnnotation\FormElement(type="Select", required=true, name="Prodavac")
      */
     protected $code;
 

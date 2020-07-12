@@ -19,13 +19,15 @@ use Vemid\ProjectOne\Entity\Repository\ProductRepository;
  */
 class ProductWrite extends GridHandler
 {
-    public function list(EntityManagerInterface $entityManager): array
+    public function list($type, EntityManagerInterface $entityManager): array
     {
+        $type = (int)$type === 1 ? Product::MERCHANDISE : Product::SERVICE;
+
         /** @var ProductRepository $productRepository */
         $productRepository = $entityManager->getRepository(Product::class);
-        $products = $productRepository->fetchProducts($this->limit, $this->offset, $this->filterColumns);
-        $totalProducts = $productRepository->fetchProducts(0, 0);
-        $filteredProducts = $productRepository->fetchProducts(0, 0, $this->filterColumns);
+        $products = $productRepository->fetchProducts($type, $this->limit, $this->offset, $this->filterColumns);
+        $totalProducts = $productRepository->fetchProducts($type, 0, 0);
+        $filteredProducts = $productRepository->fetchProducts($type, 0, 0, $this->filterColumns);
 
         $data = [];
         foreach ($products as $product) {
@@ -58,6 +60,9 @@ class ProductWrite extends GridHandler
         $product = new Product();
 
         $form = $formBuilder->build($product);
+        $form->removeComponent($form->getComponent('id'));
+        $form->setValues($_POST);
+
         $postData = $form->getHttpData();
 
         if (!$form->isValid()) {
@@ -78,7 +83,7 @@ class ProductWrite extends GridHandler
 
         $this->messageBag->pushFlashMessage($this->translator->_('Product added!'), null, Builder::SUCCESS);
 
-        return $this->redirect('/products/list');
+        return $this->redirect('/products/list/' . ($product->getType() === Product::MERCHANDISE ? 1 : 2));
     }
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)

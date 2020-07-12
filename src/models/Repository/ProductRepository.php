@@ -35,22 +35,26 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * @param $type
      * @param $limit
      * @param $offset
      * @param array $criteria
-     * @return Product[]
+     * @return mixed
      */
-    public function fetchProducts($limit, $offset, $criteria = [])
+    public function fetchProducts($type, $limit, $offset, $criteria = [])
     {
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p')
             ->leftJoin(Code::class, 'c', Join::WITH, 'p.code = c.id')
-            ->where('1=1');
+            ->where('1=1')
+            ->andWhere('p.type = :type');
 
         if (\count($criteria)) {
            $this->filterCriteriaBuilder($queryBuilder, $criteria, Product::class);
         }
+
+        $queryBuilder->setParameter('type', $type);
 
         if ($offset) {
             $queryBuilder->setFirstResult($offset);
