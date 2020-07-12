@@ -95,12 +95,6 @@ class EntityAnnotationReader implements FormBuilderInterface
                     $cssClass .= ' dateTimePicker';
                 case 'Number':
                     $cssClass .= ' touchSpin';
-                    $element->setHtmlAttribute('data-bts-max', 100);
-                    $element->setHtmlAttribute('data-bts-min', 2);
-                    $element->setHtmlAttribute('data-bts-step', 1);
-                    $element->setHtmlAttribute('data-bts-force-step-divisibility', 'round');
-                    $element->setHtmlAttribute('data-bts-button-down-class', 'btn btn-default');
-                    $element->setHtmlAttribute('data-bts-button-up-class', 'btn btn-default');
             }
 
             if ($inline) {

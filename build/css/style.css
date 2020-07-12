@@ -10168,4 +10168,11 @@ table th {
   padding: 0 0 5px 0 !important;
 }
 
+.btn.btn-link {
+  font-size: 16px;
+}
+.btn.btn-link:hover {
+  color: #3f3f3f;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -44,11 +44,19 @@
             },
 
             initTouchSpin: function () {
-                $(".touchSpin").TouchSpin({})
-                    .on("touchspin.on.max", function (e, r) {
+                $(".touchSpin").TouchSpin({
+                    min: 0,
+                    initval: 1,
+                    max: 100000,
+                    stepinterval: 1,
+                    buttondown_class: "btn btn-link",
+                    buttonup_class: "btn btn-link",
+                }).on("touchspin.on.max", function (e) {
                         $(e.currentTarget).parents("td").addClass("has-error");
                         let val = $(e.currentTarget).val();
-                        toastr.error(Vemid.language.get("limitReached"), 'Preotala količina u magacinu: ' + val);
+                        toastr.error(Vemid.language.get("limitReached"), 'Preostala količina u magacinu: ' + val);
+                }).on("touchspin.on.startdownspin", function (e) {
+                        $(e.currentTarget).parents("td").removeClass("has-error");
                 });
             },
 
