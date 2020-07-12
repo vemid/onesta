@@ -27,7 +27,7 @@ class Supplier extends Entity
     protected $id;
 
     /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(name="owner", type="boolean", length=1, nullable=false)
      */
@@ -107,9 +107,9 @@ class Supplier extends Entity
     /**
      * Get name.
      *
-     * @return string
+     * @return bool
      */
-    public function getOwner(): ?string
+    public function getOwner(): ?bool
     {
         return $this->owner;
     }

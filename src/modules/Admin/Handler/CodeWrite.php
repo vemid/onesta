@@ -31,7 +31,6 @@ class CodeWrite extends GridHandler
         foreach ($codes as $code) {
             $data[] = [
                 (string)$code->getCodeType(),
-                $code->getCode(),
                 (string)$code->getName(),
                 (string)$code->getParent(),
                 HtmlTag::groupLink([

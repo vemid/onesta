@@ -105,8 +105,16 @@
 
                             let qtyElement = $this.parents("table").find("input[name='qty']");
                             let priceElement = $this.parents("table").find("input[name='price']");
-                            qtyElement.trigger("touchspin.updatesettings", {max: respJson.qty});
+                            let maxQty = respJson.qty;
                             priceElement.val(respJson.price);
+                            qtyElement.parents("td").removeClass("has-error");
+
+                            if (!respJson.disableQty) {
+                                maxQty = 100000;
+                            }
+
+                            qtyElement.trigger("touchspin.updatesettings", {max: maxQty});
+
                         }, function (reason) {
                             toastr.error('Error processing request', reason.statusText)
                         });

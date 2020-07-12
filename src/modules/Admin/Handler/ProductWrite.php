@@ -11,6 +11,8 @@ use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use \Vemid\ProjectOne\Entity\Entity\Product;
+use Vemid\ProjectOne\Entity\Entity\SupplierProduct;
+use Vemid\ProjectOne\Entity\Entity\Supplier as EntitySupplier;
 use Vemid\ProjectOne\Entity\Repository\ProductRepository;
 
 /**
@@ -82,7 +84,19 @@ class ProductWrite extends GridHandler
         $entityManager->flush();
 
         if ($product->getType() === Product::SERVICE) {
-            //Add onesta supplier
+            if (!$supplier = $entityManager->getRepository(EntitySupplier::class)->findOneByOwner(true)) {
+                $this->messageBag->pushFlashMessage($this->translator->_('Wrong setup!'), null, Builder::DANGER);
+                return;
+            }
+
+            $supplierProduct = new SupplierProduct();
+            $supplierProduct->setProduct($product);
+            $supplierProduct->setSupplier($supplier);
+            $supplierProduct->setRetailPrice(1);
+            $supplierProduct->setAvgPurchasePrice(1);
+
+            $entityManager->persist($supplierProduct);
+            $entityManager->flush();
         }
 
         $this->messageBag->pushFlashMessage($this->translator->_('Product added!'), null, Builder::SUCCESS);

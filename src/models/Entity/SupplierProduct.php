@@ -222,6 +222,6 @@ class SupplierProduct extends Entity
 
     public function __toString()
     {
-        return sprintf('%s - %s', (string)$this->getProduct(), (string)$this->getSupplier());
+        return sprintf('%s%s', (string)$this->getProduct(), (!$this->getSupplier()->getOwner() ? ' - ' . (string)$this->getSupplier() : ''));
     }
 }

@@ -35,6 +35,8 @@ class SupplierProductWrite extends AbstractHandler
             }
         }
 
-        return ['qty' => $stockQty, 'price' => $supplierProduct->getRetailPrice()];
+        $owner = $supplierProduct->getSupplier()->getOwner();
+
+        return ['qty' => !$owner ? $stockQty : 1, 'price' => $supplierProduct->getRetailPrice(), 'disableQty' => !$owner];
     }
 }
