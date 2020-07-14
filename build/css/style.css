@@ -10179,4 +10179,15 @@ table th {
   border-style: none !important;
 }
 
+input[type=checkbox] {
+  float: right;
+  width: 50%;
+}
+
+.controls label {
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+}
+
 /*# sourceMappingURL=style.css.map */

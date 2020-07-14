@@ -20,7 +20,7 @@ class Registration extends Stock
      * @var string|null
      *
      * @ORM\Column(name="plates", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     private $plates;
 
@@ -28,7 +28,7 @@ class Registration extends Stock
      * @var string|null
      *
      * @ORM\Column(name="chassis", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     private $chassis;
 
@@ -36,7 +36,7 @@ class Registration extends Stock
      * @var string|null
      *
      * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     private $insuranceLevel;
 
@@ -44,7 +44,7 @@ class Registration extends Stock
      * @var string|null
      *
      * @ORM\Column(name="model", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false, hidden=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
     private $model;
 
@@ -95,6 +95,7 @@ class Registration extends Stock
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      * })
+     * @FormAnnotation\FormElement(type="Hidden", required=true)
      */
     private $purchase;
 
@@ -118,7 +119,7 @@ class Registration extends Stock
      *
      * @return string|null
      */
-    public function getPlates()
+    public function getPlates(): ?string
     {
         return $this->plates;
     }
@@ -166,7 +167,7 @@ class Registration extends Stock
      *
      * @return string|null
      */
-    public function getInsuranceLevel(): string
+    public function getInsuranceLevel(): ?string
     {
         return $this->insuranceLevel;
     }

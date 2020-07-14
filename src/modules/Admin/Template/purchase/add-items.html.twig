@@ -105,7 +105,7 @@
 
                 </div>
                 <div class="ibox-content" style="display: none">
-                    adasdasdasda
+                    {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add registration')} only %}
                 </div>
             </div>
         </div>
@@ -121,10 +121,10 @@
                             <table class="table table-stripped tableForm" data-entity="supplier-receipt-items" data-action="{{ cipher('/supplier-receipt-items/create/' ~ supplierReceipt.id) }}">
                                 <thead>
                                 <tr>
-                                    <th class="col-xs-3">Proizvod</th>
-                                    <th class="col-xs-2">Cena</th>
-                                    <th class="col-xs-2">Količina</th>
-                                    <th class="col-xs-4">Beleška</th>
+                                    <th class="col-xs-3 text-center">Proizvod</th>
+                                    <th class="col-xs-2 text-center">Cena</th>
+                                    <th class="col-xs-2 text-center">Količina</th>
+                                    <th class="col-xs-4 text-center">Beleška</th>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -14,6 +14,7 @@ use \Vemid\ProjectOne\Entity\Entity\Purchase as EntityPurchase;
 use \Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
 use \Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
+use Vemid\ProjectOne\Entity\Entity\Registration;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceipt as EntitySupplierReceipt;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem as EntitySupplierReceiptItem;
 
@@ -93,9 +94,19 @@ class Purchase extends AbstractHandler
         }
 
         $form = $formBuilder->build(new PurchaseItem());
+        $registrationForm = $formBuilder->build(new Registration());
+        $registrationForm->getComponent('purchase')->setValue($id);
+
+        foreach ($registrationForm->getComponents() as $component) {
+            $type = $component->controlPrototype->getAttribute('type');
+            $t = 0;
+//            $control = $component->getControl();
+        }
+
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,
-            'form' => $form
+            'form' => $form,
+            'registrationForm' => $registrationForm
         ]);
     }
 }

@@ -111,6 +111,7 @@
 
                             if (!respJson.disableQty) {
                                 maxQty = 100000;
+                                qtyElement.val(1);
                             }
 
                             qtyElement.trigger("touchspin.updatesettings", {max: maxQty});

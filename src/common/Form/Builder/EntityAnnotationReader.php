@@ -88,13 +88,20 @@ class EntityAnnotationReader implements FormBuilderInterface
                 $element->setRequired($this->translator->_(sprintf('Please fill your %s.', $filter->filter($label))));
                 $cssClass .= ' required';
             }
+
             switch ($formPropertyAnnotation->type) {
                 case 'Date':
                     $cssClass .= ' datepicker';
+                    break;
                 case 'DateTime':
                     $cssClass .= ' dateTimePicker';
+                    break;
                 case 'Number':
                     $cssClass .= ' touchSpin';
+                    break;
+                default:
+                    $cssClass .= '';
+                    break;
             }
 
             if ($inline) {
