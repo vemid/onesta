@@ -11,6 +11,8 @@ use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
+use Vemid\ProjectOne\Entity\Entity\Registration;
+use Vemid\ProjectOne\Entity\Entity\Supplier;
 
 /**
  * Class PurchaseWrite
@@ -88,5 +90,37 @@ class PurchaseWrite extends AbstractHandler
         $this->messageBag->pushFlashMessage($this->translator->_('Client added!'), null, Builder::SUCCESS);
 
         return $this->redirect('/purchases/add-items/' . $purchase->getId());
+    }
+
+    public function addRegistration($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
+    {
+        /** @var $purchase Purchase */
+        if (!$purchase = $entityManager->find(Purchase::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
+            return;
+        }
+
+        $registration = new Registration();
+
+        $form = $formBuilder->build($registration);
+        $form->setValues($_POST);
+
+        $postData = $form->getHttpData();
+        $postData['authorization'] = $postData['authorization'] ?? 0;
+
+        if (!$form->isValid()) {
+            $this->messageBag->pushFormValidationMessages($form);
+            return;
+        }
+
+        $postData['purchase'] = $purchase;
+        $postData['registeredUntil'] = new \DateTime($postData['registeredUntil']);
+
+        $registration->setData($postData);
+
+        $entityManager->persist($registration);
+        $entityManager->flush();
+
+        return $this->forward(sprintf('/purchase/get-registration/%s', $registration->getId()));
     }
 }

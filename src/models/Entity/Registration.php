@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
+use Vemid\ProjectOne\Entity\Entity;
 
 /**
  * Registrations
@@ -14,13 +15,13 @@ use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class Registration extends Stock
+class Registration extends Entity
 {
     /**
      * @var string|null
      *
      * @ORM\Column(name="plates", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $plates;
 
@@ -28,17 +29,17 @@ class Registration extends Stock
      * @var string|null
      *
      * @ORM\Column(name="chassis", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false)
+     * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $chassis;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false)
+     * @ORM\Column(name="registered_until", type="datetime", nullable=true)
+     * @FormAnnotation\FormElement(type="Date", required=true)
      */
-    private $insuranceLevel;
+    private $registeredUntil;
 
     /**
      * @var string|null
@@ -49,25 +50,25 @@ class Registration extends Stock
     private $model;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="registered_until", type="datetime", nullable=true)
-     * @FormAnnotation\FormElement(type="Date", required=false)
+     * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=false)
      */
-    private $registeredUntil;
+    private $insuranceLevel;
 
     /**
-     * @var bool
+     * @var boolean
      *
      * @ORM\Column(name="authorization", type="boolean", nullable=true)
      * @FormAnnotation\FormElement(type="Checkbox", required=false, name="Saglasnost registracije u ime kupca")
      */
-    protected $authorization;
+    private $authorization;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="note", type="text", length=0, nullable=true)
+     * @ORM\Column(name="note", type="text", length=512, nullable=true)
      * @FormAnnotation\FormElement(type="TextArea", required=false)
      */
     private $note;
@@ -91,10 +92,8 @@ class Registration extends Stock
     /**
      * @var Purchase
      *
-     * @ORM\ManyToOne(targetEntity="Purchase")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
-     * })
+     * @ORM\OneToOne(targetEntity="Purchase")
+     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      * @FormAnnotation\FormElement(type="Hidden", required=true)
      */
     private $purchase;
@@ -173,6 +172,30 @@ class Registration extends Stock
     }
 
     /**
+     * Set authorization.
+     *
+     * @param bool $authorization
+     *
+     * @return Purchase
+     */
+    public function setAuthorization($authorization): Registration
+    {
+        $this->authorization = (bool)$authorization;
+
+        return $this;
+    }
+
+    /**
+     * Get authorization.
+     *
+     * @return bool
+     */
+    public function getAuthorization(): ?bool
+    {
+        return $this->authorization;
+    }
+
+    /**
      * Set model.
      *
      * @param string|null $model
@@ -218,30 +241,6 @@ class Registration extends Stock
     public function getRegisteredUntil(): ?\DateTime
     {
         return $this->registeredUntil;
-    }
-
-    /**
-     * Set authorization.
-     *
-     * @param bool $authorization
-     *
-     * @return Purchase
-     */
-    public function setAuthorization($authorization): Registration
-    {
-        $this->authorization = $authorization;
-
-        return $this;
-    }
-
-    /**
-     * Get authorization.
-     *
-     * @return bool
-     */
-    public function getAuthorization(): ?bool
-    {
-        return $this->authorization;
     }
 
     /**

@@ -128,7 +128,6 @@
             let isValid = Vemid.validation.validateForm(form);
 
             if (!isValid) {
-                console.log("adsa");
                 return;
             }
 
@@ -142,6 +141,10 @@
 
                     if (typeof respJson.next !== "undefined") {
                         Vemid.misc.nextWindow(respJson.next, form.parent());
+                        if ($(".loader-box").length) {
+                            $(".loader-box").hide();
+                        }
+
                         return;
                     }
 
@@ -160,7 +163,7 @@
                     }
                 }, function (reason) {
                     $(".loader-box").hide();
-                    toastr.error('Error processing request', reason.statusText)
+                    toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
                 });
         };
 
@@ -281,7 +284,7 @@
                         Vemid.misc.readFileFromInput();
                         Vemid.datetime.init($(".datetime"));
                     }, function (reason) {
-                        toastr.error('Error processing request', reason.responseText)
+                        toastr.error(Vemid.language.get('errorRequest'), reason.responseText)
                     });
 
                 });
@@ -321,7 +324,7 @@
                                     }
                                 }
                             }, function (reason) {
-                                toastr.error('Error processing request', reason.statusText)
+                                toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
                             });
                     });
                 });

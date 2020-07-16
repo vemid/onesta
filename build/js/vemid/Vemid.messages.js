@@ -259,6 +259,10 @@
         limitReached: {
             en: "Limit reached",
             sr: "Limit dostignut"
+        },
+        errorRequest: {
+            en: 'Error processing request',
+            sr: 'Greska u procesiranju zahteva'
         }
     });
 }).call(Vemid, $);

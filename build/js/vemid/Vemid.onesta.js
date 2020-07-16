@@ -117,7 +117,7 @@
                             qtyElement.trigger("touchspin.updatesettings", {max: maxQty});
 
                         }, function (reason) {
-                            toastr.error('Error processing request', reason.statusText)
+                            toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
                         });
                 });
             },

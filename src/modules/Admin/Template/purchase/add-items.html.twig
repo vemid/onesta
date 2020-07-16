@@ -105,7 +105,11 @@
 
                 </div>
                 <div class="ibox-content" style="display: none">
-                    {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add registration')} only %}
+                    {% if not purchase.registration %}
+                        {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add Registration')} only %}
+                    {% else %}
+                        <div id="next"></div>
+                    {% endif %}
                 </div>
             </div>
         </div>

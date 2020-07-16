@@ -95,13 +95,9 @@ class Purchase extends AbstractHandler
 
         $form = $formBuilder->build(new PurchaseItem());
         $registrationForm = $formBuilder->build(new Registration());
-        $registrationForm->getComponent('purchase')->setValue($id);
 
-        foreach ($registrationForm->getComponents() as $component) {
-            $type = $component->controlPrototype->getAttribute('type');
-            $t = 0;
-//            $control = $component->getControl();
-        }
+        $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
+        $registrationForm->getComponent('purchase')->setValue($id);
 
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,

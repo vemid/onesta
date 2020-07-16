@@ -214,7 +214,7 @@
 
                         }, function (reason) {
                             $(".loader-box").hide();
-                            toastr.error('Error processing request', reason.statusText)
+                            toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
                         });
                 }
             });

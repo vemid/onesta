@@ -123,6 +123,9 @@
                     if (XMLHttpRequest.status === 403) {
                         toastr.error(Vemid.language.get("permissionDenied"));
                     }
+                    if (XMLHttpRequest.status === 404) {
+                        toastr.error(Vemid.language.get('errorRequest'), XMLHttpRequest.statusText);
+                    }
                 }).animate({"opacity": "show", right: "300"}, 500);
             },
 

@@ -53,7 +53,7 @@ class Purchase extends Entity
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="Vemid\ProjectOne\Entity\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="Client")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="guarantor_id", referencedColumnName="id")
      * })
@@ -84,6 +84,11 @@ class Purchase extends Entity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Registration", mappedBy="purchase")
+     */
+    private $registration;
 
     /**
      * Get id.
@@ -235,5 +240,13 @@ class Purchase extends Entity
     public function getGuarantor(): ?Client
     {
         return $this->guarantor;
+    }
+
+    /**
+     * @return Registration|null
+     */
+    public function getRegistration(): ?Registration
+    {
+        return $this->registration;
     }
 }
