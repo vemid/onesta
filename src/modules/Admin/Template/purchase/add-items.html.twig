@@ -1,5 +1,5 @@
 {% block title %}
-    <title>{{ t('Prijemnica|Pregled') }}</title>
+    <title>{{ t('Prodaja|Stavke') }}</title>
 {% endblock %}
 
 {% extends "@layout/main.html.twig" %}
@@ -95,7 +95,11 @@
                     <h2 class="text-center">Registracija
                         <div class="ibox-tools pull-right">
                             <a class="collapse-link small">
+                                {% if purchase.registration %}
+                                    <i class="fa fa-chevron-up"></i>
+                                {% else %}
                                 <i class="fa fa-chevron-down"></i>
+                                {% endif %}
                             </a>
                             <a class="close-link small">
                                 <i class="fa fa-times"></i>
@@ -104,11 +108,13 @@
                     </h2>
 
                 </div>
-                <div class="ibox-content" style="display: none">
+                <div class="ibox-content" style="display: {{  purchase.registration ? 'block' : 'none' }}">
                     {% if not purchase.registration %}
-                        {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add Registration')} only %}
+                        <div id="registration">
+                            {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add Registration')} only %}
+                        </div>
                     {% else %}
-                        <div id="next"></div>
+                        {% include '@purchase/registration.html.twig' with {registration : purchase.registration} only %}
                     {% endif %}
                 </div>
             </div>

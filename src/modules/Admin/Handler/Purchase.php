@@ -105,4 +105,17 @@ class Purchase extends AbstractHandler
             'registrationForm' => $registrationForm
         ]);
     }
+
+    public function registration($id, EntityManagerInterface $entityManager)
+    {
+        /** @var $registration Registration */
+        if (!$registration = $entityManager->find(Registration::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
+            return;
+        }
+
+        $this->view->setTemplate('purchase::view-registration.html.twig', [
+            'registration' => $registration
+        ]);
+    }
 }

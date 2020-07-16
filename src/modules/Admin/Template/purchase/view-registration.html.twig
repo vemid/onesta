@@ -1,0 +1,11 @@
+{% block title %}
+    <title>{{ t('Prodaja|Unos') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div id="next-step">
+    {% include '@purchase/registration.html.twig' with {registration : registration} only %}
+</div>
+{% endblock %}

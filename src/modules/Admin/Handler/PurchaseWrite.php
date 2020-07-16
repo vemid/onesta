@@ -121,6 +121,6 @@ class PurchaseWrite extends AbstractHandler
         $entityManager->persist($registration);
         $entityManager->flush();
 
-        return $this->forward(sprintf('/purchase/get-registration/%s', $registration->getId()));
+        return $this->forward(sprintf('/purchases/registration/%s', $registration->getId()));
     }
 }

@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="space-20"></div>
+        <ul class="list-group clear-list m-t">
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Tablice:</div>
+                    <div class="col-xs-8">{{ registration.plates }}</div>
+                </div>
+            </li>
+
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Šasija:</div>
+                    <div class="col-xs-8">
+                        {{ registration.chassis }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Registrovan do:</div>
+                    <div class="col-xs-8">
+                        {{ registration.registeredUntil ? registration.registeredUntil.format('m.d.Y') : '' }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Model:</div>
+                    <div class="col-xs-8">
+                        {{ registration.model }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Pemijski Stepen:</div>
+                    <div class="col-xs-8">
+                        {{ registration.insuranceLevel }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Saglasnost registracije u ime kupca:</div>
+                    <div class="col-xs-8">
+                        {{ registration.authorization ? 'Da' : 'Ne' }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4">Beleška:</div>
+                    <div class="col-xs-8">
+                        {{ registration.note | raw }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
+                <div class="">
+                    <div class="col-xs-4"><b>Cena:</b></div>
+                    <div class="col-xs-8"><b>{{ registration.price|number_format(2, '.', ',') }}</b>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

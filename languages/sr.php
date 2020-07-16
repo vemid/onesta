@@ -25,5 +25,6 @@ return [
     'User Management' => 'Podesavanje korisnika',
     'Record updated' => 'Izmena izvršena',
     'Save client and add items' => 'Sačuvaj kupca i predji na stavke kupovine',
-    'Add Registration' => 'Dodaj registraciju'
+    'Add Registration' => 'Dodaj registraciju',
+    'Price' => 'Cena'
 ];

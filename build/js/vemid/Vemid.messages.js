@@ -263,6 +263,10 @@
         errorRequest: {
             en: 'Error processing request',
             sr: 'Greska u procesiranju zahteva'
+        },
+        maxNumber: {
+            en: 'Maximum is',
+            sr: 'Maximalan broj je'
         }
     });
 }).call(Vemid, $);

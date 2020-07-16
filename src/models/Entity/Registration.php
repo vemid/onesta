@@ -20,7 +20,7 @@ class Registration extends Entity
     /**
      * @var string|null
      *
-     * @ORM\Column(name="plates", type="string", length=255, nullable=true)
+     * @ORM\Column(name="plates", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $plates;
@@ -28,7 +28,7 @@ class Registration extends Entity
     /**
      * @var string|null
      *
-     * @ORM\Column(name="chassis", type="string", length=255, nullable=true)
+     * @ORM\Column(name="chassis", type="string", length=255, nullable=false)
      * @FormAnnotation\FormElement(type="Text", required=true)
      */
     private $chassis;
@@ -36,10 +36,18 @@ class Registration extends Entity
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="registered_until", type="datetime", nullable=true)
+     * @ORM\Column(name="registered_until", type="datetime", nullable=false)
      * @FormAnnotation\FormElement(type="Date", required=true)
      */
     private $registeredUntil;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="decimal", precision=9, scale=2, nullable=true)
+     * @FormAnnotation\FormElement(type="Text", required=true)
+     */
+    private $price;
 
     /**
      * @var string|null
@@ -53,7 +61,7 @@ class Registration extends Entity
      * @var string|null
      *
      * @ORM\Column(name="insurance_level", type="string", length=255, nullable=true)
-     * @FormAnnotation\FormElement(type="Text", required=false)
+     * @FormAnnotation\FormElement(type="Number", required=false)
      */
     private $insuranceLevel;
 
@@ -309,6 +317,25 @@ class Registration extends Entity
     public function setPurchase(Purchase $purchase = null): Registration
     {
         $this->purchase = $purchase;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): ?float
+    {
+        return (float)$this->price;
+    }
+
+    /**
+     * @param float $price
+     * @return Registration|null
+     */
+    public function setPrice($price): ?Registration
+    {
+        $this->price = (float)$price;
 
         return $this;
     }
