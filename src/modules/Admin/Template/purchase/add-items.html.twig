@@ -21,7 +21,8 @@
                                         <div class="col-xs-4">Garantor:</div>
                                         <div class="col-xs-8">
                                             {% if purchase.guarantor %}
-                                            <a href="/clients/overview/{{ purchase.guarantor.id }}" class="text-warning">{{ purchase.guarantor }}</a>
+                                                <a href="/clients/overview/{{ purchase.guarantor.id }}"
+                                                   class="text-warning">{{ purchase.guarantor }}</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -79,6 +80,20 @@
                                         <div class="col-xs-8">{{ client.postalCode }}</div>
                                     </div>
                                 </li>
+                                <li class="list-group-item col-xs-12">
+                                    <div class="">
+                                        <div class="col-xs-9">
+                                            <p class="bigger-120">
+                                                <b>Total:</b>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            <p class="bigger-120">
+                                                <b>{{ totalPrice|number_format(2, '.', ',') }}</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li class="list-group-item col-xs-12"></li>
                             </ul>
                         </div>
@@ -98,7 +113,7 @@
                                 {% if purchase.registration %}
                                     <i class="fa fa-chevron-up"></i>
                                 {% else %}
-                                <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-chevron-down"></i>
                                 {% endif %}
                             </a>
                             <a class="close-link small">
@@ -108,7 +123,7 @@
                     </h2>
 
                 </div>
-                <div class="ibox-content" style="display: {{  purchase.registration ? 'block' : 'none' }}">
+                <div class="ibox-content" style="display: {{ purchase.registration ? 'block' : 'none' }}">
                     {% if not purchase.registration %}
                         <div id="registration">
                             {% include '@layout/form.html.twig' with {form : registrationForm, button: t('Add Registration')} only %}
@@ -128,7 +143,8 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h2 class="text-center m-b-lg">Proizvodi i Usluge</h2>
-                            <table class="table table-stripped tableForm" data-entity="purchase-items" data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}">
+                            <table class="table table-stripped tableForm" data-entity="purchase-items"
+                                   data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}">
                                 <thead>
                                 <tr>
                                     <th class="col-xs-3 text-center">Proizvod</th>
@@ -139,13 +155,12 @@
                                 </thead>
                                 <tbody>
                                 {% for purchaseItem in purchase.getPurchaseItems() %}
-                                    <tr data-edit="{{ cipher('/purchase-items/update/' ~ purchaseItem.id) }}" data-delete="{{ cipher('/purchase-items/delete/' ~ purchaseItem.id) }}">
+                                    <tr data-edit="{{ cipher('/purchase-items/update/' ~ purchaseItem.id) }}"
+                                        data-delete="{{ cipher('/purchase-items/delete/' ~ purchaseItem.id) }}">
                                         <td>{{ purchaseItem.supplierProduct }}</td>
-                                        <td class="text-center">{{ purchaseItem.id }}</td>
+                                        <td class="text-center">{{ purchaseItem.price }}</td>
                                         <td class="text-center">{{ purchaseItem.qty }}</td>
-                                        <td class="text-center">
-                                            {{ purchaseItem.note1 | raw }}
-                                        </td>
+                                        <td>{{ purchaseItem.note1 | raw }}</td>
                                     </tr>
                                 {% endfor %}
                                 <tr>

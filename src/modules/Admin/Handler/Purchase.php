@@ -104,10 +104,13 @@ class Purchase extends AbstractHandler
         $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
         $registrationForm->getComponent('purchase')->setValue($id);
 
+        $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
+
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,
             'form' => $form,
-            'registrationForm' => $registrationForm
+            'registrationForm' => $registrationForm,
+            'totalPrice' => $purchaseRepository->fetchTotalPrice($purchase)
         ]);
     }
 

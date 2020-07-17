@@ -10200,4 +10200,8 @@ button.btn-link:hover {
   border-color: #e5e6e7;
 }
 
+td ul {
+  padding-left: 15px;
+}
+
 /*# sourceMappingURL=style.css.map */
