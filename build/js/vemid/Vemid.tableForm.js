@@ -112,6 +112,11 @@
                         if (formElement.length > 0 && !formElement.hasClass(".chosen-search-input")) {
                             formData.append("postData["+ index +"][" + formElement.attr("name") + "]", formElement.val());
                         }
+
+                        if (formElement.is("textarea")) {
+                            let textVal = formElement.next(".note-editor").find(".note-editable").html();
+                            formData.append("postData["+ index +"][" + formElement.attr("name") + "]", textVal);
+                        }
                     });
                 }
             });

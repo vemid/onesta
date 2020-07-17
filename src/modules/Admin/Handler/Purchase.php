@@ -94,6 +94,13 @@ class Purchase extends AbstractHandler
         $form = $formBuilder->build(new PurchaseItem());
         $registrationForm = $formBuilder->build(new Registration());
 
+        $values = $form->getComponent('supplierProduct')->getItems();
+        foreach ($purchase->getPurchaseItems() as $purchaseItem) {
+            unset($values[$purchaseItem->getSupplierProduct()->getId()]);
+        }
+
+        $form->getComponent('supplierProduct')->setItems($values);
+
         $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
         $registrationForm->getComponent('purchase')->setValue($id);
 
