@@ -72,7 +72,7 @@ class SupplierReceiptItemWrite extends GridHandler
                     $supplierProduct->setSupplier($supplier);
                 }
 
-                $avgPrice = $entityManager->getRepository(EntityProduct::class)
+                $avgPrice = $entityManager->getRepository(Product::class)
                     ->fetchProductAveragePurchasePriceBySupplier($data['product'], $supplier, $data['price'], $data['qty']);
 
                 $avgPrice = $avgPrice > 0  ? $avgPrice : $data['price'];
