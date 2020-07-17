@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Entity\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
@@ -89,6 +91,19 @@ class Purchase extends Entity
      * @ORM\OneToOne(targetEntity="Registration", mappedBy="purchase")
      */
     private $registration;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseItem", mappedBy="purchase", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $purchaseItems;
+
+    /**
+     * Purchase constructor.
+     */
+    public function __construct()
+    {
+        $this->purchaseItems = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -248,5 +263,13 @@ class Purchase extends Entity
     public function getRegistration(): ?Registration
     {
         return $this->registration;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getPurchaseItems(): ?PersistentCollection
+    {
+        return $this->purchaseItems;
     }
 }

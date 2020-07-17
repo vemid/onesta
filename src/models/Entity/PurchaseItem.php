@@ -13,6 +13,7 @@ use Vemid\ProjectOne\Entity\Entity;
  *
  * @ORM\Table(name="purchase_items", indexes={@ORM\Index(name="purchase_id", columns={"purchase_id"}), @ORM\Index(name="supplier_product_id", columns={"supplier_product_id"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class PurchaseItem extends Stock
 {
@@ -74,18 +75,6 @@ class PurchaseItem extends Stock
     protected $purchase;
 
     /**
-     * @var SupplierProduct
-     *
-     * @ORM\ManyToOne(targetEntity="SupplierProduct")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="supplier_product_id", referencedColumnName="id")
-     * })
-     * @FormAnnotation\FormElement(type="Select", required=true, relation="SupplierProduct")
-     */
-    protected $supplierProduct;
-
-
-    /**
      * Set price.
      *
      * @param string $price
@@ -106,7 +95,7 @@ class PurchaseItem extends Stock
      */
     public function getPrice(): ?float
     {
-        return $this->price;
+        return (float)$this->price;
     }
 
     /**
@@ -182,15 +171,13 @@ class PurchaseItem extends Stock
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
      * @return PurchaseItem
+     * @ORM\PrePersist
+     * @throws \Exception
      */
-    public function setCreatedAt($createdAt): PurchaseItem
+    public function setCreatedAt(): PurchaseItem
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
@@ -237,29 +224,5 @@ class PurchaseItem extends Stock
     public function getPurchase(): ?Purchase
     {
         return $this->purchase;
-    }
-
-    /**
-     * Set supplierProduct.
-     *
-     * @param SupplierProduct|null $supplierProduct
-     *
-     * @return PurchaseItem
-     */
-    public function setSupplierProduct(SupplierProduct $supplierProduct = null): PurchaseItem
-    {
-        $this->supplierProduct = $supplierProduct;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierProduct.
-     *
-     * @return SupplierProduct|null
-     */
-    public function getSupplierProduct(): ?SupplierProduct
-    {
-        return $this->supplierProduct;
     }
 }

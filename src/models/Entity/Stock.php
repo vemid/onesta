@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Vemid\ProjectOne\Entity\Entity;
+use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 
 /**
  * Stocks
@@ -48,6 +49,7 @@ class Stock extends Entity
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="supplier_product_id", referencedColumnName="id")
      * })
+     * @FormAnnotation\FormElement(type="Select", required=true, relation="SupplierProduct")
      */
     private $supplierProduct;
 

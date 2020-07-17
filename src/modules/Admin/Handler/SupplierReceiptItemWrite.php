@@ -31,13 +31,13 @@ class SupplierReceiptItemWrite extends GridHandler
 
         $postData = $this->request->getParsedBody();
 
-        if (!isset($postData['supplierReceiptItem'])) {
+        if (!isset($postData['postData'])) {
             $this->messageBag->pushFlashMessage($this->translator->_('Podaci ne postoji!'), null, Builder::DANGER);
             return;
         }
 
         $errorMessages = [];
-        foreach ($postData['supplierReceiptItem'] as $row => &$data) {
+        foreach ($postData['postData'] as $row => &$data) {
             $supplierReceiptItem = new SupplierReceiptItem();
             $form = $formBuilder->build($supplierReceiptItem, [], false);
             $form->setValues($data, true);
@@ -58,7 +58,7 @@ class SupplierReceiptItemWrite extends GridHandler
         }
 
         if (count($errorMessages) === 0) {
-            foreach ($postData['supplierReceiptItem'] as $row => &$data) {
+            foreach ($postData['postData'] as $row => &$data) {
 
                 $supplier = $supplierReceipt->getSupplier();
                 $supplierProduct = $entityManager->getRepository(SupplierProduct::class)->findOneBy([

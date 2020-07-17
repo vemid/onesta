@@ -15,8 +15,6 @@ use \Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
 use \Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
-use Vemid\ProjectOne\Entity\Entity\SupplierReceipt as EntitySupplierReceipt;
-use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem as EntitySupplierReceiptItem;
 
 /**
  * Class Purchase

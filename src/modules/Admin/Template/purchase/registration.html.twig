@@ -4,63 +4,63 @@
         <ul class="list-group clear-list m-t">
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Tablice:</div>
-                    <div class="col-xs-8">{{ registration.plates }}</div>
+                    <div class="col-xs-5">Tablice:</div>
+                    <div class="col-xs-7">{{ registration.plates }}</div>
                 </div>
             </li>
 
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Šasija:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Šasija:</div>
+                    <div class="col-xs-7">
                         {{ registration.chassis }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Registrovan do:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Registrovan do:</div>
+                    <div class="col-xs-7">
                         {{ registration.registeredUntil ? registration.registeredUntil.format('m.d.Y') : '' }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Model:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Model:</div>
+                    <div class="col-xs-7">
                         {{ registration.model }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Pemijski Stepen:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Pemijski Stepen:</div>
+                    <div class="col-xs-7">
                         {{ registration.insuranceLevel }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Saglasnost registracije u ime kupca:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Saglasnost registracije u ime kupca:</div>
+                    <div class="col-xs-7">
                         {{ registration.authorization ? 'Da' : 'Ne' }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4">Beleška:</div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-5">Beleška:</div>
+                    <div class="col-xs-7">
                         {{ registration.note | raw }}
                     </div>
                 </div>
             </li>
             <li class="list-group-item col-xs-12 col-sm-12 col-lg-6">
                 <div class="">
-                    <div class="col-xs-4"><b>Cena:</b></div>
-                    <div class="col-xs-8"><b>{{ registration.price|number_format(2, '.', ',') }}</b>
+                    <div class="col-xs-5"><b>Cena:</b></div>
+                    <div class="col-xs-7"><b>{{ registration.price|number_format(2, '.', ',') }}</b>
                     </div>
                 </div>
             </li>

@@ -110,7 +110,7 @@
                         let $td = $(td);
                         let formElement = $td.find("input, select, textarea");
                         if (formElement.length > 0 && !formElement.hasClass(".chosen-search-input")) {
-                            formData.append("supplierReceiptItem["+ index +"][" + formElement.attr("name") + "]", formElement.val());
+                            formData.append("postData["+ index +"][" + formElement.attr("name") + "]", formElement.val());
                         }
                     });
                 }

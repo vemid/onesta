@@ -10,9 +10,12 @@ use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Code;
+use Vemid\ProjectOne\Entity\Entity\Product;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
+use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
-use Vemid\ProjectOne\Entity\Entity\Supplier;
+use Vemid\ProjectOne\Entity\Entity\Stock;
+use Vemid\ProjectOne\Entity\Entity\SupplierProduct;
 
 /**
  * Class PurchaseWrite
@@ -122,5 +125,59 @@ class PurchaseWrite extends AbstractHandler
         $entityManager->flush();
 
         return $this->forward(sprintf('/purchases/registration/%s', $registration->getId()));
+    }
+
+    public function addItems($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
+    {
+        /** @var $purchase Purchase */
+        if (!$purchase = $entityManager->find(Purchase::class, $id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Porudžbina ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $postData = $this->request->getParsedBody();
+
+        if (!isset($postData['postData'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Podaci ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $errorMessages = [];
+        foreach ($postData['postData'] as $row => &$data) {
+            $purchaseItem = new PurchaseItem();
+            $form = $formBuilder->build($purchaseItem, [], false);
+            $form->setValues($data, true);
+
+            $form->validate();
+            foreach ($form->getControls() as $control) {
+                foreach ($control->getErrors() as $error) {
+                    $errorMessages[$row] = ['field' => $control->getName(), 'message' => $error];
+                }
+            }
+
+            if (!$supplierProduct = $entityManager->find(SupplierProduct::class, $data['supplierProduct'])) {
+                $errorMessages[$row] = ['field' => 'supplierProduct', 'message' => $this->translator->_('Proizvod ne postoji!')];
+            } else {
+                $data['supplierProduct'] = $supplierProduct;
+                $data['purchase'] = $purchase;
+            }
+        }
+
+        if (count($errorMessages) === 0) {
+            foreach ($postData['postData'] as $row => $data) {
+                $purchaseItem = new PurchaseItem();
+                $purchaseItem->setData($data);
+                $purchaseItem->setType(Stock::OUTCOME);
+                $entityManager->persist($purchaseItem);
+            }
+
+            $entityManager->flush();
+        } else {
+            $this->messageBag->pushFlashMessage($this->translator->_('Greška u podacima!'), null, Builder::DANGER);
+
+            return ['error' => true, 'rowMessages' => $errorMessages];
+        }
+
+        return $this->redirect('/purchases/add-items/' . $id);
     }
 }

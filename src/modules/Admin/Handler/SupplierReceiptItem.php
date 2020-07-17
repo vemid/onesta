@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Admin\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Nette\Forms\IControl;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
