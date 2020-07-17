@@ -11,6 +11,7 @@ use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use \Vemid\ProjectOne\Entity\Entity\SupplierReceipt as EntitySupplierReceipt;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem as EntitySupplierReceiptItem;
+use \Vemid\ProjectOne\Entity\Entity\Supplier as EntitySupplier;
 
 /**
  * Class SupplierReceipt
@@ -25,10 +26,20 @@ class SupplierReceipt extends AbstractHandler
         ]);
     }
 
-    public function create(FormBuilderInterface $formBuilder): void
+    public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager): void
     {
+        $form = $formBuilder->build(new EntitySupplierReceipt());
+        $items = $form->getComponent('supplier')->getItems();
+
+        $owners = $entityManager->getRepository(EntitySupplier::class)->findByOwner(true);
+        foreach ($owners as $owner) {
+            unset($items[$owner->getId()]);
+        }
+
+        $form->getComponent('supplier')->setItems($items);
+
         $this->view->setTemplate('supplier-receipt::create.html.twig', [
-            'form' => $formBuilder->build(new EntitySupplierReceipt())
+            'form' => $form
         ]);
     }
 
