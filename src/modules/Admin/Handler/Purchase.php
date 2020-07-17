@@ -10,6 +10,7 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\CodeType;
+use Vemid\ProjectOne\Entity\Entity\PaymentInstallment;
 use \Vemid\ProjectOne\Entity\Entity\Purchase as EntityPurchase;
 use \Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
 use \Vemid\ProjectOne\Entity\Entity\Code;
@@ -93,6 +94,7 @@ class Purchase extends AbstractHandler
 
         $form = $formBuilder->build(new PurchaseItem());
         $registrationForm = $formBuilder->build(new Registration());
+        $paymentInstallmentForm = $formBuilder->build(new PaymentInstallment());
 
         $values = $form->getComponent('supplierProduct')->getItems();
         foreach ($purchase->getPurchaseItems() as $purchaseItem) {
@@ -104,13 +106,17 @@ class Purchase extends AbstractHandler
         $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
         $registrationForm->getComponent('purchase')->setValue($id);
 
+        $paymentInstallmentForm->getComponent('paymentDate')->setAttribute('disabled');
+        $paymentInstallmentForm->getComponent('paymentAmount')->setAttribute('disabled');
+
         $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
 
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,
             'form' => $form,
             'registrationForm' => $registrationForm,
-            'totalPrice' => $purchaseRepository->fetchTotalPrice($purchase)
+            'totalPrice' => $purchaseRepository->fetchTotalPrice($purchase),
+            'paymentInstallmentForm' => $paymentInstallmentForm
         ]);
     }
 

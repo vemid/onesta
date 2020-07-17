@@ -144,10 +144,10 @@
                         <div class="col-xs-12">
                             <h2 class="text-center m-b-lg">Proizvodi i Usluge</h2>
                             <table class="table table-stripped tableForm" data-entity="purchase-items"
-                                   data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}">
+                                   data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}" data-locked="{{ purchase.finished }}">
                                 <thead>
                                 <tr>
-                                    <th class="col-xs-3 text-center">Proizvod</th>
+                                    <th class="col-xs-3">Proizvod</th>
                                     <th class="col-xs-2 text-center">Cena</th>
                                     <th class="col-xs-2 text-center">Količina</th>
                                     <th class="col-xs-4 text-center">Beleška</th>
@@ -163,18 +163,89 @@
                                         <td>{{ purchaseItem.note1 | raw }}</td>
                                     </tr>
                                 {% endfor %}
+                                {% if not purchase.finished %}
                                 <tr>
                                     <td>{{ form['supplierProduct'].control | raw }}</td>
                                     <td>{{ form['price'].control | raw }}</td>
                                     <td>{{ form['qty'].control | raw }}</td>
                                     <td>{{ form['note1'].control | raw }}</td>
                                 </tr>
+                                {% endif %}
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    {% if not purchase.finished %}
+                    <div class="space-20"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="list-group clear-list">
+                                <div class="list-group-item text-center">
+                                    <div class="space-20"></div>
+                                    <button data-id="{{ purchase.id }}" id="finishPurchase" class="btn btn-warning col-xs-12 col-lg-6 col-sm-8" style="float:none!important">{{ t('Zatvori kupovinu')}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if purchase.finished %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card ibox box-shadow">
+                    <div class="ibox-content">
+                        <div class="space-20"></div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="text-center m-b-lg">Rate i Plaćanja</h2>
+                                <table class="table table-stripped tableFormInstallments" data-entity="payment-installment"
+                                       data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-xs-3">Datum naplate</th>
+                                        <th class="col-xs-2 text-center">Iznos</th>
+                                        <th class="col-xs-2 text-center">Datum uplate</th>
+                                        <th class="col-xs-4 text-center">Uplaćeno</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for purchaseItem in purchase.getPaymentInstallments() %}
+                                        <tr data-edit="{{ cipher('/purchase-items/update/' ~ purchaseItem.id) }}"
+                                            data-delete="{{ cipher('/purchase-items/delete/' ~ purchaseItem.id) }}">
+                                            <td>{{ purchaseItem.supplierProduct }}</td>
+                                            <td class="text-center">{{ purchaseItem.price }}</td>
+                                            <td class="text-center">{{ purchaseItem.qty }}</td>
+                                            <td>{{ purchaseItem.note1 | raw }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}

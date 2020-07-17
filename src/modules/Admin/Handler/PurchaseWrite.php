@@ -98,7 +98,7 @@ class PurchaseWrite extends AbstractHandler
     {
         /** @var $purchase Purchase */
         if (!$purchase = $entityManager->find(Purchase::class, (int)$id)) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena kupovina'), null, Builder::WARNING);
             return;
         }
 
@@ -178,5 +178,26 @@ class PurchaseWrite extends AbstractHandler
         }
 
         return $this->redirect('/purchases/add-items/' . $id);
+    }
+
+
+    public function finish($id, EntityManagerInterface $entityManager)
+    {
+        /** @var $purchase Purchase */
+        if (!$purchase = $entityManager->find(Purchase::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena kupovina'), null, Builder::WARNING);
+            return;
+        }
+        
+        if ($purchase->getFinished()) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, ne možemo zatvoriti kupovinu koja je već zatvorena!'), null, Builder::WARNING);
+            return;
+        }
+
+        $purchase->setFinished(true);
+        $entityManager->persist($purchase);
+        $entityManager->flush();
+
+        return ['success' => true];
     }
 }

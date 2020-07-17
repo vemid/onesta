@@ -15,7 +15,7 @@ return [
                     'products' => ['list', 'create', 'update', 'overview'],
                     'suppliers' => ['list', 'create', 'update', 'overview'],
                     'codes' => ['list', 'create', 'update'],
-                    'purchases' => ['list', 'create', 'update', 'add-items', 'add-registration', 'registration'],
+                    'purchases' => ['list', 'create', 'update', 'add-items', 'add-registration', 'registration', 'finish'],
                     'supplier-receipts' => ['list', 'create', 'update', 'overview'],
                     'supplier-receipt-items' => ['create', 'update'],
                     'purchase-items' => ['update'],

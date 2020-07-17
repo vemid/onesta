@@ -237,6 +237,7 @@
 
                 let firstRow = $("tbody tr:first", table);
                 let lastRow = firstRow.siblings(":last");
+                let lockedActions = table.attr("data-locked");
                 if (lastRow.length === 0) {
                     lastRow = firstRow;
                 }
@@ -246,9 +247,13 @@
                     $(footerHtml).insertAfter(table);
                 }
 
-                $.each($("tr", table), function (rowIndex, row) {
-                    _addActionColumn(row);
-                });
+                console.log(lockedActions);
+
+                if (typeof lockedActions === 'undefined' || !lockedActions) {
+                    $.each($("tr", table), function (rowIndex, row) {
+                        _addActionColumn(row);
+                    });
+                }
 
                 _cloneLastRow(table);
                 _deleteClonedRow();

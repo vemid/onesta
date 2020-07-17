@@ -55,7 +55,7 @@
                         .autocomplete({
                             minLength: 3,
                             source: function (request, response) {
-                                request['clientId'] = $("input[name='client']").val();
+                                request["clientId"] = $("input[name='client']").val();
                                 $.post(Vemid.config.formUrl + "form/clients/fetch-by-term", request, response);
                             },
                             select: function (event, ui) {
@@ -73,13 +73,13 @@
                         plates = $("input[name='plates']"),
                         chassis = $("input[name='chassis']");
 
-                    if (val === 'DELOVI') {
+                    if (val === "DELOVI") {
                         $([chassis, plates, model, insuranceLevel]).each(function (index, element) {
                             element.addClass("hidden")
                                 .parents(".row:first")
                                 .addClass("hidden");
                         });
-                    } else if (val === 'REGISTRACIJA') {
+                    } else if (val === "REGISTRACIJA") {
                         $([chassis, plates, model, insuranceLevel]).each(function (index, element) {
                             element
                                 .removeClass("hidden")
@@ -94,9 +94,9 @@
                 $(document).on("change", "select[name='supplierProduct']", function (e) {
                     let formData = new FormData();
                     let $this = $(this);
-                    formData.append('id', $(this).val());
+                    formData.append("id", $(this).val());
 
-                    Vemid.misc.makeAjaxCall('/form/supplier-products/get-qty', "POST", formData)
+                    Vemid.misc.makeAjaxCall("/form/supplier-products/get-qty", "POST", formData)
                         .then(function (respJson) {
                             if (typeof respJson.qty === "undefined") {
                                 toastr.error('Server error');
@@ -117,7 +117,7 @@
                             qtyElement.trigger("touchspin.updatesettings", {max: maxQty});
 
                         }, function (reason) {
-                            toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
+                            toastr.error(Vemid.language.get("errorRequest"), reason.statusText)
                         });
                 });
             },
@@ -137,7 +137,7 @@
                         pib = $("input[name='pib']"),
                         jmbg = $("input[name='jmbg']");
 
-                    if (val === 'NATURAL') {
+                    if (val === "NATURAL") {
                         pib.addClass("hidden")
                             .parents(".row:first")
                             .addClass("hidden");
@@ -145,7 +145,7 @@
                         jmbg.removeClass("hidden")
                             .parents(".row:first")
                             .removeClass("hidden");
-                    } else if (val === 'LEGAL') {
+                    } else if (val === "LEGAL") {
                         pib
                             .removeClass("hidden")
                             .parents(".row:first")
@@ -158,6 +158,21 @@
                 });
             },
 
+            finishPurchase: function() {
+                $("#finishPurchase").click(function() {
+                    let id = $(this).attr("data-id");
+                    Vemid.misc.makeAjaxCall("/purchases/finish/" + id, "POST", {})
+                        .then(function (respJson) {
+                            if (typeof respJson.success !== "undefined" && respJson.success) {
+                                location.reload();
+                                return;
+                            }
+                        }, function (reason) {
+                            toastr.error(Vemid.language.get("errorRequest"), reason.statusText)
+                        });
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
                 this.guarantorAutocomplete();
@@ -165,7 +180,9 @@
                 this.clientTypeSelect();
                 this.supplierProductChange();
                 this.removeGuarantor();
+                this.finishPurchase();
                 Vemid.tableForm.init($(".tableForm"));
+                Vemid.tableForm.init($(".tableFormInstallments"));
             }
         }
     })();
