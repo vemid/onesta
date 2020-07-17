@@ -72,6 +72,13 @@ class Purchase extends Entity
     protected $note;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="finished", type="boolean", length=1, nullable=false)
+     */
+    protected $finished;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -137,6 +144,25 @@ class Purchase extends Entity
     public function getNote(): ?string
     {
         return $this->note;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getFinished(): ?bool
+    {
+        return (bool)$this->finished;
+    }
+
+    /**
+     * @param bool $finished
+     * @return Purchase
+     */
+    public function setFinished($finished): Purchase
+    {
+        $this->finished = (bool)$finished;
+
+        return $this;
     }
 
     /**
