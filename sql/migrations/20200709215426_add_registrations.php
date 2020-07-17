@@ -39,7 +39,7 @@ class AddRegistrations extends AbstractMigration
             ->addColumn('model', 'string', ['null' => true])
             ->addColumn('registered_until', 'datetime', ['null' => true])
             ->addColumn('authorization', 'boolean', ['null' => true, 'default' => null])
-            ->addColumn('note', 'sql/migrations/20200709215845_remove_regsitration_fields_from_purchase.phptext', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_LONG, 'null' => true])
+            ->addColumn('note', 'text', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_LONG, 'null' => true])
             ->addColumn('created_at', 'datetime')
             ->addForeignKey('purchase_id', 'purchases', 'id')
             ->create();
