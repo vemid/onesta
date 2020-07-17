@@ -32,8 +32,7 @@ class UpdateStoksAddItem extends AbstractMigration
     public function change()
     {
         $table = $this->table('stocks');
-        $table->addColumn('entity_type_id', 'string', ['after' => 'type'])
-            ->addColumn('entity_type', 'integer', ['after' => 'type'])
+        $table->addColumn('entity_type', 'string', ['after' => 'type'])
             ->update();
     }
 }
