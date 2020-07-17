@@ -13,10 +13,10 @@ use \Vemid\ProjectOne\Entity\Entity\SupplierReceipt as EntitySupplierReceipt;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem as EntitySupplierReceiptItem;
 
 /**
- * Class SupplierReceipt
+ * Class PurchaseItem
  * @package Vemid\ProjectOne\Admin\Handler
  */
-class SupplierReceipt extends AbstractHandler
+class PurchaseItem extends AbstractHandler
 {
     public function list(SupplierReceiptFilterForm $supplierReceiptFilterForm): void
     {

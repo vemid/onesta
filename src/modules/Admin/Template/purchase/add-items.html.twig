@@ -139,9 +139,9 @@
                                 </thead>
                                 <tbody>
                                 {% for purchaseItem in purchase.getPurchaseItems() %}
-                                    <tr data-edit="{{ cipher('/supplier-receipt-items/update/' ~ supplierReceiptItem.id) }}" data-delete="{{ cipher('/supplier-receipt-items/delete/' ~ supplierReceiptItem.id) }}">
+                                    <tr data-edit="{{ cipher('/purchase-items/update/' ~ purchaseItem.id) }}" data-delete="{{ cipher('/purchase-items/delete/' ~ purchaseItem.id) }}">
                                         <td>{{ purchaseItem.supplierProduct }}</td>
-                                        <td class="text-center">{{ purchaseItem.price }}</td>
+                                        <td class="text-center">{{ purchaseItem.id }}</td>
                                         <td class="text-center">{{ purchaseItem.qty }}</td>
                                         <td class="text-center">
                                             {{ purchaseItem.note1 | raw }}

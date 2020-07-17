@@ -10,7 +10,7 @@ use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
 /**
- * Class SupplierWrite
+ * Class SupplierReceiptItemWrite
  * @package Vemid\ProjectOne\Form\Handler
  */
 class SupplierReceiptItemWrite extends AbstractHandler

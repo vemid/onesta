@@ -13,7 +13,7 @@ use \Vemid\ProjectOne\Entity\Entity\SupplierReceipt as EntitySupplierReceipt;
 use \Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem as EntitySupplierReceiptItem;
 
 /**
- * Class Product
+ * Class SupplierReceiptItem
  * @package Vemid\ProjectOne\Admin\Handler
  */
 class SupplierReceiptItem extends AbstractHandler

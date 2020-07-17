@@ -63,6 +63,7 @@ return [
             $routeCollector->addRoute('POST', '/supplier-receipts/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\SupplierReceiptWrite::class);
             $routeCollector->addRoute('POST', '/supplier-receipt-items/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\SupplierReceiptItemWrite::class);
             $routeCollector->addRoute('POST', '/supplier-products/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\SupplierProductWrite::class);
+            $routeCollector->addRoute('POST', '/purchase-items/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\PurchaseItemWrite::class);
         });
     }
 ];

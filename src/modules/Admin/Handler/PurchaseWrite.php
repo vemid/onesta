@@ -10,7 +10,6 @@ use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Code;
-use Vemid\ProjectOne\Entity\Entity\Product;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;

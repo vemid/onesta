@@ -15,7 +15,7 @@ use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
 use Vemid\ProjectOne\Entity\Entity\SupplierReceiptItem;
 
 /**
- * Class SupplierReceiptWrite
+ * Class SupplierReceiptItemWrite
  * @package Vemid\ProjectOne\Admin\Handler
  */
 class SupplierReceiptItemWrite extends GridHandler

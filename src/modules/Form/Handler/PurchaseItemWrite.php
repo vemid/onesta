@@ -7,23 +7,23 @@ namespace Vemid\ProjectOne\Form\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
-use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
+use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 
 /**
- * Class SupplierReceiptWrite
+ * Class PurchaseItemWrite
  * @package Vemid\ProjectOne\Form\Handler
  */
-class SupplierReceiptWrite extends AbstractHandler
+class PurchaseItemWrite extends AbstractHandler
 {
     public function delete($id, EntityManagerInterface $entityManager)
     {
-        /** @var $supplierReceipt SupplierReceipt */
-        if (!$supplierReceipt = $entityManager->find(SupplierReceipt::class, (int)$id)) {
+        /** @var $purchaseItem PurchaseItem */
+        if (!$purchaseItem = $entityManager->find(PurchaseItem::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, nešto nije u redu. Ne možemo da obrišemo rekord'), null, Builder::WARNING);
             return;
         }
 
-        $entityManager->remove($supplierReceipt);
+        $entityManager->remove($purchaseItem);
         $entityManager->flush();
 
         $this->messageBag->pushFlashMessage($this->translator->_('Obrisan rekord'), null, Builder::SUCCESS);

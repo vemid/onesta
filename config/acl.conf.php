@@ -24,6 +24,7 @@ return [
                     'products' => ['delete'],
                     'codes' => ['delete'],
                     'suppliers' => ['delete'],
+                    'purchase-items' => ['delete'],
                     'files' => ['download'],
                     'supplier-receipts' => ['delete'],
                     'supplier-products' => ['get-qty'],

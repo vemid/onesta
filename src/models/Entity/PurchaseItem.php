@@ -56,15 +56,6 @@ class PurchaseItem extends Stock
     protected $createdAt;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    protected $id;
-
-    /**
      * @var Purchase
      *
      * @ORM\ManyToOne(targetEntity="Purchase")
@@ -190,16 +181,6 @@ class PurchaseItem extends Stock
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
