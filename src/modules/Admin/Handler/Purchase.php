@@ -106,8 +106,8 @@ class Purchase extends AbstractHandler
         $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
         $registrationForm->getComponent('purchase')->setValue($id);
 
-        $paymentInstallmentForm->getComponent('paymentDate')->setAttribute('disabled');
-        $paymentInstallmentForm->getComponent('paymentAmount')->setAttribute('disabled');
+        $paymentInstallmentForm->getComponent('paymentDate')->setDisabled();
+        $paymentInstallmentForm->getComponent('paymentAmount')->setDisabled();
 
         $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
 

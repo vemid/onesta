@@ -65,30 +65,40 @@
         };
 
         return {
-            initDate: function ($element, date) {
-                let fp = $element.flatpickr({
-                    altInput: true,
-                    static: !$(".modal").is(":hidden"),
-                    altFormat: "F j, Y",
-                    allowInput: true,
-                    locale: {
-                        firstDayOfWeek: 1,
-                        weekdays: {
-                            shorthand: _getShortNameDays(),
-                            longhand: _getLongNameDays(),
-                        },
-                        months: {
-                            shorthand: _getShortMonthNames(),
-                            longhand: _getLongMonthNames(),
-                        },
-                    },
-                    onChange: function (selectedDates, dateStr, instance) {
-                    },
-                });
+            initDate: function ($elements, date) {
+                $.each($elements, function(){
+                    let $element = $(this);
 
-                if (!!date) {
-                    fp.setDate(date);
-                }
+                    if ($element.prop("disabled")) {
+                        return;
+                    }
+
+                    let fp = $element.flatpickr({
+                        altInput: true,
+                        static: !$(".modal").is(":hidden"),
+                        altFormat: "F j, Y",
+                        allowInput: true,
+                        locale: {
+                            firstDayOfWeek: 1,
+                            weekdays: {
+                                shorthand: _getShortNameDays(),
+                                longhand: _getLongNameDays(),
+                            },
+                            months: {
+                                shorthand: _getShortMonthNames(),
+                                longhand: _getLongMonthNames(),
+                            },
+                        },
+                        onChange: function (selectedDates, dateStr, instance) {
+                        },
+                    });
+
+                    if (!!date) {
+                        fp.setDate(date);
+                    }
+                })
+
+
             },
 
             init: function () {
