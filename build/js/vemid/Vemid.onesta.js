@@ -7,6 +7,30 @@
 
     Vemid.onesta = (function () {
 
+        let _letCalculateTableRowsAmount = function (table, deleted) {
+            let trs = $("tbody tr", table),
+                total = 0;
+
+            $.each(trs, function(index, row){
+                let isLastElement = index === trs.length -1;
+                let formField = $(row).find("td").eq(1).find("input").eq(0);
+                let val = formField.val();
+                if (typeof val !== "undefined" && !!val) {
+                    total += parseFloat(val.replace(/,/g,''));
+                }
+
+                if (isLastElement && deleted) {
+                    total += parseFloat(val.replace(/,/g,''));
+                }
+            });
+
+            let rowValue = parseFloat(total) / parseFloat(trs.length);
+            $.each(trs, function(){
+                let formField = $(this).find("td").eq(1).find("input").eq(0);
+                formField.val(rowValue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+        };
+
         return {
             nameAutocomplete: function () {
                 $("input[name ='firstName']").each(function (index, element) {
@@ -21,11 +45,9 @@
                                 let $id = ui.item.id;
                                 Vemid.misc.makeAjaxCall("/form/clients/fetch-by-id/" + $id, "GET")
                                     .then(function (respJson) {
-                                        console.log(respJson);
                                         if (Object.keys(respJson).length) {
                                             $.each(respJson, function (property, value) {
                                                 let $el = $("[name ='" + property + "']");
-                                                console.log($el);
                                                 if ($el.length) {
                                                     $el.val(value);
 
@@ -124,7 +146,6 @@
 
             removeGuarantor: function () {
                 $(document).on("keyup change", "input[name='guarantorId']", function(){
-                    console.log($(this).val());
                     if (!$(this).val()) {
                         $("input[name='guarantor']").val("");
                     }
@@ -173,6 +194,36 @@
                 });
             },
 
+            paymentInstallmentsOnAddRow: function () {
+                let tableFormInstallments = $(".tableFormInstallments");
+                if (tableFormInstallments.length === 0) {
+                    return;
+                }
+
+                $("#clone-row").click(function () {
+                    let row = $("tr:last", tableFormInstallments);
+                    let inputDateTime = row.prev().find("td").eq(0).find("input").eq(0);
+                    let prevDate = inputDateTime.val();
+                    let eq = row.find("td").eq(0).find("input").eq(0);
+                    let date = new Date(prevDate);
+
+                    date.setMonth(date.getMonth() + 1);
+                    Vemid.datetime.initDate(eq, date);
+                    _letCalculateTableRowsAmount(tableFormInstallments, false);
+                });
+            },
+
+            paymentInstallmentsOnDeleteRow: function () {
+                let tableFormInstallments = $(".tableFormInstallments");
+                if (tableFormInstallments.length === 0) {
+                    return;
+                }
+
+                $(document).on("click", ".delete-cloned-row", function(e) {
+                    _letCalculateTableRowsAmount(tableFormInstallments, true);
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
                 this.guarantorAutocomplete();
@@ -183,6 +234,8 @@
                 this.finishPurchase();
                 Vemid.tableForm.init($(".tableForm"));
                 Vemid.tableForm.init($(".tableFormInstallments"));
+                this.paymentInstallmentsOnAddRow();
+                this.paymentInstallmentsOnDeleteRow();
             }
         }
     })();

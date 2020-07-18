@@ -228,16 +228,29 @@
                                         <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
+                                        {% set installmentDateControl1 = paymentInstallmentForm['installmentDate'].control %}
+                                        {% set installmentDateControl1 = installmentDateControl1.setValue(instalmentDates['date1']) %}
+
+                                        {% set paymentDateControl1 = paymentInstallmentForm['paymentDate'].control %}
+                                        {% set paymentDateControl1 = paymentDateControl1.setDisabled(true) %}
+
+                                        {% set paymentAmountControl1 = paymentInstallmentForm['paymentAmount'].control %}
+                                        {% set paymentAmountControl1 = paymentAmountControl1.setDisabled(true) %}
+                                        {% set date = installmentDateControl1.value %}
+
+
+                                        <td>{{ installmentDateControl1 | raw }}</td>
                                         <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
-                                        <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
-                                        <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
+                                        <td>{{ paymentAmountControl1 | raw }}</td>
+                                        <td>{{ paymentDateControl1 | raw }}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
+                                        {% set installmentDateControl2 = installmentDateControl1.setValue(instalmentDates['date2']) %}
+
+                                        <td>{{ installmentDateControl2 | raw }}</td>
                                         <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
-                                        <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
-                                        <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
+                                        <td>{{ paymentAmountControl1 | raw }}</td>
+                                        <td>{{ paymentDateControl1 | raw }}</td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -39,7 +39,11 @@
                     return false;
                 } else {
                     let clonedRow = row.clone();
+                    $(".delete-cloned-row", clonedRow).off("click");
+
                     row.parents("table").append(clonedRow);
+                    $(".delete-cloned-row", row.next()).off("click");
+
                     $.each($("td", clonedRow), function (tdIndex, td) {
                         let formElement = $(td).find("input, select, textarea");
                         if (formElement.length > 0) {
@@ -61,6 +65,15 @@
                                             .trigger("liszt:activate");
                                     }
                                 }
+
+                                if ($el.hasClass("datepicker")) {
+                                    let name = $el.attr("name");
+                                    if (typeof name !== 'undefined') {
+                                        Vemid.datetime.initDate($el);
+                                    } else {
+                                        $el.remove();
+                                    }
+                                }
                             });
                         }
                     });
@@ -69,7 +82,11 @@
         };
 
         let _deleteClonedRow = function() {
-            $(document).on("click", ".delete-cloned-row", function() {
+            $(document).on("click", ".delete-cloned-row", function(e) {
+                if ($(this).parents("table").length === 0) {
+                    return;
+                }
+
                 let tr = $(this).parents("tr");
                 let table = tr.parents("table");
                 let select = tr.find("select");

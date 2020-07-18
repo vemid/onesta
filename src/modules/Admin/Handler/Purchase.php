@@ -92,6 +92,9 @@ class Purchase extends AbstractHandler
             return;
         }
 
+        $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
+        $totalPrice = $purchaseRepository->fetchTotalPrice($purchase);
+
         $form = $formBuilder->build(new PurchaseItem());
         $registrationForm = $formBuilder->build(new Registration());
         $paymentInstallmentForm = $formBuilder->build(new PaymentInstallment());
@@ -106,17 +109,22 @@ class Purchase extends AbstractHandler
         $registrationForm->setAction('/purchases/add-registration/' . $purchase->getId());
         $registrationForm->getComponent('purchase')->setValue($id);
 
-        $paymentInstallmentForm->getComponent('paymentDate')->setDisabled();
-        $paymentInstallmentForm->getComponent('paymentAmount')->setDisabled();
+        $dateTime = $purchase->getCreatedAt();
+        $date1 = clone $dateTime;
+        $date1->modify('+1 month');
+        $date2 = clone $dateTime;
+        $date2->modify('+2 month');
 
-        $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
+        $paymentInstallmentForm->getComponent('installmentDate')->setValue($dateTime->format('Y-m-d'));
+        $paymentInstallmentForm->getComponent('installmentAmount')->setDefaultValue(number_format(round($totalPrice / 3, 2), 2));
 
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,
             'form' => $form,
             'registrationForm' => $registrationForm,
-            'totalPrice' => $purchaseRepository->fetchTotalPrice($purchase),
-            'paymentInstallmentForm' => $paymentInstallmentForm
+            'totalPrice' => $totalPrice,
+            'paymentInstallmentForm' => $paymentInstallmentForm,
+            'instalmentDates' => ['date1' => $date1->format('Y-m-d'), 'date2' => $date2->format('Y-m-d')]
         ]);
     }
 
