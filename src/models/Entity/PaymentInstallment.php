@@ -12,7 +12,7 @@ use Vemid\ProjectOne\Entity\Entity;
  * PaymentInstallments
  *
  * @ORM\Table(name="payment_installments", indexes={@ORM\Index(name="purchase_id", columns={"purchase_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vemid\ProjectOne\Entity\Repository\PaymentInstallmentRepository")
  */
 class PaymentInstallment extends Entity
 {
@@ -101,7 +101,7 @@ class PaymentInstallment extends Entity
      */
     public function setInstallmentAmount($installmentAmount)
     {
-        $this->installmentAmount = $installmentAmount;
+        $this->installmentAmount = (float)$installmentAmount;
 
         return $this;
     }
@@ -149,7 +149,7 @@ class PaymentInstallment extends Entity
      */
     public function setPaymentAmount($paymentAmount = null)
     {
-        $this->paymentAmount = $paymentAmount;
+        $this->paymentAmount = (float)($paymentAmount);
 
         return $this;
     }

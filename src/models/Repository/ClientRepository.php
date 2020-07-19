@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Vemid\ProjectOne\Entity\Entity\Client;
 
 /**

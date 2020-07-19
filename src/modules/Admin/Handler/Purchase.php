@@ -93,7 +93,9 @@ class Purchase extends AbstractHandler
         }
 
         $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
+        $paymentInstallmentRepository = $entityManager->getRepository(PaymentInstallment::class);
         $totalPrice = $purchaseRepository->fetchTotalPrice($purchase);
+        $assignedInstalmentsAmount = $paymentInstallmentRepository->fetchTotalInstalmentPrice($purchase);
 
         $form = $formBuilder->build(new PurchaseItem());
         $registrationForm = $formBuilder->build(new Registration());
@@ -124,7 +126,8 @@ class Purchase extends AbstractHandler
             'registrationForm' => $registrationForm,
             'totalPrice' => $totalPrice,
             'paymentInstallmentForm' => $paymentInstallmentForm,
-            'instalmentDates' => ['date1' => $date1->format('Y-m-d'), 'date2' => $date2->format('Y-m-d')]
+            'instalmentDates' => ['date1' => $date1->format('Y-m-d'), 'date2' => $date2->format('Y-m-d')],
+            'assignedInstalmentsAmount' => $assignedInstalmentsAmount
         ]);
     }
 

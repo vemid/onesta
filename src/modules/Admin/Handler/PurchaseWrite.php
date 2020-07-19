@@ -15,6 +15,7 @@ use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
 use Vemid\ProjectOne\Entity\Entity\Stock;
 use Vemid\ProjectOne\Entity\Entity\SupplierProduct;
+use \Vemid\ProjectOne\Entity\Entity\PaymentInstallment;
 
 /**
  * Class PurchaseWrite
@@ -199,5 +200,62 @@ class PurchaseWrite extends AbstractHandler
         $entityManager->flush();
 
         return ['success' => true];
+    }
+
+    public function addPaymentInstallments($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
+    {
+        /** @var $purchase Purchase */
+        if (!$purchase = $entityManager->find(Purchase::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena kupovina'), null, Builder::WARNING);
+            return;
+        }
+
+        if (!$purchase->getFinished()) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, ne možemo procesuirati plaćanja za kupovinu koja nije zatvorena!'), null, Builder::WARNING);
+            return;
+        }
+
+        $postData = $this->request->getParsedBody();
+
+        if (!isset($postData['postData'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Podaci ne postoji!'), null, Builder::DANGER);
+            return;
+        }
+
+        $errorMessages = [];
+        foreach ($postData['postData'] as $row => &$data) {
+            $paymentInstallment = new PaymentInstallment();
+            $form = $formBuilder->build($paymentInstallment, [], false);
+            $form->setValues($data, true);
+
+            $form->validate();
+            foreach ($form->getControls() as $control) {
+                foreach ($control->getErrors() as $error) {
+                    $errorMessages[$row] = ['field' => $control->getName(), 'message' => $error];
+                }
+            }
+
+            $data['purchase'] = $purchase;
+            $data['installmentAmount'] = preg_replace('/[^\d.]/', '', $data['installmentAmount']);
+            $data['installmentDate'] = new \DateTime($data['installmentDate']);
+            $data['paymentDate'] = !empty($data['paymentDate']) ? new \DateTime($data['paymentDate']) : null;
+            $data['paymentAmount'] = !empty($data['paymentAmount']) ? preg_replace('/[^\d.]/', '', $data['paymentAmount']) : null;
+        }
+
+        if (count($errorMessages) === 0) {
+            foreach ($postData['postData'] as $row => $data) {
+                $purchaseItem = new PaymentInstallment();
+                $purchaseItem->setData($data);
+                $entityManager->persist($purchaseItem);
+            }
+
+            $entityManager->flush();
+        } else {
+            $this->messageBag->pushFlashMessage($this->translator->_('Greška u podacima!'), null, Builder::DANGER);
+
+            return ['error' => true, 'rowMessages' => $errorMessages];
+        }
+
+        return $this->redirect('/purchases/add-items/' . $id);
     }
 }

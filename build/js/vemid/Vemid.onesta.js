@@ -9,20 +9,7 @@
 
         let _letCalculateTableRowsAmount = function (table, deleted) {
             let trs = $("tbody tr", table),
-                total = 0;
-
-            $.each(trs, function(index, row){
-                let isLastElement = index === trs.length -1;
-                let formField = $(row).find("td").eq(1).find("input").eq(0);
-                let val = formField.val();
-                if (typeof val !== "undefined" && !!val) {
-                    total += parseFloat(val.replace(/,/g,''));
-                }
-
-                if (isLastElement && deleted) {
-                    total += parseFloat(val.replace(/,/g,''));
-                }
-            });
+                total = table.attr("data-price").replace(/,/g,'');
 
             let rowValue = parseFloat(total) / parseFloat(trs.length);
             $.each(trs, function(){

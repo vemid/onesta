@@ -264,8 +264,6 @@
                     $(footerHtml).insertAfter(table);
                 }
 
-                console.log(lockedActions);
-
                 if (typeof lockedActions === 'undefined' || !lockedActions) {
                     $.each($("tr", table), function (rowIndex, row) {
                         _addActionColumn(row);

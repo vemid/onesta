@@ -202,7 +202,7 @@
                             <div class="col-xs-12">
                                 <h2 class="text-center m-b-lg">Rate i Plaćanja</h2>
                                 <table class="table table-stripped tableFormInstallments" data-entity="payment-installment"
-                                       data-action="{{ cipher('/purchases/add-items/' ~ purchase.id) }}">
+                                       data-action="{{ cipher('/purchases/add-payment-installments/' ~ purchase.id) }}" data-price="{{ totalPrice }}">
                                     <thead>
                                     <tr>
                                         <th class="col-xs-3">Datum naplate</th>
@@ -213,14 +213,15 @@
                                     </thead>
                                     <tbody>
                                     {% for purchaseItem in purchase.getPaymentInstallments() %}
-                                        <tr data-edit="{{ cipher('/purchase-items/update/' ~ purchaseItem.id) }}"
-                                            data-delete="{{ cipher('/purchase-items/delete/' ~ purchaseItem.id) }}">
-                                            <td>{{ purchaseItem.supplierProduct }}</td>
-                                            <td class="text-center">{{ purchaseItem.price }}</td>
-                                            <td class="text-center">{{ purchaseItem.qty }}</td>
-                                            <td>{{ purchaseItem.note1 | raw }}</td>
+                                        <tr data-edit="{{ cipher('/payment-installments/update/' ~ purchaseItem.id) }}"
+                                            data-delete="{{ cipher('/payment-installments/delete/' ~ purchaseItem.id) }}">
+                                            <td>{{ purchaseItem.installmentDate.format('m.d.Y') }}</td>
+                                            <td class="text-center">{{ purchaseItem.installmentAmount|number_format(2, '.', ',') }}</td>
+                                            <td class="text-center">{{ purchaseItem.paymentDate.format('m.d.Y') }}</td>
+                                            <td class="text-center">{{ purchaseItem.paymentAmount|number_format(2, '.', ',') }}</td>
                                         </tr>
                                     {% endfor %}
+                                    {% if purchase.getPaymentInstallments()|length == 0 or totalPrice > assignedInstalmentsAmount %}
                                     <tr>
                                         <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
                                         <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
@@ -252,6 +253,7 @@
                                         <td>{{ paymentAmountControl1 | raw }}</td>
                                         <td>{{ paymentDateControl1 | raw }}</td>
                                     </tr>
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>

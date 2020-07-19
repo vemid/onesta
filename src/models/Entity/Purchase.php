@@ -105,11 +105,17 @@ class Purchase extends Entity
     private $purchaseItems;
 
     /**
+     * @ORM\OneToMany(targetEntity="PaymentInstallment", mappedBy="purchase", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $paymentInstallments;
+
+    /**
      * Purchase constructor.
      */
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
+        $this->paymentInstallments = new ArrayCollection();
     }
 
     /**
@@ -297,5 +303,13 @@ class Purchase extends Entity
     public function getPurchaseItems(): ?PersistentCollection
     {
         return $this->purchaseItems;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getPaymentInstallments(): ?PersistentCollection
+    {
+        return $this->paymentInstallments;
     }
 }
