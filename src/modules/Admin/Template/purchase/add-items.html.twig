@@ -220,9 +220,8 @@
                                         {% set class = '' %}
                                         {% if not purchaseItem.paymentDate and today > purchaseItem.installmentDate %}
                                             {% set class = 'alert-danger' %}
-                                        {% endif %}
-                                        {% if purchaseItem.paymentDate and purchaseItem.paymentDate > purchaseItem.installmentDate %}
-                                            {% set class = 'alert-danger' %}
+                                        {% elseif purchaseItem.paymentDate and purchaseItem.paymentDate > purchaseItem.installmentDate %}
+                                            {% set class = 'alert-warning' %}
                                         {% endif %}
 
                                         <tr  class="{{ class }}" data-edit="{{ cipher('/payment-installments/update/' ~ purchaseItem.id) }}"

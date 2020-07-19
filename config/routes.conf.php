@@ -7,6 +7,8 @@ use Vemid\ProjectOne\Admin\Handler\Authentication;
 use Vemid\ProjectOne\Admin\Handler\AuthenticationWrite;
 use Vemid\ProjectOne\Admin\Handler\Code;
 use Vemid\ProjectOne\Admin\Handler\CodeWrite;
+use Vemid\ProjectOne\Admin\Handler\PaymentInstallment;
+use Vemid\ProjectOne\Admin\Handler\PaymentInstallmentWrite;
 use Vemid\ProjectOne\Admin\Handler\Product;
 use Vemid\ProjectOne\Admin\Handler\ProductWrite;
 use Vemid\ProjectOne\Admin\Handler\PurchaseItem;
@@ -54,6 +56,8 @@ return [
         $routeCollector->addRoute('POST', '/supplier-receipt-items/{method}[/{id:[\w-]+}]', SupplierReceiptItemWrite::class);
         $routeCollector->addRoute('GET', '/purchase-items/{method}[/{id:[\w-]+}]', PurchaseItem::class);
         $routeCollector->addRoute('POST', '/purchase-items/{method}[/{id:[\w-]+}]', PurchaseItemWrite::class);
+        $routeCollector->addRoute('GET', '/payment-installments/{method}[/{id:[\w-]+}]', PaymentInstallment::class);
+        $routeCollector->addRoute('POST', '/payment-installments/{method}[/{id:[\w-]+}]', PaymentInstallmentWrite::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);

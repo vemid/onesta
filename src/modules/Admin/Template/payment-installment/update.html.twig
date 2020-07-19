@@ -1,0 +1,23 @@
+{% block title %}
+    <title>{{ t('Rata|Izmena') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="space-20"></div>
+                        <h1 class="text-center m-b-lg m-t-lg">Rata br. {{ installment }}</h1>
+                        {% include '@layout/form.html.twig' with {form : form} only %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

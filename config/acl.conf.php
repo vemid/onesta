@@ -19,6 +19,7 @@ return [
                     'supplier-receipts' => ['list', 'create', 'update', 'overview'],
                     'supplier-receipt-items' => ['create', 'update'],
                     'purchase-items' => ['update'],
+                    'payment-installments' => ['update'],
                 ],
                 'form' => [
                     'user' => ['edit', 'delete', 'create'],
