@@ -33,8 +33,6 @@ class PaymentInstallmentWrite extends AbstractHandler
             return;
         }
 
-        $postData['installmentAmount'] = preg_replace('/[^\d.]/', '', $postData['installmentAmount']);
-        $postData['installmentDate'] = new \DateTime($postData['installmentDate']);
         $postData['paymentDate'] = !empty($postData['paymentDate']) ? new \DateTime($postData['paymentDate']) : null;
         $postData['paymentAmount'] = !empty($postData['paymentAmount']) ? preg_replace('/[^\d.]/', '', $postData['paymentAmount']) : null;
 
