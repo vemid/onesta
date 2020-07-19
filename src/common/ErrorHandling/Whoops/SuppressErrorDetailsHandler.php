@@ -43,7 +43,7 @@ final class SuppressErrorDetailsHandler extends Handler
 
     private function suppress(): void
     {
-        $suppressedError = new \Exception($this->options['error_message']);
+        $suppressedError = new Exception($this->options['error_message']);
 
         $this->setException($suppressedError);
 

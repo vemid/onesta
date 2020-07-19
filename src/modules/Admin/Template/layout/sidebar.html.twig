@@ -25,6 +25,21 @@
                     <span class="nav-label">{{ t('Home') }}</span>
                 </a>
             </li>
+            <li class="{{ 'clients' in url ? 'active' : '' }}">
+                <a href="#">
+                    <i class="fa fa-user-circle"></i>
+                    <span class="nav-label">{{ t('Klijenti') }}</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse" style="">
+                    <li class="{{ 'client/list' in url ? 'active' : '' }}">
+                        <a href="/clients/list">
+                            <i class="fa fa-list"></i>
+                            <span class="nav-label">{{ t('Pregled Klijenata') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="{{ 'purchase' in url or 'clients' in url ? 'active' : '' }}">
                 <a href="#">
                     <i class="fa fa-shopping-cart"></i>

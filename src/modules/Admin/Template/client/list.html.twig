@@ -1,0 +1,41 @@
+{% block title %}
+    <title>{{ t('Klijenti|Lista') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card ibox float-e-margins box-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="space-20"></div>
+                        <table id="dataTable" data-entity="supplier" data-store="supplierList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/suppliers/list') }}" data-title="{{ t('Lista Dobavljača') }}">
+                            <thead>
+                                <tr>
+                                    <th data-name="s.name" class="col-xs-3">Ime</th>
+                                    <th data-name="s.email" class="col-xs-2">Email</th>
+                                    <th data-name="s.phoneNumber" class="col-xs-2">Telefon</th>
+                                    <th data-name="s.address" class="col-xs-3">Adresa</th>
+                                    <th data-name="s.postalCode" class="col-xs-1">Poštanski broj</th>
+                                    <th class="col-xs-1">Akcije</th>
+                                </tr>
+                                <tr class="hidden">
+                                    <th>{{ form['name'].control | raw }}</th>
+                                    <th>{{ form['email'].control | raw }}</th>
+                                    <th>{{ form['phoneNumber'].control | raw }}</th>
+                                    <th>{{ form['address'].control | raw }}</th>
+                                    <th data-visible="false"></th>
+                                    <th data-visible="false"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
