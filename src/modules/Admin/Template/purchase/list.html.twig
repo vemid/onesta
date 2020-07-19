@@ -15,9 +15,9 @@
                         <table id="dataTable" data-entity="purchase" data-store="purchaseList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/purchases/list') }}" data-title="{{ t('Lista prodaje') }}">
                             <thead>
                                 <tr>
-                                    <th data-name="ct.id" class="col-xs-3">Tip</th>
-                                    <th data-name="c.code" class="col-xs-2">Kod</th>
-                                    <th data-name="c.name" class="col-xs-3">Ime</th>
+                                    <th data-name="c.firstName" class="col-xs-3">Ime i Prezime</th>
+                                    <th data-name="p.createdAt" class="col-xs-2">Datum</th>
+                                    <th data-name="g.firstName" class="col-xs-3">Garantor</th>
                                     <th data-name="c.parent" class="col-xs-3">Pod kategorija</th>
                                     <th class="col-xs-1">Akcije</th>
                                 </tr>
