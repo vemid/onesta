@@ -42,6 +42,7 @@ return [
         $routeCollector->addRoute('GET', '/auth/{method}[/{id:[\w-]+}]', Authentication::class);
         $routeCollector->addRoute('POST', '/auth/{method}[/{id:[\w-]+}]', AuthenticationWrite::class);
         $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', User::class);
+        $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', Client::class);
         $routeCollector->addRoute('GET', '/products/{method}[/{id:[\w-]+}]', Product::class);
         $routeCollector->addRoute('POST', '/products/{method}[/{id:[\w-]+}]', ProductWrite::class);
         $routeCollector->addRoute('GET', '/suppliers/{method}[/{id:[\w-]+}]', Supplier::class);
