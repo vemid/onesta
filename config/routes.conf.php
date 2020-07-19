@@ -62,7 +62,7 @@ return [
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);
-            $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', Client::class);
+            $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\Client::class);
             $routeCollector->addRoute('POST', '/clients/{method}[/{id:[\w-]+}]', ClientWrite::class);
             $routeCollector->addRoute('GET', '/files/{method}/{id}', \Vemid\ProjectOne\Form\Handler\File::class);
             $routeCollector->addRoute('POST', '/user/{method}[/{id:[\w-]+}]', JsonUserWrite::class);
