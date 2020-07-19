@@ -211,6 +211,47 @@
                 });
             },
 
+            removeInstallment: function () {
+                $(document).on("click", "a[data-custom-remove-inst]", function (e) {
+                    e.preventDefault();
+
+                    let formUrl = $(this).attr("href");
+                    let currentUrl = window.location.href;
+                    formUrl = Vemid.crypto.decrypt(formUrl);
+
+                    swal({
+                        title: Vemid.language.get("areYouSure"),
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText: Vemid.language.get("giveUp"),
+                        confirmButtonColor: "#da180f",
+                        confirmButtonText: Vemid.language.get("delete"),
+                        closeOnConfirm: true
+                    }, function () {
+                        Vemid.misc.makeAjaxCall(formUrl, "POST", {})
+                            .then(function (result) {
+                                Vemid.notification.fromResponse(result);
+
+                                if (!result.error) {
+                                    if (typeof dataTable !== 'undefined') {
+                                        $(dataTable).DataTable().ajax.reload();
+                                    } else {
+                                        $("#content").load(currentUrl + " #content > *", function () {
+                                            Vemid.misc.init();
+                                            Vemid.datetime.init();
+                                            Vemid.tableForm.init($(".tableForm"));
+                                            Vemid.tableForm.init($(".tableFormInstallments"));
+                                        });
+                                    }
+                                }
+                            }, function (reason) {
+                                toastr.error(Vemid.language.get('errorRequest'), reason.statusText)
+                            });
+                    });
+                });
+            },
+
             init: function () {
                 this.nameAutocomplete();
                 this.guarantorAutocomplete();
@@ -223,6 +264,7 @@
                 Vemid.tableForm.init($(".tableFormInstallments"));
                 this.paymentInstallmentsOnAddRow();
                 this.paymentInstallmentsOnDeleteRow();
+                this.removeInstallment();
             }
         }
     })();

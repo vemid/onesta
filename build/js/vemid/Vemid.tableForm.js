@@ -153,12 +153,18 @@
 
                 if (_checkIfRowIsForm($row)) {
                     column += "<a href='#' onclick='return false;' class='text-danger bigger-140 text-center delete-cloned-row'><i class='fa fa-minus'></i></a>";
-                }else if (_ifActionMode($row)) {
+                } else if (_ifActionMode($row)) {
                     let entityEdit = $row.attr("data-edit");
                     let entityDelete = $row.attr("data-delete");
+                    let customActions = [].filter.call($row.get(0).attributes, at => /^data-custom/.test(at.name));
 
                     column += "<a href='"+ Vemid.crypto.decrypt(entityEdit) +"' class='text-info bigger-120 text-center'><i class='fa fa-edit'></i></a>";
                     column += "&nbsp;<a href='#' data-delete data-form-url='"+ entityDelete +"' class='text-danger bigger-120 text-center'><i class='fa fa-remove'></i></a>";
+                    if (customActions.length > 0) {
+                        customActions.forEach((element) => {
+                            column += "&nbsp;<a href='"+ element.value +"' "+ element.name +" class='info text-center'><i class='fa fa-pencil'></i></a>";
+                        });
+                    }
                 }
 
                 column += "</td>";
@@ -268,10 +274,7 @@
                     $(footerHtml).insertAfter(table);
                 }
 
-
-                console.log(lockedActions, table);
                 if (typeof lockedActions === 'undefined' || !lockedActions) {
-
                     $.each($("tr", table), function (rowIndex, row) {
                         _addActionColumn(row);
                     });

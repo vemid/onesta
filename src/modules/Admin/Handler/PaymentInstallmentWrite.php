@@ -47,4 +47,20 @@ class PaymentInstallmentWrite extends AbstractHandler
 
         $this->redirect('/purchases/add-items/' . $paymentInstallment->getPurchase()->getId());
     }
+
+    public function removeInstallment($id, EntityManagerInterface $entityManager)
+    {
+        /** @var $paymentInstallment PaymentInstallment */
+        if (!$paymentInstallment = $entityManager->find(PaymentInstallment::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, nesto nije u redu. Ne postoji traženi dobavljač'), null, Builder::WARNING);
+            return;
+        }
+
+        $paymentInstallment->setPaymentAmount(0);
+
+        $entityManager->persist($paymentInstallment);
+        $entityManager->flush();
+
+        $this->messageBag->pushFlashMessage($this->translator->_('Obrisan iznos rate'), null, Builder::SUCCESS);
+    }
 }

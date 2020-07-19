@@ -224,8 +224,13 @@
                                             {% set class = 'alert-warning' %}
                                         {% endif %}
 
+                                        {% set cipher = '' %}
+                                        {% if purchaseItem.paymentAmount > 0 %}
+                                            {% set cipher = cipher('/payment-installments/remove-installment/' ~ purchaseItem.id) %}
+                                        {% endif %}
+
                                         <tr  class="{{ class }}" data-edit="{{ cipher('/payment-installments/update/' ~ purchaseItem.id) }}"
-                                            data-delete="{{ cipher('/payment-installments/delete/' ~ purchaseItem.id) }}">
+                                            data-delete="{{ cipher('/payment-installments/delete/' ~ purchaseItem.id) }}" {{ cipher ? 'data-custom-remove-inst=' ~ cipher ~'' : '' }}>
                                             <td>{{ purchaseItem.installmentDate.format('m.d.Y') }}</td>
                                             <td class="text-center">{{ purchaseItem.installmentAmount|number_format(2, '.', ',') }}</td>
                                             <td class="text-center">{{ purchaseItem.paymentDate.format('m.d.Y') }}</td>
