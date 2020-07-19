@@ -80,6 +80,7 @@
 
         let col = Math.round((12 / counter) * 10) / 10;
         col.toFixed();
+        col = Math.floor(col);
 
         $.each($("th", filterTr), function (index, th) {
             let html = $(th).html();
@@ -185,15 +186,8 @@
                 let filterValue = $field.val();
 
                 if (dateRangeFilters.length === 2) {
-                    filterValue = '';
-                    $.each(dateRangeFilters, function (index, filedElement) {
-                        let $filedElement = $(filedElement);
-                        if (index === 1) {
-                            filterValue += " - ";
-                        }
-
-                        filterValue += $filedElement.val();
-                    });
+                    filterValue = dateRangeFilters.eq(0).val() + " - " + dateRangeFilters.eq(1).val();
+                    console.log(filterValue);
                 }
 
                 let name = $field.attr("name");
@@ -230,10 +224,11 @@
                 let filterRangeValues = filterValues[i].split(" - ");
 
                 dateRangeFilters.eq(0).val(filterRangeValues[0]).attr("value", filterRangeValues[0]);
-                dateRangeFilters.eq(1).val(filterRangeValues[1]).attr("value", filterRangeValues[1]);
+                dateRangeFilters.eq(1).val(filterRangeValues[1]).attr("value", filterRangeValues[1].replace(' - ',''));
             } else if (filter.is("select")) {
                 if (!!filterValues && typeof filterValues[i] !== 'undefined') {
-                    $("option[value="+ filterValues[i] +"]", filter).attr('selected','selected');
+                    console.log(filterValues[i]);
+                    $("option[value='"+ filterValues[i] +"']", filter).attr('selected','selected');
                 }
 
                 filter
@@ -259,14 +254,7 @@
 
                 let filterValue = $(this).val();
                 if (dateRangeFilters.length === 2) {
-                    filterValue = '';
-                    $.each(dateRangeFilters, function (index, $element) {
-                        if (index === 1) {
-                            filterValue += " - ";
-                        }
-
-                        filterValue += $($element).val();
-                    });
+                    filterValue = dateRangeFilters.eq(0).val();
                 }
 
                 filterValues[i] = filterValue;

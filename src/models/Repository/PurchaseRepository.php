@@ -6,9 +6,11 @@ namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
+use Vemid\ProjectOne\Entity\Entity\SupplierReceipt;
 
 /**
  * Class PurchaseRepository
@@ -16,6 +18,39 @@ use Vemid\ProjectOne\Entity\Entity\Registration;
  */
 class PurchaseRepository extends EntityRepository
 {
+    use FilterTrait;
+
+    /**
+     * @param $limit
+     * @param $offset
+     * @param array $criteria
+     * @return Purchase[]
+     */
+    public function fetchPurchases($limit, $offset, $criteria = [])
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
+            ->select('p')
+            ->from(Purchase::class, 'p')
+            ->leftJoin(Client::class, 'c', Join::WITH, 'c.id = p.client')
+            ->leftJoin(Registration::class, 'r', Join::WITH, 'p.id = r.purchase')
+            ->leftJoin(PurchaseItem::class, 'pi', Join::WITH, 'p.id = pi.purchase')
+            ->where('1=1');
+
+        if (\count($criteria)) {
+            $this->filterCriteriaBuilder($queryBuilder, $criteria, SupplierReceipt::class);
+        }
+
+        if ($offset) {
+            $queryBuilder->setFirstResult($offset);
+        }
+
+        if ($limit) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
     /**
      * @param Purchase $purchase
      * @return int|float

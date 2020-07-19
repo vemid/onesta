@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Admin\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Vemid\ProjectOne\Admin\Form\Filter\CodeFilterForm;
+use Vemid\ProjectOne\Admin\Form\Filter\PurchaseFilterForm;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
@@ -23,10 +23,10 @@ use Vemid\ProjectOne\Entity\Entity\Registration;
  */
 class Purchase extends AbstractHandler
 {
-    public function list(CodeFilterForm $codeFilterForm): void
+    public function list(PurchaseFilterForm $purchaseFilterForm): void
     {
         $this->view->setTemplate('purchase::list.html.twig', [
-            'form' => $codeFilterForm->generate()
+            'form' => $purchaseFilterForm->generate()
         ]);
     }
 

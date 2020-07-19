@@ -15,17 +15,30 @@
                         <table id="dataTable" data-entity="purchase" data-store="purchaseList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/purchases/list') }}" data-title="{{ t('Lista prodaje') }}">
                             <thead>
                                 <tr>
-                                    <th data-name="c.firstName" class="col-xs-3">Ime i Prezime</th>
+                                    <th data-name="c.id" class="col-xs-2">Ime i Prezime</th>
                                     <th data-name="p.createdAt" class="col-xs-2">Datum</th>
-                                    <th data-name="g.firstName" class="col-xs-3">Garantor</th>
-                                    <th data-name="c.parent" class="col-xs-3">Pod kategorija</th>
+                                    <th data-name="c.guarantor" class="col-xs-2">Garantor</th>
+                                    <th data-name="c.phoneNumber" class="col-xs-1">Br. tel</th>
+                                    <th data-name="r.plate" class="col-xs-1">Reg. broj</th>
+                                    <th data-name="r.plate" class="col-xs-2">Dodatne usluge</th>
+                                    <th class="col-xs-1">Ukupno</th>
                                     <th class="col-xs-1">Akcije</th>
                                 </tr>
-                                <tr>
-                                    <th>{{ form['type'].control | raw }}</th>
-                                    <th>{{ form['code'].control | raw }}</th>
+                                <tr class="hidden">
                                     <th>{{ form['name'].control | raw }}</th>
-                                    <th>{{ form['parent'].control | raw }}</th>
+                                    <th>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['fromDate'].control | raw }}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                            {{ form['toDate'].control | raw }}
+                                        </div>
+                                    </th>
+                                    <th>{{ form['guarantor'].control | raw }}</th>
+                                    <th>{{ form['phoneNumber'].control | raw }}</th>
+                                    <th></th>
+                                    <th data-visible="false"></th>
+                                    <th data-visible="false"></th>
                                     <th data-visible="false"></th>
                                 </tr>
                             </thead>

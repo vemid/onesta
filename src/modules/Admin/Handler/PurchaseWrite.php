@@ -6,8 +6,9 @@ namespace Vemid\ProjectOne\Admin\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
+use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
-use Vemid\ProjectOne\Common\Route\AbstractHandler;
+use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
@@ -16,16 +17,51 @@ use Vemid\ProjectOne\Entity\Entity\Registration;
 use Vemid\ProjectOne\Entity\Entity\Stock;
 use Vemid\ProjectOne\Entity\Entity\SupplierProduct;
 use \Vemid\ProjectOne\Entity\Entity\PaymentInstallment;
+use Vemid\ProjectOne\Entity\Repository\PurchaseRepository;
 
 /**
  * Class PurchaseWrite
  * @package Vemid\ProjectOne\Admin\Handler
  */
-class PurchaseWrite extends AbstractHandler
+class PurchaseWrite extends GridHandler
 {
-    public function list()
+    public function list(EntityManagerInterface $entityManager)
     {
+        /** @var PurchaseRepository $purchaseRepository */
+        $purchaseRepository = $entityManager->getRepository(Purchase::class);
+        $purchases = $purchaseRepository->fetchPurchases($this->limit, $this->offset, $this->filterColumns);
+        $totalPurchases = $purchaseRepository->fetchPurchases(0, 0);
+        $filteredPurchases = $purchaseRepository->fetchPurchases(0, 0, $this->filterColumns);
 
+        $data = [];
+        foreach ($purchases as $purchase) {
+            $client = $purchase->getClient();
+            $data[] = [
+                (string)$client,
+                $purchase->getCreatedAt()->format('m.d.Y'),
+                (string)$client->getGuarantor(),
+                $client->getPhoneNumber(),
+                $purchase->getRegistration() ? $purchase->getRegistration()->getPlates() : '',
+                '',
+                number_format($purchaseRepository->fetchTotalPrice($purchase), 2),
+                HtmlTag::groupLink([
+                    HtmlTag::link('/supplier-receipts/overview/' . $purchase->getId(), false, 'text-success bigger-120', 'search', false),
+                    HtmlTag::link('/supplier-receipts/update/' . $purchase->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
+                    HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
+                        'data-delete' => '',
+                        'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/supplier-receipts/delete/' . $purchase->getId())),
+                        'data-title' => $this->translator->_('Obriši proizvod'),
+                    ]),
+                ])
+            ];
+        }
+
+        return [
+            'draw' => $this->page,
+            'recordsTotal' => count($totalPurchases),
+            'recordsFiltered' => count($filteredPurchases),
+            'data' => $data
+        ];
     }
 
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager)

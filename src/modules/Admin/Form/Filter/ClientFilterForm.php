@@ -6,9 +6,6 @@ namespace Vemid\ProjectOne\Admin\Form\Filter;
 
 use Nette\Forms\Form;
 use Vemid\ProjectOne\Common\Form\AbstractForm;
-use Vemid\ProjectOne\Entity\Entity\Code;
-use Vemid\ProjectOne\Entity\Entity\CodeType;
-use Vemid\ProjectOne\Entity\Entity\Product;
 use Vemid\ProjectOne\Entity\EntityInterface;
 
 /**

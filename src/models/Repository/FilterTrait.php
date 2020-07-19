@@ -66,6 +66,9 @@ trait FilterTrait
                     continue;
                 }
 
+                $startDate = str_replace('.', '/', $startDate);
+                $endDate = str_replace('.', '/', $endDate);
+
                 $queryBuilder->andWhere(sprintf('%s BETWEEN :param%s AND :param%s', $field, $counter, $counter + 1));
                 $params["param$counter"] = (new \DateTime($startDate ?: '1980-01-01'))->format('Y-m-d');
                 $counter++;
