@@ -220,8 +220,10 @@
                                         {% set class = '' %}
                                         {% if not purchaseItem.paymentDate and today > purchaseItem.installmentDate %}
                                             {% set class = 'alert-danger' %}
-                                        {% elseif purchaseItem.paymentDate and purchaseItem.paymentDate > purchaseItem.installmentDate %}
+                                        {% elseif purchaseItem.paymentDate and purchaseItem.paymentDate > purchaseItem.installmentDate and purchaseItem.paymentAmount >= purchaseItem.installmentAmount %}
                                             {% set class = 'alert-warning' %}
+                                        {% elseif purchaseItem.paymentDate and purchaseItem.paymentAmount < purchaseItem.installmentAmount %}
+                                            {% set class = 'alert-dark' %}
                                         {% endif %}
 
                                         {% set cipher = '' %}
