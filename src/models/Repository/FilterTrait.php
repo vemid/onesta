@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Entity\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Supplier;
@@ -30,6 +31,24 @@ trait FilterTrait
             $relatedMetadata = $entityManager->getClassMetadata($relatedClass);
             $className = @end((explode('\\', $relatedClass)));
             $relatedAlias = strtolower($className[0]);
+
+            $joins = $queryBuilder->getDQLPart('join');
+
+            $initiatedJoin = false;
+            foreach ($joins as $join) {
+                /** @var Join $item */
+                foreach ($join as $item) {
+                    $joinClassName = @end((explode('\\', $item->getJoin())));
+                    if ($joinClassName === $className) {
+                        $initiatedJoin = true;
+                        break 1;
+                    }
+                }
+            }
+
+            if (!$initiatedJoin) {
+                continue;
+            }
 
             if (preg_match_all('/((?:^|[A-Z])[a-z]+)/', $className, $matches)) {
                 $camelCased = $matches[0];
@@ -74,7 +93,7 @@ trait FilterTrait
                 $counter++;
                 $params["param$counter"] = (new \DateTime($endDate ?: 'NOW'))->format('Y-m-d');
                 $counter++;
-            }else if ($field !== '*') {
+            } else if ($field !== '*') {
                 $propertyField = explode('.', $field)[1];
 
                 $number = ctype_digit($value) && in_array($propertyField, $relationProperties, false);

@@ -7,6 +7,7 @@ namespace Vemid\ProjectOne\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Vemid\ProjectOne\Entity\Entity\Client;
+use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
@@ -37,7 +38,7 @@ class PurchaseRepository extends EntityRepository
             ->where('1=1');
 
         if (\count($criteria)) {
-            $this->filterCriteriaBuilder($queryBuilder, $criteria, SupplierReceipt::class);
+            $this->filterCriteriaBuilder($queryBuilder, $criteria, Purchase::class);
         }
 
         if ($offset) {
