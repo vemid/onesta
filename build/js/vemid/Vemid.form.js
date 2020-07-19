@@ -320,6 +320,7 @@
                                             Vemid.misc.init();
                                             Vemid.datetime.init();
                                             Vemid.tableForm.init($(".tableForm"));
+                                            Vemid.tableForm.init($(".tableFormInstallments"));
                                         });
                                     }
                                 }

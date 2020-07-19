@@ -201,7 +201,11 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <h2 class="text-center m-b-lg">Rate i Plaćanja</h2>
-                                <table class="table table-stripped tableFormInstallments" data-entity="payment-installment"
+                                {% set diff = totalPrice - assignedInstalmentsAmount %}
+                                {% if purchase.getPaymentInstallments()|length > 0 and diff > 0  %}
+                                    <div class="alert alert-danger"><p>Suma rata se razlikuje od ukupne vrednosti! Rasporediti preostali iznos od: {{ diff|number_format(2, '.', ',') }}</p></div>
+                                    {% endif %}
+                                <table class="table table-stripped tableFormInstallments" data-entity="payment-installment" data-locked="false"
                                        data-action="{{ cipher('/purchases/add-payment-installments/' ~ purchase.id) }}" data-price="{{ totalPrice }}">
                                     <thead>
                                     <tr>
@@ -213,7 +217,15 @@
                                     </thead>
                                     <tbody>
                                     {% for purchaseItem in purchase.getPaymentInstallments() %}
-                                        <tr data-edit="{{ cipher('/payment-installments/update/' ~ purchaseItem.id) }}"
+                                        {% set class = '' %}
+                                        {% if not purchaseItem.paymentDate and today > purchaseItem.installmentDate %}
+                                            {% set class = 'alert-danger' %}
+                                        {% endif %}
+                                        {% if purchaseItem.paymentDate and purchaseItem.paymentDate > purchaseItem.installmentDate %}
+                                            {% set class = 'alert-danger' %}
+                                        {% endif %}
+
+                                        <tr  class="{{ class }}" data-edit="{{ cipher('/payment-installments/update/' ~ purchaseItem.id) }}"
                                             data-delete="{{ cipher('/payment-installments/delete/' ~ purchaseItem.id) }}">
                                             <td>{{ purchaseItem.installmentDate.format('m.d.Y') }}</td>
                                             <td class="text-center">{{ purchaseItem.installmentAmount|number_format(2, '.', ',') }}</td>
@@ -222,12 +234,15 @@
                                         </tr>
                                     {% endfor %}
                                     {% if purchase.getPaymentInstallments()|length == 0 or totalPrice > assignedInstalmentsAmount %}
+                                        {% if purchase.getPaymentInstallments()|length < 4 %}
                                     <tr>
                                         <td>{{ paymentInstallmentForm['installmentDate'].control | raw }}</td>
                                         <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
                                         <td>{{ paymentInstallmentForm['paymentDate'].control | raw }}</td>
                                         <td>{{ paymentInstallmentForm['paymentAmount'].control | raw }}</td>
                                     </tr>
+                                        {% endif %}
+                                        {% if purchase.getPaymentInstallments()|length < 3 %}
                                     <tr>
                                         {% set installmentDateControl1 = paymentInstallmentForm['installmentDate'].control %}
                                         {% set installmentDateControl1 = installmentDateControl1.setValue(instalmentDates['date1']) %}
@@ -245,6 +260,8 @@
                                         <td>{{ paymentAmountControl1 | raw }}</td>
                                         <td>{{ paymentDateControl1 | raw }}</td>
                                     </tr>
+                                        {% endif %}
+                                        {% if purchase.getPaymentInstallments()|length < 2 %}
                                     <tr>
                                         {% set installmentDateControl2 = installmentDateControl1.setValue(instalmentDates['date2']) %}
 
@@ -253,6 +270,17 @@
                                         <td>{{ paymentAmountControl1 | raw }}</td>
                                         <td>{{ paymentDateControl1 | raw }}</td>
                                     </tr>
+                                        {% endif %}
+                                        {% if purchase.getPaymentInstallments()|length == 0 %}
+                                    <tr>
+                                        {% set installmentDateControl3 = installmentDateControl1.setValue(instalmentDates['date3']) %}
+
+                                        <td>{{ installmentDateControl3 | raw }}</td>
+                                        <td>{{ paymentInstallmentForm['installmentAmount'].control | raw }}</td>
+                                        <td>{{ paymentAmountControl1 | raw }}</td>
+                                        <td>{{ paymentDateControl1 | raw }}</td>
+                                    </tr>
+                                        {% endif %}
                                     {% endif %}
                                     </tbody>
                                 </table>

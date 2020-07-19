@@ -112,13 +112,24 @@ class Purchase extends AbstractHandler
         $registrationForm->getComponent('purchase')->setValue($id);
 
         $dateTime = $purchase->getCreatedAt();
-        $date1 = clone $dateTime;
-        $date1->modify('+1 month');
-        $date2 = clone $dateTime;
-        $date2->modify('+2 month');
 
-        $paymentInstallmentForm->getComponent('installmentDate')->setValue($dateTime->format('Y-m-d'));
-        $paymentInstallmentForm->getComponent('installmentAmount')->setDefaultValue(number_format(round($totalPrice / 3, 2), 2));
+        $priceToPay = $totalPrice - $assignedInstalmentsAmount;
+        $instalments = 4 - $purchase->getPaymentInstallments()->count();
+        $date = clone $dateTime;
+
+        if ($instalments) {
+            $date->modify(sprintf('+%d months', $purchase->getPaymentInstallments()->count()));
+
+            $paymentInstallmentForm->getComponent('installmentDate')->setValue($date->format('Y-m-d'));
+            $paymentInstallmentForm->getComponent('installmentAmount')->setDefaultValue(number_format(round($priceToPay / $instalments, 2), 2));
+        }
+
+        $date1 = clone $date;
+        $date1->modify('+1 month');
+        $date2 = clone $date;
+        $date2->modify('+2 month');
+        $date3 = clone $date;
+        $date3->modify('+3 month');
 
         $this->view->setTemplate('purchase::add-items.html.twig', [
             'purchase' => $purchase,
@@ -126,8 +137,9 @@ class Purchase extends AbstractHandler
             'registrationForm' => $registrationForm,
             'totalPrice' => $totalPrice,
             'paymentInstallmentForm' => $paymentInstallmentForm,
-            'instalmentDates' => ['date1' => $date1->format('Y-m-d'), 'date2' => $date2->format('Y-m-d')],
-            'assignedInstalmentsAmount' => $assignedInstalmentsAmount
+            'instalmentDates' => ['date1' => $date1->format('Y-m-d'), 'date2' => $date2->format('Y-m-d'), 'date3' => $date3->format('Y-m-d')],
+            'assignedInstalmentsAmount' => $assignedInstalmentsAmount,
+            'today' => new \DateTime()
         ]);
     }
 

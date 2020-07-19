@@ -228,7 +228,9 @@
                                     $("body").removeClass("modal-open");
                                     Vemid.misc.init();
                                     Vemid.datetime.init();
-                                    Vemid.tableForm.init($("#content table"));
+                                    $.each($("#content table"), function(){
+                                        Vemid.tableForm.init($(this));
+                                    });
                                     $(".loader-box").hide();
                                 });
 
@@ -255,6 +257,8 @@
                 let firstRow = $("tbody tr:first", table);
                 let lastRow = firstRow.siblings(":last");
                 let lockedActions = table.attr("data-locked");
+                lockedActions = (lockedActions === 'true' || lockedActions === '1');
+
                 if (lastRow.length === 0) {
                     lastRow = firstRow;
                 }
@@ -264,7 +268,10 @@
                     $(footerHtml).insertAfter(table);
                 }
 
+
+                console.log(lockedActions, table);
                 if (typeof lockedActions === 'undefined' || !lockedActions) {
+
                     $.each($("tr", table), function (rowIndex, row) {
                         _addActionColumn(row);
                     });

@@ -30,6 +30,7 @@ return [
                     'supplier-receipts' => ['delete'],
                     'supplier-products' => ['get-qty'],
                     'supplier-receipt-items' => ['delete'],
+                    'payment-installments' => ['delete'],
                     'clients' => ['fetch-by-term', 'fetch-by-id'],
                 ]
             ],

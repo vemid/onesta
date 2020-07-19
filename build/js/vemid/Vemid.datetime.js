@@ -76,7 +76,7 @@
                     let fp = $element.flatpickr({
                         altInput: true,
                         static: !$(".modal").is(":hidden"),
-                        altFormat: "F j, Y",
+                        altFormat: "m.d.Y",
                         allowInput: true,
                         locale: {
                             firstDayOfWeek: 1,
