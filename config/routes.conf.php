@@ -24,7 +24,7 @@ use Vemid\ProjectOne\Admin\Handler\SupplierWrite;
 use Vemid\ProjectOne\Admin\Handler\User;
 use Vemid\ProjectOne\Api\Handler\Ping;
 use Vemid\ProjectOne\Admin\Handler\Index as AdminIndex;
-use Vemid\ProjectOne\Form\Handler\ClientWrite;
+use Vemid\ProjectOne\Admin\Handler\ClientWrite;
 use Vemid\ProjectOne\Form\Handler\User as JsonUser;
 use Vemid\ProjectOne\Form\Handler\UserWrite as JsonUserWrite;
 use \Vemid\ProjectOne\Admin\Handler\Purchase;
@@ -42,7 +42,6 @@ return [
         $routeCollector->addRoute('GET', '/auth/{method}[/{id:[\w-]+}]', Authentication::class);
         $routeCollector->addRoute('POST', '/auth/{method}[/{id:[\w-]+}]', AuthenticationWrite::class);
         $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', User::class);
-        $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', Client::class);
         $routeCollector->addRoute('GET', '/products/{method}[/{id:[\w-]+}]', Product::class);
         $routeCollector->addRoute('POST', '/products/{method}[/{id:[\w-]+}]', ProductWrite::class);
         $routeCollector->addRoute('GET', '/suppliers/{method}[/{id:[\w-]+}]', Supplier::class);
@@ -59,11 +58,13 @@ return [
         $routeCollector->addRoute('POST', '/purchase-items/{method}[/{id:[\w-]+}]', PurchaseItemWrite::class);
         $routeCollector->addRoute('GET', '/payment-installments/{method}[/{id:[\w-]+}]', PaymentInstallment::class);
         $routeCollector->addRoute('POST', '/payment-installments/{method}[/{id:[\w-]+}]', PaymentInstallmentWrite::class);
+        $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', Client::class);
+        $routeCollector->addRoute('POST', '/clients/{method}[/{id:[\w-]+}]', ClientWrite::class);
 
         $routeCollector->addGroup('/form', static function (RouteCollector $routeCollector) {
             $routeCollector->addRoute('GET', '/user/{method}[/{id:[\w-]+}]', JsonUser::class);
             $routeCollector->addRoute('GET', '/clients/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\Client::class);
-            $routeCollector->addRoute('POST', '/clients/{method}[/{id:[\w-]+}]', ClientWrite::class);
+            $routeCollector->addRoute('POST', '/clients/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\ClientWrite::class);
             $routeCollector->addRoute('GET', '/files/{method}/{id}', \Vemid\ProjectOne\Form\Handler\File::class);
             $routeCollector->addRoute('POST', '/user/{method}[/{id:[\w-]+}]', JsonUserWrite::class);
             $routeCollector->addRoute('POST', '/products/{method}[/{id:[\w-]+}]', \Vemid\ProjectOne\Form\Handler\ProductWrite::class);

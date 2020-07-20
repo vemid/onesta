@@ -12,21 +12,26 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="space-20"></div>
-                        <table id="dataTable" data-entity="supplier" data-store="supplierList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/suppliers/list') }}" data-title="{{ t('Lista Dobavljača') }}">
+                        <table id="dataTable" data-entity="client" data-store="clientList" class="table table-stripped toggle-arrow-tiny" data-serverside="true" data-ajax-url="{{ cipher('/clients/list') }}" data-title="{{ t('Lista Klijenta') }}">
                             <thead>
                                 <tr>
-                                    <th data-name="s.name" class="col-xs-3">Ime</th>
-                                    <th data-name="s.email" class="col-xs-2">Email</th>
-                                    <th data-name="s.phoneNumber" class="col-xs-2">Telefon</th>
-                                    <th data-name="s.address" class="col-xs-3">Adresa</th>
-                                    <th data-name="s.postalCode" class="col-xs-1">Poštanski broj</th>
+                                    <th data-name="c.id" class="col-xs-2">Ime I Prezime</th>
+                                    <th data-name="c.email" class="col-xs-1">Email</th>
+                                    <th data-name="c.phoneNumber" class="col-xs-1">Telefon</th>
+                                    <th data-name="c.jmbg" class="col-xs-1">Jmbg</th>
+                                    <th data-name="c.pib" class="col-xs-1">PIB</th>
+                                    <th data-name="c.city" class="col-xs-1">Grad</th>
+                                    <th data-name="c.address" class="col-xs-2">Adresa</th>
                                     <th class="col-xs-1">Akcije</th>
                                 </tr>
                                 <tr class="hidden">
                                     <th>{{ form['name'].control | raw }}</th>
                                     <th>{{ form['email'].control | raw }}</th>
                                     <th>{{ form['phoneNumber'].control | raw }}</th>
-                                    <th>{{ form['address'].control | raw }}</th>
+                                    <th>{{ form['jmbg'].control | raw }}</th>
+                                    <th>{{ form['pib'].control | raw }}</th>
+                                    <th data-visible="false"></th>
+                                    <th data-visible="false"></th>
                                     <th data-visible="false"></th>
                                     <th data-visible="false"></th>
                                 </tr>
