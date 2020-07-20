@@ -29,13 +29,29 @@ class PurchaseWrite extends GridHandler
     {
         /** @var PurchaseRepository $purchaseRepository */
         $purchaseRepository = $entityManager->getRepository(Purchase::class);
+        $paymentInstallmentRepository = $entityManager->getRepository(PaymentInstallment::class);
         $purchases = $purchaseRepository->fetchPurchases($this->limit, $this->offset, $this->filterColumns);
         $totalPurchases = $purchaseRepository->fetchPurchases(0, 0);
         $filteredPurchases = $purchaseRepository->fetchPurchases(0, 0, $this->filterColumns);
 
         $data = [];
         foreach ($purchases as $purchase) {
+            $totalPrice = $purchaseRepository->fetchTotalPrice($purchase);
+            $totalPaid = $purchaseRepository->fetchTotalPaid($purchase);
+            $missingPaymentInstallments = $paymentInstallmentRepository->fetchMissingInstallments($purchase);
+            $todayPaymentInstallments = $paymentInstallmentRepository->fetchInstallmentsShouldPayToday($purchase);
+
             $client = $purchase->getClient();
+
+            $color = '';
+            if($totalPrice === $totalPaid) {
+                $color = '#62FF90';
+            } elseif(count($todayPaymentInstallments)) {
+                $color = '#FFD967';
+            } elseif(count($missingPaymentInstallments)) {
+                $color = '#FF432E';
+            }
+
             $data[] = [
                 (string)$client,
                 $purchase->getCreatedAt()->format('m.d.Y'),
@@ -43,7 +59,7 @@ class PurchaseWrite extends GridHandler
                 $client->getPhoneNumber(),
                 $purchase->getRegistration() ? $purchase->getRegistration()->getPlates() : '',
                 '',
-                number_format($purchaseRepository->fetchTotalPrice($purchase), 2),
+                number_format($totalPrice, 2),
                 HtmlTag::groupLink([
                     HtmlTag::link('/supplier-receipts/overview/' . $purchase->getId(), false, 'text-success bigger-120', 'search', false),
                     HtmlTag::link('/supplier-receipts/update/' . $purchase->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
@@ -52,7 +68,8 @@ class PurchaseWrite extends GridHandler
                         'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/supplier-receipts/delete/' . $purchase->getId())),
                         'data-title' => $this->translator->_('Obriši proizvod'),
                     ]),
-                ])
+                ]),
+                $color
             ];
         }
 

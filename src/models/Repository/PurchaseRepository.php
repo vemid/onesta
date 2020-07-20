@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Vemid\ProjectOne\Entity\Entity\Client;
 use Vemid\ProjectOne\Entity\Entity\Code;
+use Vemid\ProjectOne\Entity\Entity\PaymentInstallment;
 use Vemid\ProjectOne\Entity\Entity\Purchase;
 use Vemid\ProjectOne\Entity\Entity\PurchaseItem;
 use Vemid\ProjectOne\Entity\Entity\Registration;
@@ -87,6 +88,31 @@ class PurchaseRepository extends EntityRepository
 
         if (!empty($totalPriceRegistration[0]['totalPrice'])) {
             $price += $totalPriceRegistration[0]['totalPrice'];
+        }
+
+        return $price;
+    }
+
+    /**
+     * @param Purchase $purchase
+     * @return int|float
+     */
+    public function fetchTotalPaid(Purchase $purchase)
+    {
+        $totalPrice = $this->getEntityManager()->createQueryBuilder()
+            ->select('SUM(pi.paymentAmount) as totalPaid')
+            ->from(Purchase::class, 'p')
+            ->leftJoin(PaymentInstallment::class, 'pi', Join::WITH, 'p.id = pi.purchase')
+            ->where('p.id = :purchase')
+            ->setParameters([
+                'purchase' => $purchase->getId(),
+            ])
+            ->getQuery()
+            ->execute();
+
+        $price = 0;
+        if (!empty($totalPrice[0]['totalPaid'])) {
+            $price = $totalPrice[0]['totalPaid'];
         }
 
         return $price;

@@ -159,6 +159,17 @@
                 }
             },
             buttons: buttons
+        },
+        createdRow: function(row, data, dataIndex, columns){
+            if (data.length !== columns.length) {
+                let extraData = data;
+                extraData.splice(0, columns.length);
+                extraData.forEach((element) => {
+                    if(element.includes("#")){
+                        $(row).css("background-color", element);
+                    }
+                });
+            }
         }
     };
 

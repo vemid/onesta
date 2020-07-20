@@ -10,7 +10,9 @@ use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\AST\Functions\CurrentDateFunction;
 use Doctrine\ORM\Tools\Setup;
+use DoctrineExtensions\Query\Mysql\Date;
 use DoctrineExtensions\Query\Mysql\Sha1;
 use Vemid\ProjectOne\Common\Config\ConfigInterface;
 use \Doctrine\ORM\Mapping\Driver\XmlDriver;
@@ -64,6 +66,9 @@ class EntityManagerFactory
         );
 
         $config->addCustomStringFunction('sha1', Sha1::class);
+        $config->addCustomStringFunction('DATE', Date::class);
+        $config->addCustomStringFunction('CURDATE', CurrentDateFunction::class);
+
         $config->setMetadataCacheImpl($cacheDriver);
         $config->setQueryCacheImpl($cacheDriver);
         $config->setResultCacheImpl($cacheDriver);

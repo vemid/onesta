@@ -33,4 +33,41 @@ class PaymentInstallmentRepository extends EntityRepository
 
         return $price;
     }
+
+    /**
+     * @param Purchase $purchase
+     * @return int|float
+     */
+    public function fetchMissingInstallments(Purchase $purchase)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('pi')
+            ->from(PaymentInstallment::class, 'pi')
+            ->where('pi.purchase = :purchase')
+            ->andWhere('pi.paymentDate IS NULL OR pi.paymentAmount < 1')
+            ->setParameters([
+                'purchase' => $purchase->getId(),
+            ])
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param Purchase $purchase
+     * @return int|float
+     */
+    public function fetchInstallmentsShouldPayToday(Purchase $purchase)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('pi')
+            ->from(PaymentInstallment::class, 'pi')
+            ->where('pi.purchase = :purchase')
+            ->andWhere('pi.paymentAmount < 1')
+            ->andWhere('DATE(pi.installmentDate) = CURDATE()')
+            ->setParameters([
+                'purchase' => $purchase->getId(),
+            ])
+            ->getQuery()
+            ->execute();
+    }
 }
