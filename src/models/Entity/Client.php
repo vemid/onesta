@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 use Vemid\ProjectOne\Entity\Entity;
 
@@ -137,11 +138,17 @@ class Client extends Entity
     private $clients;
 
     /**
+     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="client")
+     */
+    private $purchases;
+
+    /**
      * Client constructor.
      */
     public function __construct()
     {
         $this->clients = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     /**
@@ -462,6 +469,14 @@ class Client extends Entity
     public function getGuarantor(): ?Client
     {
         return $this->guarantor;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getPurchases(): ?PersistentCollection
+    {
+        return $this->purchases;
     }
 
     /**

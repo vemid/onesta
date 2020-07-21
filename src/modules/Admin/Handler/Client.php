@@ -64,4 +64,16 @@ class Client extends AbstractHandler
             'form' => $form
         ]);
     }
+
+    public function overview($id, EntityManagerInterface $entityManager)
+    {
+        /** @var $client EntityClient */
+        if (!$client = $entityManager->find(EntityClient::class, (int)$id)) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
+        }
+
+        $this->view->setTemplate('client::overview.html.twig', [
+            'client' => $client
+        ]);
+    }
 }

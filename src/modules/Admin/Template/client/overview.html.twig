@@ -1,0 +1,118 @@
+{% block title %}
+    <title>{{ t('Klijent|Pregled') }}</title>
+{% endblock %}
+
+{% extends "@layout/main.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card ibox float-e-margins box-shadow">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-lg-6">
+                            <div class="space-20"></div>
+                            <h1 class="text-center text-default m-b-lg m-t-lg">{{ client }}</h1>
+                            <ul class="list-group clear-list m-t">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Ime i Prezime:</div>
+                                        <div class="col-xs-8">{{ client }}</div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Telefon:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.phoneNumber }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Email:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.email }}
+                                        </div>
+                                    </div>
+                                </li>
+                                {% if client.type == 'NATURAL' %}
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-4">Jmbg:</div>
+                                            <div class="col-xs-8">
+                                                {{ client.jmbg }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-4">PIB:</div>
+                                            <div class="col-xs-8">
+                                                {{ client.pib }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Adresa:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.address }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Grad:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.city }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4">Garantor:</div>
+                                        <div class="col-xs-8">
+                                            {{ client.guarantor }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item"></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-6">
+                            <div class="row">
+                                <div class="space-20"></div>
+                            </div>
+                            <h2 class="text-center text-info mt-10">Istorija Kupovina</h2>
+                            <div class="space-20"></div>
+                            <div class="inspinia-timeline">
+                                {% if client.purchases|length %}
+                                    {% for purchase in client.purchases %}
+                                    <div class="timeline-item">
+                                    <div class="row">
+                                        <div class="col-xs-3 date">
+                                            <i class="fa fa-money"></i>
+                                            <small class="text-navy">{{ purchase.createdAt.format('d.m.Y') }}</small>
+                                        </div>
+                                        <div class="col-xs-7 content">
+                                            <p class="m-b-xs"><strong>Send documents to Mike</strong></p>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>nema</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

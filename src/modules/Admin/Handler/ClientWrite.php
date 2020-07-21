@@ -9,8 +9,6 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Helper\HtmlTag;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
-use Vemid\ProjectOne\Entity\Entity\Code;
-use Vemid\ProjectOne\Entity\Entity\CodeType;
 use Vemid\ProjectOne\Entity\Repository\ClientRepository;
 use \Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
 
@@ -39,7 +37,8 @@ class ClientWrite extends GridHandler
                 $client->getCity(),
                 $client->getAddress(),
                 HtmlTag::groupLink([
-                    HtmlTag::link('/clients/update/' . $client->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
+                    HtmlTag::link('/clients/overview/' . $client->getId(), false, 'text-default bigger-120', 'search', false),
+                    HtmlTag::link('/clients/update/' . $client->getId(), false, 'text-info bigger-120', 'pencil-square-o', false),
                     HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
                         'data-delete' => '',
                         'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/clients/delete/' . $client->getId())),
