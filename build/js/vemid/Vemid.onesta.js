@@ -22,11 +22,16 @@
             nameAutocomplete: function () {
                 $("input[name ='firstName']").each(function (index, element) {
                     let $element = $(element);
+                    let $client = $("[name ='clientId']");
+                    let clientId = '';
+                    if ($client.length) {
+                        clientId = "?clientId=" + $client.val();
+                    }
 
                     $element
                         .autocomplete({
                             minLength: 3,
-                            source: Vemid.config.formUrl + "form/clients/fetch-by-term",
+                            source: Vemid.config.formUrl + "form/clients/fetch-by-term" + clientId,
                             select: function (event, ui) {
                                 event.preventDefault();
                                 let $id = ui.item.id;
@@ -59,12 +64,21 @@
             guarantorAutocomplete: function () {
                 $("input[name ='guarantorId']").each(function (index, element) {
                     let $element = $(element);
+                    let $client = $("[name ='clientId']");
+                    let clientId = '';
+                    if ($client.length) {
+                        clientId = $client.val();
+                    }
 
                     $element
                         .autocomplete({
                             minLength: 3,
                             source: function (request, response) {
                                 request["clientId"] = $("input[name='client']").val();
+                                if (clientId) {
+                                    request["clientId"] = clientId;
+                                }
+
                                 $.post(Vemid.config.formUrl + "form/clients/fetch-by-term", request, response);
                             },
                             select: function (event, ui) {

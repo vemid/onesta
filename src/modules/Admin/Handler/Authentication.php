@@ -79,6 +79,8 @@ class Authentication extends AbstractHandler
             return;
         }
 
+        $params = $this->request->getQueryParams();
+
         $qrCodeImage = null;
         if (!$user->getSecretKey()) {
             $user->setSecretKey($google2FA->generateSecretKey());
@@ -102,9 +104,12 @@ class Authentication extends AbstractHandler
             $qrCodeImage = base64_encode($writer->writeString($g2faUrl));
         }
 
+        $form = $form->generate($user);
+        $form->setAction('/auth/g2fa' . (isset($params['redirect']) ? '?redirect=' . $params['redirect'] : ''));
+
         $this->view->setTemplate('auth::2fa.html.twig', [
             'qrCodeImage' => $qrCodeImage,
-            'form' => $form->generate($user)
+            'form' => $form
         ]);
     }
 

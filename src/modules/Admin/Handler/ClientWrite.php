@@ -12,7 +12,6 @@ use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Entity\Entity\Code;
 use Vemid\ProjectOne\Entity\Entity\CodeType;
 use Vemid\ProjectOne\Entity\Repository\ClientRepository;
-use Vemid\ProjectOne\Entity\Repository\CodeRepository;
 use \Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
 
 /**
@@ -92,18 +91,18 @@ class ClientWrite extends GridHandler
 
         $this->messageBag->pushFlashMessage($this->translator->_('Kategorija dodata!'), null, Builder::SUCCESS);
 
-        return $this->redirect('/codes/list');
+        return $this->redirect('/clients/list');
     }
 
     public function update($id, EntityManagerInterface $entityManager, FormBuilderInterface $formBuilder)
     {
-        /** @var $code Code */
-        if (!$code = $entityManager->find(Code::class, (int)$id)) {
+        /** @var $client EntityClient */
+        if (!$client = $entityManager->find(EntityClient::class, (int)$id)) {
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, nesto nije u redu. Ne postoji traženi dobavljač'), null, Builder::WARNING);
             return;
         }
 
-        $form = $formBuilder->build($code);
+        $form = $formBuilder->build($client);
         $postData = $form->getHttpData();
 
         if (!$form->isSuccess()) {
@@ -111,27 +110,19 @@ class ClientWrite extends GridHandler
             return;
         }
 
-        if (!$codeType = $entityManager->find(CodeType::class, $postData['codeType'])) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Tip ne postoji!'), null, Builder::DANGER);
+        if (!empty($postData['guarantor']) && !$guarantor = $entityManager->find(EntityClient::class, $postData['guarantor'])) {
+            $this->messageBag->pushFlashMessage($this->translator->_('Garantor ne postoji!'), null, Builder::DANGER);
             return;
         }
 
-        $parent = null;
-        if (!empty($postData['parent']) && !$parent = $entityManager->find(Code::class, $postData['parent'])) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Podkategorija ne postoji!'), null, Builder::DANGER);
-            return;
-        }
+        $postData['guarantor'] = $guarantor ?? null;
+        $client->setData($postData);
 
-        $postData['codeType'] = $codeType;
-        $postData['parent'] = $parent;
-
-        $code->setData($postData);
-
-        $entityManager->persist($code);
+        $entityManager->persist($client);
         $entityManager->flush();
 
-        $this->messageBag->pushFlashMessage($this->translator->_('Dobaljač izmenjen'), null, Builder::SUCCESS);
+        $this->messageBag->pushFlashMessage($this->translator->_('Klijent izmenjen'), null, Builder::SUCCESS);
 
-        $this->redirect('/codes/list');
+        $this->redirect('/clients/list');
     }
 }

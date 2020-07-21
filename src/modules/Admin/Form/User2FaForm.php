@@ -19,7 +19,6 @@ class User2FaForm extends AbstractForm
      */
     public function generate(EntityInterface $entity = null): Form
     {
-        $this->form->setAction('/auth/g2fa');
         $this->form->setHtmlAttribute('class', 'm-t');
         $this->form->setHtmlAttribute('novalidate', true);
 

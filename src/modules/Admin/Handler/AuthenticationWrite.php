@@ -34,6 +34,7 @@ class AuthenticationWrite extends AbstractHandler
     public function login(EntityManagerInterface $entityManager, UserLoginForm $userLoginForm)
     {
         $form = $userLoginForm->getForm();
+        $params = $this->request->getQueryParams();
 
         if (!$form->isSuccess()) {
             $this->messageBag->pushFormValidationMessages($form);
@@ -59,7 +60,7 @@ class AuthenticationWrite extends AbstractHandler
         if (password_verify($post['password'], $user->getPassword())) {
             if (filter_var($this->config->get('2fa'), FILTER_VALIDATE_BOOLEAN)) {
                 if ($user->getSecretKey()) {
-                    return $this->forward('/auth/g2fa/' . $user->getId());
+                    return $this->forward(sprintf('/auth/g2fa/%s%s', $user->getId(), isset($params['redirect']) ? '?redirect=' . $params['redirect'] : ''));
                 }
 
                 return $this->forward('/auth/g2fa-setup/' . $user->getId());
@@ -79,7 +80,7 @@ class AuthenticationWrite extends AbstractHandler
             $flashSession->success($this->translator->_(sprintf('Welcome %s', (string)$user)));
             header('Require-Auth: 0');
 
-            return $this->redirect('/');
+            return $this->redirect($params['redirect'] ?? '/');
         }
 
         $this->messageBag->pushFlashMessage($this->translator->_('Wrong password'), null, Builder::DANGER);
@@ -113,6 +114,7 @@ class AuthenticationWrite extends AbstractHandler
     public function g2fa(EntityManagerInterface $entityManager, Google2FA $google2FA, User2FaForm $form)
     {
         $form = $form->getForm();
+        $params = $this->request->getQueryParams();
 
         if (!$form->isSuccess()) {
             $this->messageBag->pushFormValidationMessages($form);
@@ -147,7 +149,7 @@ class AuthenticationWrite extends AbstractHandler
         $flashSession = new FlashSession($this->session);
         $flashSession->success($this->translator->_(sprintf('Welcome %s', (string)$user)));
 
-        return $this->redirect('/');
+        return $this->redirect($params['redirect'] ?? '/');
     }
 
     public function resetPassword(UserResetPasswordForm $userResetPasswordForm, EntityManagerInterface $entityManager, MailManagerInterface $mailer, ConfigInterface $config)

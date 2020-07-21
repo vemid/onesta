@@ -37,7 +37,7 @@ class LoggedUserMiddleware implements MiddlewareInterface
         $uri = preg_replace('/\/\d*$/', '', $request->getUri()->getPath());
 
         if (!$session->has('user') && !in_array($uri, $allowedActions, false)) {
-            header('Location: /auth/login ', false, 302);
+            header('Location: /auth/login?redirect=' . $request->getUri()->getPath(), false, 302);
             header('Require-Auth: 1');
 
             return (new Response())

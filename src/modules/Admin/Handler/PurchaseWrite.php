@@ -99,7 +99,11 @@ class PurchaseWrite extends GridHandler
                 return;
             }
 
-            $postData['guarantor'] = $client->getGuarantor();
+            if (!$guarantor = $entityManager->find(Client::class, $postData['guarantor'])) {
+                $guarantor = $client->getGuarantor();
+            }
+
+            $postData['guarantor'] = $guarantor;
 
             $client->setData($postData);
 
