@@ -59,11 +59,11 @@ class PurchaseWrite extends GridHandler
                 $client->getPhoneNumber(),
                 $purchase->getRegistration() ? $purchase->getRegistration()->getPlates() : '',
                 '',
-                number_format($totalPrice, 2),
+                number_format((float)$totalPrice, 2),
                 HtmlTag::groupLink([
                     HtmlTag::link('/supplier-receipts/overview/' . $purchase->getId(), false, 'text-success bigger-120', 'search', false),
                     HtmlTag::link('/supplier-receipts/update/' . $purchase->getId(), false, 'text-default bigger-120', 'pencil-square-o', false),
-                    HtmlTag::link('#', false, 'text-danger bigger-120', 'trash-o', false, [
+                    HtmlTag::link('#', false, count($missingPaymentInstallments) ? 'text-info' : 'text-danger bigger-120', 'trash-o', false, [
                         'data-delete' => '',
                         'data-form-url' => htmlspecialchars(PhpToCryptoJs::cryptoJsAesEncrypt('Vemid', '/supplier-receipts/delete/' . $purchase->getId())),
                         'data-title' => $this->translator->_('Obriši proizvod'),
