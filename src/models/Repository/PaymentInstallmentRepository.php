@@ -36,7 +36,7 @@ class PaymentInstallmentRepository extends EntityRepository
 
     /**
      * @param Purchase $purchase
-     * @return int|float
+     * @return PaymentInstallment[]
      */
     public function fetchMissingInstallments(Purchase $purchase)
     {
@@ -45,6 +45,7 @@ class PaymentInstallmentRepository extends EntityRepository
             ->from(PaymentInstallment::class, 'pi')
             ->where('pi.purchase = :purchase')
             ->andWhere('pi.paymentDate IS NULL OR pi.paymentAmount < 1')
+            ->andWhere('pi.installmentDate < CURDATE()')
             ->setParameters([
                 'purchase' => $purchase->getId(),
             ])

@@ -12,6 +12,9 @@ use Vemid\ProjectOne\Common\Form\FormBuilderInterface;
 use Vemid\ProjectOne\Common\Message\Builder;
 use Vemid\ProjectOne\Common\Route\AbstractHandler;
 use Vemid\ProjectOne\Entity\Entity\Client as EntityClient;
+use Vemid\ProjectOne\Entity\Entity\Purchase as EntityPurchase;
+use Vemid\ProjectOne\Entity\Entity\PaymentInstallment as EntityPaymentInstallment;
+use Vemid\ProjectOne\Entity\Repository\PurchaseRepository;
 
 /**
  * Class Client
@@ -72,8 +75,31 @@ class Client extends AbstractHandler
             $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi klijent'), null, Builder::WARNING);
         }
 
+        /** @var PurchaseRepository $purchaseRepository */
+        $purchaseRepository = $entityManager->getRepository(EntityPurchase::class);
+        $purchaseItemRepository = $entityManager->getRepository(EntityPaymentInstallment::class);
+
+        $purchases = [];
+        /** @var EntityPurchase $purchase */
+        foreach ($client->getPurchases() as $purchase) {
+            $missingInstallments = $purchaseItemRepository->fetchMissingInstallments($purchase);
+
+            $totalMissingInstallments = 0;
+            foreach ($missingInstallments as $missingInstallment) {
+                $totalMissingInstallments += $missingInstallment->getInstallmentAmount() - $missingInstallment->getPaymentAmount();
+            }
+
+            $purchases[] = [
+                'purchase' => $purchase,
+                'total' => $purchaseRepository->fetchTotalPrice($purchase),
+                'totalMissingInstallments' => $totalMissingInstallments,
+                'registration' => $purchase->getRegistration()
+            ];
+        }
+
         $this->view->setTemplate('client::overview.html.twig', [
-            'client' => $client
+            'client' => $client,
+            'purchases' => $purchases
         ]);
     }
 }

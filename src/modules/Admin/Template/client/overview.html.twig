@@ -75,7 +75,9 @@
                                     <div class="row">
                                         <div class="col-xs-4">Garantor:</div>
                                         <div class="col-xs-8">
-                                            {{ client.guarantor }}
+                                            {% if client.guarantor %}
+                                                <a href="/clients/overview/{{ client.guarantor.id }}" target="_blank" class="text-default">{{ client.guarantor }}</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </li>
@@ -90,23 +92,41 @@
                             <div class="space-20"></div>
                             <div class="inspinia-timeline">
                                 {% if client.purchases|length %}
-                                    {% for purchase in client.purchases %}
-                                    <div class="timeline-item">
-                                    <div class="row">
-                                        <div class="col-xs-3 date">
-                                            <i class="fa fa-money"></i>
-                                            <small class="text-navy">{{ purchase.createdAt.format('d.m.Y') }}</small>
+                                    {% for item in purchases %}
+                                        {% set purchase = item['purchase'] %}
+                                        {% set total = item['total'] %}
+                                        {% set registration = item['registration'] %}
+                                        {% set totalMissingInstallments = item['totalMissingInstallments'] %}
+
+                                        {% if purchase.finished %}
+                                        <div class="timeline-item">
+                                            <div class="row">
+                                                <div class="col-xs-3 date">
+                                                    <i class="fa fa-money"></i>
+                                                    <small class="text-navy">{{ purchase.createdAt.format('d.m.Y') }}</small>
+                                                </div>
+                                                <div class="col-xs-7 content">
+                                                    {% if registration %}
+                                                        <p class="m-b-xs">Registracija: {{ registration.plates }}</p>
+                                                    {% endif %}
+                                                    {% for purchaseItem in purchase.purchaseItems %}
+                                                        {% set product = purchaseItem.supplierProduct.product %}
+                                                        <p class="m-b-xs">{{ product.type == 'MERCHANDISE' ? 'Proizvod' : 'Usluga' }}: {{ purchaseItem.supplierProduct }} x {{ purchaseItem.qty }} kom</p>
+                                                    {% endfor %}
+                                                    {% if total > 0 %}
+                                                        <hr>
+                                                        <p class="m-b-lg"><span>Ukupno:</span> <b> {{ total|number_format(2, '.', ',') }}</b>
+                                                            <a href="/purchases/add-items/{{ purchase.id }}" target="_blank" class="text-default m-l-lg">{{ t('Detaljnije') }}</a>
+                                                            {% if totalMissingInstallments > 0 %}
+                                                                <span class="block text-danger">{{ t('Dospele rate') }}: {{ totalMissingInstallments }}</span>
+                                                            {% endif %}
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-xs-7 content">
-                                            <p class="m-b-xs"><strong>Send documents to Mike</strong></p>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                Lorem Ipsum has been the industry's standard dummy text ever since.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                        {% endif %}
                                     {% endfor %}
-                                {% else %}
-                                    <p>nema</p>
                                 {% endif %}
                             </div>
                         </div>
