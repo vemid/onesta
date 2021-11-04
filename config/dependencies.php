@@ -139,7 +139,6 @@ return [
         $middleware->pipe($container->get(SessionMiddleware::class));
         $middleware->pipe($container->get(LoggedUserMiddleware::class));
         $middleware->pipe($container->get(MiddlewareAclInterface::class));
-        $middleware->pipe($container->get(UserLocaleMiddleware::class));
         $middleware->pipe($container->get(FlashSessionMiddleware::class));
         $middleware->pipe($container->get(EventMiddlewareInterface::class));
         $middleware->pipe($container->get(RequestHandler::class));
