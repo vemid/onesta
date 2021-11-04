@@ -35,12 +35,14 @@ class TranslatorFactory
     {
         $files = [];
         $languages = $config->get('language')->toArray();
+        if (count($languages) === 0) {
+            throw new \LogicException('Setup you language and locale in default config!');
+        }
+
         foreach ($languages as $language) {
             $files['type'] = PhpArray::class;
             $files['filename'] = sprintf('%s/languages/%s.php', APP_PATH, $language);
         }
-
-
 
         $translator = Translator::factory([
             'locale' => [array_values($languages)],

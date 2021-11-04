@@ -42,16 +42,16 @@ class UserLocaleMiddleware implements MiddlewareInterface
 
         if (!$session->has('user') || !isset($session->get('user')['locale'])) {
             $guzzle = new Client();
-            $response = $guzzle->get('https://geoip.supermasita.com/api/v1.0/ip/');
-            $json = json_decode((string)$response->getBody(), true);
-
-            $isoCode = strtolower($json['country']['iso_code']);
-            $locale = $this->config->get('language')->toArray()[$isoCode] ?? \Locale::getDefault();
-            \Locale::setDefault($locale);
+//            $response = $guzzle->get('https://geoip.supermasita.com/api/v1.0/ip/');
+//            $json = json_decode((string)$response->getBody(), true);
+//
+//            $isoCode = strtolower($json['country']['iso_code']);
+//            $locale = $this->config->get('language')->toArray()[$isoCode] ?? \Locale::getDefault();
+            \Locale::setDefault('rs');
 
             if ($session->has('user')) {
                 $user = $session->get('user');
-                $user['locale'] = $locale;
+                $user['locale'] = 'sr_Rs';
 
                 $session->set('user', $user);
             }

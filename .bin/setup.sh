@@ -101,5 +101,7 @@ else
   echo "img folder is already a symlinked"
 fi
 
+source "${HOME_DIR}/.env/db.env"
+
 echo "setup finished"
 
