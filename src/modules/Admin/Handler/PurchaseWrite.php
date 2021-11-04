@@ -104,6 +104,7 @@ class PurchaseWrite extends GridHandler
             }
 
             $postData['guarantor'] = $guarantor;
+            $postData['finished'] = 0;
 
             $client->setData($postData);
 
