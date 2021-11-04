@@ -13,7 +13,7 @@ use Vemid\ProjectOne\Common\ErrorHandling\Whoops\NullHandler;
 use Vemid\ProjectOne\Common\ErrorHandling\Whoops\SetHttpStatusCodeHandler;
 use Vemid\ProjectOne\Common\ErrorHandling\Whoops\SuppressErrorDetailsHandler;
 use Vemid\ProjectOne\Common\ErrorHandling\Whoops\WhoopsRunner;
-use Vemid\ProjectOne\Common\Whoops\LogHandler;
+use Vemid\ProjectOne\Common\ErrorHandling\LogHandler;
 use Whoops\Handler\CallbackHandler;
 use Whoops\Handler\Handler;
 use Whoops\Handler\JsonResponseHandler as WhoopsJsonResponseHandler;

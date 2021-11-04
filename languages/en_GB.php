@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'Save' => 'Sacaa'
+    'Save' => 'Sacaa',
+    'type' => 'ass'
 ];

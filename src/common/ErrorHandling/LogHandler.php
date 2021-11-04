@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Vemid\ProjectOne\Common\Whoops;
+namespace Vemid\ProjectOne\Common\ErrorHandling;
 
 use Psr\Log\LoggerInterface;
 use Vemid\ProjectOne\Common\Exception\DontLogInterface;
 
 /**
- * @author Nikola Posa <nikola.posa@arbor-education.com>
+ *
  */
 class LogHandler
 {

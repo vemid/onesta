@@ -26,5 +26,6 @@ return [
     'Record updated' => 'Izmena izvršena',
     'Save client and add items' => 'Sačuvaj kupca i predji na stavke kupovine',
     'Add Registration' => 'Dodaj registraciju',
-    'Price' => 'Cena'
+    'Price' => 'Cena',
+    'type' => 'Tip'
 ];
