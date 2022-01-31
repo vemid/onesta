@@ -50,7 +50,7 @@ class EntityAnnotationReader implements FormBuilderInterface
         $form = new Form(sha1(get_class($entity)));
 
         if ($enableCsrf) {
-            $form->addProtection('Security token has expired, please submit the form again');
+//            $form->addProtection('Security token has expired, please submit the form again');
         }
 
         $form->setHtmlAttribute('novalidate');
@@ -76,7 +76,7 @@ class EntityAnnotationReader implements FormBuilderInterface
                 $value = $value->getEntityId();
             }
 
-            $label = $this->translator->_($formPropertyAnnotation->name ?: ucwords($filter->filter($propertyName->name)));
+            $label = $this->translator->_($formPropertyAnnotation->name ?: ucwords($propertyName->name));
             $type = $formPropertyAnnotation->type !== 'Date' || $formPropertyAnnotation->type !== 'DateTime' ? $formPropertyAnnotation->type : 'Text';
             $methodToCall = in_array($type, ['Date', 'DateTime', 'Number'], false) ? 'Text' : $type;
 
@@ -85,7 +85,7 @@ class EntityAnnotationReader implements FormBuilderInterface
 
             $cssClass =  sprintf('form-control%s', $formPropertyAnnotation->hidden ? ' hidden' : '');
             if ($formPropertyAnnotation->required) {
-                $element->setRequired($this->translator->_(sprintf('Please fill your %s.', $filter->filter($label))));
+                $element->setRequired($this->translator->_(sprintf('Please fill your %s.', $label)));
                 $cssClass .= ' required';
             }
 

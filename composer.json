@@ -26,9 +26,7 @@
         "filp/whoops": "^2.7",
         "jasny/session-middleware": "^1.0",
         "knplabs/knp-snappy": "^1.2",
-        "laminas/laminas-eventmanager": "3.5.x-dev",
         "laminas/laminas-permissions-acl": "^2.7@dev",
-        "laminas/laminas-servicemanager": "3.11.x-dev",
         "laminas/laminas-stratigility": "^3.2",
         "league/event": "^2.2",
         "mezzio/mezzio": "^3.2",
@@ -52,7 +50,8 @@
         "twig/twig": "2.x-dev",
         "zendframework/zend-config": "^3.3",
         "zendframework/zend-config-aggregator": "^1.1",
-        "zendframework/zend-diactoros": "^2.1@dev"
+        "zendframework/zend-diactoros": "^2.1",
+        "zendframework/zend-servicemanager": "4.0.x-dev"
     },
     "require-dev": {
         "phpunit/php-code-coverage": "^7.0",
