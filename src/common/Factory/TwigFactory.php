@@ -6,18 +6,19 @@ namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Laminas\Permissions\Acl\AclInterface;
+use Mezzio\Twig\TwigExtension;
+use Mezzio\Twig\TwigRenderer;
 use Odan\Twig\TwigAssetsExtension;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
 use Twig\TwigFunction;
+use \Psr\Container\NotFoundExceptionInterface;
+use \Psr\Container\ContainerExceptionInterface;
 use Vemid\ProjectOne\Common\Acl\Roles;
 use Vemid\ProjectOne\Common\Config\ConfigInterface;
 use Vemid\ProjectOne\Common\Config\ConfigResolvedInterface;
 use Vemid\ProjectOne\Common\Misc\PhpToCryptoJs;
 use Vemid\ProjectOne\Common\Translator\TranslationInterface;
-use Zend\Expressive\Twig\TwigExtension;
-use Zend\Expressive\Twig\TwigRenderer;
 
 /**
  * Class TwigFactory
@@ -49,8 +50,9 @@ class TwigFactory
     private $configObject;
 
     /**
-     * TwigFactory constructor.
      * @param ContainerInterface $container
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function __construct(ContainerInterface $container)
     {

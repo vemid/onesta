@@ -110,7 +110,6 @@ class PhpSessionPersistence implements InitializePersistenceIdInterface, Session
         }
 
         if (PHP_SESSION_ACTIVE === session_status()) {
-            session_id($id);
             $_SESSION = $session->toArray();
             session_write_close();
         }

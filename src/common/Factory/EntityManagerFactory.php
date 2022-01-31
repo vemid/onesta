@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Cache\ApcuCache;
 use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;

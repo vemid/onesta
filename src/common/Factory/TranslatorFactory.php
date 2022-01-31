@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Factory;
 
-use Laminas\Cache\Storage\Adapter\Apcu;
-use Laminas\Cache\Storage\Adapter\Filesystem;
-use Laminas\Cache\StorageFactory;
+//use Laminas\Cache\Storage\Adapter\Apcu;
+//use Laminas\Cache\Storage\Adapter\Filesystem;
+//use Laminas\Cache\StorageFactory;
 use Laminas\I18n\Translator\Loader\PhpArray;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -50,15 +50,15 @@ class TranslatorFactory
             'event_manager_enabled' => true,
         ]);
 
-        if ($config->get('environment') !== 'development') {
-            $cache = StorageFactory::factory([
-                'adapter' => [
-                    'name'    => Apcu::class,
-                ],
-            ]);
-
-            $translator->setCache($cache);
-        }
+//        if ($config->get('environment') !== 'development') {
+//            $cache = StorageFactory::factory([
+//                'adapter' => [
+//                    'name'    => Apcu::class,
+//                ],
+//            ]);
+//
+//            $translator->setCache($cache);
+//        }
 
         return $translator;
     }

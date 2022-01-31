@@ -63,14 +63,13 @@ use Vemid\ProjectOne\Common\Route\Handler\ArgumentResolver\ArgumentResolverManag
 use Laminas\Stratigility\MiddlewarePipe;
 use Laminas\Stratigility\MiddlewarePipeInterface;
 use Phoundation\ErrorHandling\RunnerInterface;
+use \Mezzio\Helper\ServerUrlHelper;
+use  \Mezzio\Helper\UrlHelper;
 use Vemid\ProjectOne\Common\Session\PhpSessionPersistence;
 use Vemid\ProjectOne\Common\Mailer\MailManagerInterface;
 use Vemid\ProjectOne\Common\Translator\Translation;
 use Vemid\ProjectOne\Common\Translator\TranslationInterface;
-use Zend\Expressive\Helper\ServerUrlHelper;
-use Zend\Expressive\Helper\UrlHelper;
-use Zend\Expressive\Helper\UrlHelperFactory;
-use Zend\Expressive\Twig\TwigExtension;
+use \Mezzio\Twig\TwigExtension;
 use function DI\autowire;
 use function DI\create;
 use function DI\factory;
@@ -80,6 +79,7 @@ use League\Event\Emitter;
 use League\Event\EmitterInterface;
 use League\Event\ListenerProviderInterface;
 use Middlewares\RequestHandler;
+use \Mezzio\Router\RouterInterface;
 use Narrowspark\HttpEmitter\SapiEmitter;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -186,11 +186,11 @@ return [
         return new TwigAssetsExtension($env, (array)$config->get('templates')->get('external'));
     },
     FileManager::class => autowire(FileManager::class),
-    UrlHelper::class => factory(UrlHelperFactory::class),
+    UrlHelper::class => factory(\Mezzio\Helper\UrlHelperFactory::class),
     UserLocaleMiddleware::class => autowire(UserLocaleMiddleware::class),
     UserLoginForm::class => autowire(UserLoginForm::class),
     UserChangePassword::class => autowire(UserChangePassword::class),
-    'Zend\Expressive\Router\RouterInterface' => static function (ContainerInterface $container) {
+    RouterInterface::class => static function (ContainerInterface $container) {
         return new FastRouteRouter(
             null,
             $container->get(ConfigInterface::class)['routes']

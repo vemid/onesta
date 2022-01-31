@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:8.0-fpm
 
 RUN apt-get update \
     && apt-get install -y \
@@ -7,28 +7,28 @@ RUN apt-get update \
         zlib1g-dev \
         libicu-dev \
         libpq-dev \
+        libzip-dev \
         git \
         zip \
         unzip \
         nginx \
     && docker-php-ext-install \
-        pcntl \
         intl \
         iconv \
         gd \
         pdo \
         pdo_mysql \
         zip \
-        opcache \
-    && pecl install apcu-5.1.5
+        opcache
 
+
+RUN pecl install apcu-5.1.21
 RUN docker-php-ext-enable apcu
 
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN pecl install xdebug
-RUN apt-get install nano
 RUN apt-get update \
     && apt-get install -y libonig-dev \
     && docker-php-ext-install -j$(nproc) \
