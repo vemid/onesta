@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Vemid\ProjectOne\Common\Factory;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Query\AST\Functions\CurrentDateFunction;
-use Doctrine\ORM\Tools\Setup;
 use DoctrineExtensions\Query\Mysql\Date;
 use DoctrineExtensions\Query\Mysql\Sha1;
 use Vemid\ProjectOne\Common\Config\ConfigInterface;
-use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
 /**
  * Class EntityManagerFactory
