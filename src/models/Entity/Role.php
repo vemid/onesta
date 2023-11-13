@@ -6,6 +6,7 @@ namespace Vemid\ProjectOne\Entity\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity as DoctrineEntity;
 use Doctrine\ORM\PersistentCollection;
 use Vemid\ProjectOne\Entity\Entity;
 use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
@@ -13,8 +14,8 @@ use Vemid\ProjectOne\Common\Annotation as FormAnnotation;
 /**
  * Role
  *
- * @ORM\Table(name="roles", uniqueConstraints={@ORM\UniqueConstraint(name="code", columns={"code"})})
- * @ORM\Entity
+ * @Table(name="roles", uniqueConstraints={@ORM\UniqueConstraint(name="code", columns={"code"})})
+ * @DoctrineEntity
  */
 class Role extends Entity
 {

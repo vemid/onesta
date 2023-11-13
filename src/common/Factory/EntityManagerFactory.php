@@ -71,8 +71,9 @@ class EntityManagerFactory
         $config->setMetadataCacheImpl($cacheDriver);
         $config->setQueryCacheImpl($cacheDriver);
         $config->setResultCacheImpl($cacheDriver);
-//        $config->addEntityNamespace('\\Vemid\\ProjectOne\\Entity', 'Vemid');
+        $config->addEntityNamespace('Vemid', 'Vemid\ProjectOne\Entity');
 
+        AnnotationRegistry::registerLoader('class_exists');
         AnnotationRegistry::registerFile(APP_PATH . '/src/common/Annotation/FormElement.php');
 
         return EntityManager::create($this->connection, $config, $this->eventManager);
