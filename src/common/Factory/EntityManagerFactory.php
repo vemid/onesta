@@ -8,14 +8,16 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Query\AST\Functions\CurrentDateFunction;
 use Doctrine\ORM\Tools\Setup;
 use DoctrineExtensions\Query\Mysql\Date;
 use DoctrineExtensions\Query\Mysql\Sha1;
 use Vemid\ProjectOne\Common\Config\ConfigInterface;
-use \Doctrine\ORM\Mapping\Driver\XmlDriver;
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
 /**
  * Class EntityManagerFactory
@@ -23,31 +25,24 @@ use \Doctrine\ORM\Mapping\Driver\XmlDriver;
  */
 class EntityManagerFactory
 {
-    /** @var Connection */
-    private $connection;
+    private Connection $connection;
 
-    /** @var ConfigInterface */
-    private $config;
+    private ConfigInterface $config;
 
-    /** @var EventManager */
-    private $eventManager;
+    private EventManager $eventManager;
 
-    /**
-     * EntityManagerFactory constructor.
-     * @param Connection $connection
-     * @param ConfigInterface $config
-     * @param EventManager $eventManager
-     */
-    public function __construct(Connection $connection, ConfigInterface $config, EventManager $eventManager)
-    {
+    public function __construct(
+        Connection $connection,
+        ConfigInterface $config,
+        EventManager $eventManager
+    ) {
         $this->connection = $connection;
         $this->config = $config;
         $this->eventManager = $eventManager;
     }
 
     /**
-     * @return EntityManager
-     * @throws \Doctrine\ORM\ORMException
+     * @throws MissingMappingDriverImplementation
      */
     public function create(): EntityManager
     {
@@ -61,6 +56,6 @@ class EntityManagerFactory
         $config->addCustomStringFunction('DATE', Date::class);
         $config->addCustomStringFunction('CURDATE', CurrentDateFunction::class);
 
-        return EntityManager::create($this->connection, $config, $this->eventManager);
+        return new EntityManager($this->connection, $config, $this->eventManager);
     }
 }

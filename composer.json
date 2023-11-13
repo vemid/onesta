@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": ">= 7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "bacon/bacon-qr-code": "^2.0",
         "beberlei/doctrineextensions": "^1.2",

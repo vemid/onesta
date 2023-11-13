@@ -9,4 +9,5 @@ return [
     'db.username' => getenv('ONESTA_DB_USER') ?: 'root',
     'db.password' => getenv('ONESTA_DB_PASSWORD') ?: 'root',
     'db.debug' => getenv('ONESTA_ENVIRONMENT') ?: true,
+    'db.driver' => 'pdo_mysql'
 ];
