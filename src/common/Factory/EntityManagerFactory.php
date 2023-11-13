@@ -9,6 +9,7 @@ use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Query\AST\Functions\CurrentDateFunction;
 use Doctrine\ORM\Tools\Setup;
 use DoctrineExtensions\Query\Mysql\Date;
@@ -50,31 +51,15 @@ class EntityManagerFactory
      */
     public function create(): EntityManager
     {
-//        $cacheDriver = new ApcuCache();
-
-        $cacheDriver = new PhpFileCache(
-            APP_PATH . '/var/cache/doctrine'
-        );
-
-        $config = Setup::createAnnotationMetadataConfiguration(
+        $config = ORMSetup::createXMLMetadataConfiguration(
             [APP_PATH . '/config/xml'],
-            $this->config->get('db')->get('debug'),
-            sprintf('%s/var/cache/doctrine', APP_PATH),
-            null,
-            false
+            (bool)$this->config->get('db')->get('debug'),
+            sprintf('%s/var/cache/doctrine', APP_PATH)
         );
 
         $config->addCustomStringFunction('sha1', Sha1::class);
         $config->addCustomStringFunction('DATE', Date::class);
         $config->addCustomStringFunction('CURDATE', CurrentDateFunction::class);
-
-        $config->setMetadataCacheImpl($cacheDriver);
-        $config->setQueryCacheImpl($cacheDriver);
-        $config->setResultCacheImpl($cacheDriver);
-        $config->addEntityNamespace('Vemid', 'Vemid\ProjectOne\Entity');
-
-        AnnotationRegistry::registerLoader('class_exists');
-        AnnotationRegistry::registerFile(APP_PATH . '/src/common/Annotation/FormElement.php');
 
         return EntityManager::create($this->connection, $config, $this->eventManager);
     }
