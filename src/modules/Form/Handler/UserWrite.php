@@ -91,7 +91,7 @@ class UserWrite extends AbstractHandler
         $user->setUsername($postData['username']);
         $user->setFirstName($postData['firstName']);
         $user->setLastName($postData['lastName']);
-        $user->setGender($postData['gender']);
+        $user->setGender($postData['gender'] ?: null);
         $user->setEmail($postData['email']);
         $user->setIsActive(isset($postData['isActive']) ? 1 : 0);
         $entityManager->persist($user);

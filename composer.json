@@ -14,19 +14,26 @@
             "php": "7.2"
         },
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "require": {
         "php": ">= 7.2",
         "ext-json": "*",
         "bacon/bacon-qr-code": "^2.0",
         "beberlei/doctrineextensions": "^1.2",
+        "dflydev/fig-cookies": "^3.1",
         "doctrine/annotations": "1.14.x-dev",
         "doctrine/cache": "^1.12",
         "filp/whoops": "^2.7",
         "jasny/session-middleware": "^1.0",
         "knplabs/knp-snappy": "^1.2",
+        "laminas/laminas-eventmanager": "*",
+        "laminas/laminas-i18n": "*",
         "laminas/laminas-permissions-acl": "^2.7@dev",
+        "laminas/laminas-servicemanager": "*",
         "laminas/laminas-stratigility": "^3.2",
         "league/event": "^2.2",
         "mezzio/mezzio": "^3.2",
@@ -39,8 +46,10 @@
         "narrowspark/http-emitter": "^0.8.0",
         "nette/forms": "^3.0",
         "nikolaposa/phoundation": "^2.0",
+        "odan/twig-assets": "dev-master",
         "php-di/php-di": "^6.0",
         "php-http/guzzle6-adapter": "^2.0",
+        "php-http/message-factory": "^1.0@dev",
         "pragmarx/google2fa": "^7.0",
         "rakit/validation": "^1.2",
         "robmorgan/phinx": "^0.11.4",
@@ -50,8 +59,7 @@
         "twig/twig": "2.x-dev",
         "zendframework/zend-config": "^3.3",
         "zendframework/zend-config-aggregator": "^1.1",
-        "zendframework/zend-diactoros": "^2.1",
-        "zendframework/zend-servicemanager": "4.0.x-dev"
+        "zendframework/zend-diactoros": "^2.1"
     },
     "require-dev": {
         "phpunit/php-code-coverage": "^7.0",

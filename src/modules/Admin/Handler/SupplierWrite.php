@@ -70,8 +70,8 @@ class SupplierWrite extends GridHandler
 
         $supplier->setData($postData);
 
-        $entityManager->persist($supplier);
-        $entityManager->flush();
+//        $entityManager->persist($supplier);
+//        $entityManager->flush();
 
         $this->messageBag->pushFlashMessage($this->translator->_('Dobavljač dodat!'), null, Builder::SUCCESS);
 

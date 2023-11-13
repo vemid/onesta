@@ -35,7 +35,6 @@ abstract class AbstractForm
         $this->entityManager = $entityManager;
 
         $this->form = new Form(sha1(static::class));
-        $this->form->addProtection('Security token has expired, please submit the form again');
     }
 
     /**

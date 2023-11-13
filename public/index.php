@@ -39,6 +39,7 @@ $container = $containerBuilder->build();
 $errorHandler = $container->call($container->get(RunnerInterface::class));
 $errorHandler->register();
 
+
 $emitter = $container->get(SapiEmitter::class);
 $emitter->emit($container->get(MiddlewareResponseInterface::class));
 
