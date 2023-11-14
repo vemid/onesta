@@ -28,16 +28,12 @@ use Whoops\Util\Misc as WhoopsUtil;
  */
 class ErrorHandlerFactory
 {
-    /** @var LoggerInterface */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /** @var ConfigInterface */
-    private $config;
+    private ConfigInterface $config;
 
     /**
      * ErrorHandlerFactory constructor.
-     * @param LoggerInterface $logger
-     * @param ConfigInterface $config
      */
     public function __construct(LoggerInterface $logger, ConfigInterface $config)
     {
@@ -45,9 +41,6 @@ class ErrorHandlerFactory
         $this->config = $config;
     }
 
-    /**
-     * @return RunnerInterface
-     */
     public function __invoke(): RunnerInterface
     {
         $displayErrors = (bool)$this->config->get('error_handling')->get('display_errors');

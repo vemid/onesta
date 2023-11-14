@@ -16,10 +16,7 @@ use Vemid\ProjectOne\Common\Entity\Event\Subscriber\SetReferencedObjectField;
  */
 class EventManagerFactory
 {
-    /**
-     * @return EventManager
-     */
-    public function create()
+    public function create(): EventManager
     {
         $eventManager = new EventManager();
         $eventManager->addEventListener([Events::postRemove], new InsertProductSupplierAfterReceiptItemAdded());

@@ -21,8 +21,6 @@ use \Exception;
 class ErrorLoggerFactory implements ErrorLoggerInterface
 {
     /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
      * @throws Exception
      */
     public function create(ConfigInterface $config): LoggerInterface
@@ -31,16 +29,10 @@ class ErrorLoggerFactory implements ErrorLoggerInterface
     }
 
     /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
      * @throws Exception
      */
     public function __invoke(ConfigInterface $config): LoggerInterface
     {
-//        $client = ClientBuilder::create([
-//            'dsn' => $config->get('sentry.dns')
-//        ])->getClient();
-
         $stdErrStreamHandler = new StreamHandler('php://stderr');
         $stdErrStreamHandler->setFormatter(new JsonFormatter());
 
@@ -50,7 +42,6 @@ class ErrorLoggerFactory implements ErrorLoggerInterface
         $logger = new MongoLogger('error-logs');
         $logger->pushHandler($fileStreamHandler);
         $logger->pushHandler($stdErrStreamHandler);
-//        $logger->pushHandler(new Handler(new Hub($client)));
 
         return $logger;
     }

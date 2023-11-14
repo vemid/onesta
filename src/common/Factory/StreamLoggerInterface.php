@@ -13,15 +13,7 @@ use Psr\Log\LoggerInterface;
  */
 interface StreamLoggerInterface
 {
-    /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
-     */
     public function create(ConfigInterface $config): LoggerInterface;
 
-    /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
-     */
     public function __invoke(ConfigInterface $config): LoggerInterface;
 }

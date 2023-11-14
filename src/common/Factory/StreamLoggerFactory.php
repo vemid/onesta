@@ -18,8 +18,6 @@ use \Exception;
 class StreamLoggerFactory implements StreamLoggerInterface
 {
     /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
      * @throws \Exception
      */
     public function create(ConfigInterface $config): LoggerInterface
@@ -28,8 +26,6 @@ class StreamLoggerFactory implements StreamLoggerInterface
     }
 
     /**
-     * @param ConfigInterface $config
-     * @return LoggerInterface
      * @throws Exception
      */
     public function __invoke(ConfigInterface $config): LoggerInterface
@@ -39,11 +35,6 @@ class StreamLoggerFactory implements StreamLoggerInterface
 
         $logger = new MongoLogger('logs');
         $logger->pushHandler($stOutStreamHandler);
-//        $logger->pushProcessor(static function ($record) use ($config) {
-//            $record['extra']['env'] = 'dev';
-//            $record['extra']['version'] = $config->get('version');
-//            return $record;
-//        });
 
         return $logger;
     }

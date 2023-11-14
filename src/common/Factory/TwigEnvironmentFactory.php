@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Common\Factory;
 
 use Twig\Environment;
+use Twig\Error\LoaderError;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
 
@@ -15,12 +16,14 @@ use Twig\Loader\FilesystemLoader;
 class TwigEnvironmentFactory
 {
     /**
-     * @param array $config
-     * @return Environment
-     * @throws \Twig\Error\LoaderError
+     * @throws LoaderError
      */
-    public function __invoke(array $config)
+    public function __invoke(array $config): Environment
     {
+        $loader = new ArrayLoader([
+            '@error/404.html.twig' => '',
+        ]);
+
         $templateConfig = $config['templates'];
         if (isset($templateConfig['paths'])) {
             $loader = new FilesystemLoader($templateConfig['paths']['__main__']);
@@ -30,11 +33,6 @@ class TwigEnvironmentFactory
             foreach ($templateConfig['paths'] as $namespace => $path) {
                 $loader->addPath($path, $namespace);
             }
-
-        } else {
-            $loader = new ArrayLoader([
-                '@error/404.html.twig' => '',
-            ]);
         }
 
         return new Environment($loader, [

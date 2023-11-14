@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Vemid\ProjectOne\Common\Factory;
 
 use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Exception;
 use Vemid\ProjectOne\Common\Config\ConfigInterface;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use \Doctrine\DBAL\DBALException;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ConnectionFactory
@@ -19,25 +18,17 @@ use Psr\Log\LoggerInterface;
 class ConnectionFactory
 {
     /**
-     * @param ConfigInterface $config
-     * @param LoggerInterface $logger
-     * @param EventManager $eventManager
-     * @return Connection
-     * @throws DBALException
+     * @throws Exception
      */
-    public function create(ConfigInterface $config, LoggerInterface $logger, EventManager $eventManager): Connection
+    public function create(ConfigInterface $config, EventManager $eventManager): Connection
     {
-        return $this($config, $logger, $eventManager);
+        return $this($config, $eventManager);
     }
 
     /**
-     * @param ConfigInterface $config
-     * @param LoggerInterface $logger
-     * @param EventManager $eventManager
-     * @return Connection
-     * @throws DBALException
+     * @throws Exception
      */
-    public function __invoke(ConfigInterface $config, LoggerInterface $logger, EventManager $eventManager): Connection
+    public function __invoke(ConfigInterface $config, EventManager $eventManager): Connection
     {
         $connectionParams = [
             'dbname' => $config->get('db')->get('name'),

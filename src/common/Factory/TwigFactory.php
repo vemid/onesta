@@ -65,9 +65,6 @@ class TwigFactory
         $this->configObject = $container->get(ConfigInterface::class);
     }
 
-    /**
-     * @return TwigRenderer
-     */
     public function create(): TwigRenderer
     {
         $functionCipher = new TwigFunction('cipher', static function ($value) {
@@ -84,7 +81,6 @@ class TwigFactory
 
         $functionIsAllowed = new TwigFunction('isAllowed', static function ($id, $resource) use ($roleManager, $acl) {
             $route = preg_replace('/\/\d*$/', '', $resource);
-
             foreach ($roleManager->getUserRoles($id) as $role) {
                 if ($acl->isAllowed($role, $route)) {
                     return true;
@@ -95,7 +91,9 @@ class TwigFactory
         });
 
         $this->environment->addExtension($this->extension);
-        $this->environment->addExtension(new TwigAssetsExtension($this->environment, $this->config['templates']['external']));
+        $this->environment->addExtension(
+            new TwigAssetsExtension($this->environment, $this->config['templates']['external'])
+        );
         $this->environment->addFunction($functionCipher);
         $this->environment->addFunction($functionIsAllowed);
         $this->environment->addFunction($functionTranslate);

@@ -14,10 +14,6 @@ use function FastRoute\simpleDispatcher;
  */
 class RouteResourceFactory
 {
-    /**
-     * @param ConfigInterface $config
-     * @return Dispatcher
-     */
     public function create(ConfigInterface $config): Dispatcher
     {
         return simpleDispatcher($config->get('routes'));
