@@ -12,41 +12,22 @@ use Doctrine\Common\Annotations\Annotation;
  */
 final class FormElement
 {
-    /**
-     * @var string
-     */
-    public $name = '';
+    public string $name = '';
 
     /**
-     * The type of Id generator.
-     *
-     * @var string
-     *
      * @Enum({"Text", "Select", "TextArea", "Checkbox", "Hidden", "Date", "DateTime", "Email", "Password", "Upload", "MultiSelect", "Number"})
      */
-    public $type = 'Text';
+    public string $type = 'Text';
 
-    /**
-     * @var boolean
-     */
-    public $required = false;
+    public bool $required = false;
 
-    /**
-     * @var boolean
-     */
-    public $nullable = false;
+    public bool $nullable = false;
 
-    /** @var string */
-    public $relation  = '';
+    public string $relation  = '';
 
-    /** @var array */
-    public $disabled = [];
+    public array $disabled = [];
 
-    /** @var bool */
-    public $hidden = false;
+    public bool $hidden = false;
 
-    /**
-     * @var array
-     */
-    public $options = [];
+    public array $options = [];
 }

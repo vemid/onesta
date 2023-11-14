@@ -16,7 +16,7 @@ final class HandlerChain extends Handler
     /**
      * @var Handler[]
      */
-    private $handlers;
+    private array $handlers;
 
     public function __construct(Handler ...$handlers)
     {

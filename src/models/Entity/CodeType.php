@@ -114,7 +114,7 @@ class CodeType extends Entity
     /**
      * @return PersistentCollection
      */
-    public function getCodes(): ?PersistentCollection
+    public function getCodes(): ?ArrayCollection
     {
         return $this->codes;
     }

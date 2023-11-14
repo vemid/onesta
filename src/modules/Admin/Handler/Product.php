@@ -40,14 +40,17 @@ class Product extends AbstractHandler
         }
 
         $options = ['' => '-- Izaberite --'];
-        foreach ($codeType->getCodes() as $code) {
-            $options[$code->getId()] = (string)$code;
+
+        if ($codeType->getCodes() !== null) {
+            foreach ($codeType->getCodes() as $code) {
+                $options[$code->getId()] = (string)$code;
+            }
         }
 
         $form = $formBuilder->build(new EntityProduct);
         $form->removeComponent($form->getComponent('id'));
-        $form->getComponent('type')->setValue($type);
-        $form->getComponent('code')->setItems($options);
+        $form->getComponent('type')?->setValue($type);
+        $form->getComponent('code')?->setItems($options);
 
         $this->view->setTemplate('product::create.html.twig', [
             'form' => $form
@@ -58,7 +61,11 @@ class Product extends AbstractHandler
     {
         /** @var $product EntityProduct */
         if (!$product = $entityManager->find(EntityProduct::class, (int)$id)) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi proizvod'), null, Builder::WARNING);
+            $this->messageBag->pushFlashMessage(
+                $this->translator->_('Hm, izgleda da ne postoji traženi proizvod'),
+                null,
+                Builder::WARNING
+            );
         }
 
         $this->view->setTemplate('product::update.html.twig', [
@@ -68,9 +75,12 @@ class Product extends AbstractHandler
 
     public function overview($id, EntityManagerInterface $entityManager): void
     {
-        /** @var $product EntityProduct */
         if (!$product = $entityManager->find(EntityProduct::class, (int)$id)) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji traženi proizvod'), null, Builder::WARNING);
+            $this->messageBag->pushFlashMessage(
+                $this->translator->_('Hm, izgleda da ne postoji traženi proizvod'),
+                null,
+                Builder::WARNING
+            );
         }
 
         $this->view->setTemplate('product::overview.html.twig', [

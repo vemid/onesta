@@ -12,37 +12,28 @@ use Vemid\ProjectOne\Common\Exception\DontLogInterface;
  */
 class LogHandler
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * @var array
      */
-    private $dontLog = [];
+    private array $dontLog;
 
-    public function __construct(
-        LoggerInterface $logger,
-        array $dontLog = []
-    ) {
+    public function __construct(LoggerInterface $logger, array $dontLog = [])
+    {
         $this->logger = $logger;
         $this->dontLog = array_merge($dontLog, [DontLogInterface::class]);
     }
 
-    public function __invoke($error)
+    public function __invoke(\Throwable $error)
     {
-        /* @var $error \Throwable */
-
         if (!$this->shouldLog($error)) {
             return;
         }
 
         $this->logger->error(
             $error->getMessage(),
-            [
-                'exception' => $error,
-            ]
+            ['exception' => $error]
         );
     }
 

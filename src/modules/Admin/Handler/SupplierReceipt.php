@@ -29,14 +29,17 @@ class SupplierReceipt extends AbstractHandler
     public function create(FormBuilderInterface $formBuilder, EntityManagerInterface $entityManager): void
     {
         $form = $formBuilder->build(new EntitySupplierReceipt());
-        $items = $form->getComponent('supplier')->getItems();
+        $items = $form->getComponent('supplier')?->getItems();
 
-        $owners = $entityManager->getRepository(EntitySupplier::class)->findByOwner(true);
+        $owners = $entityManager->getRepository(EntitySupplier::class)->findBy([
+            'owner' => 0
+        ]);
+
         foreach ($owners as $owner) {
             unset($items[$owner->getId()]);
         }
 
-        $form->getComponent('supplier')->setItems($items);
+        $form->getComponent('supplier')?->setItems($items);
 
         $this->view->setTemplate('supplier-receipt::create.html.twig', [
             'form' => $form
@@ -60,13 +63,18 @@ class SupplierReceipt extends AbstractHandler
     {
         /** @var $supplierReceipt EntitySupplierReceipt */
         if (!$supplierReceipt = $entityManager->find(EntitySupplierReceipt::class, (int)$id)) {
-            $this->messageBag->pushFlashMessage($this->translator->_('Hm, izgleda da ne postoji tražena prijemnica'), null, Builder::WARNING);
+            $this->messageBag->pushFlashMessage(
+                $this->translator->_('Hm, izgleda da ne postoji tražena prijemnica'),
+                null,
+                Builder::WARNING
+            );
         }
 
         $form = $formBuilder->build(new EntitySupplierReceiptItem());
-        $form->getComponent('supplierReceipt')->setDefaultValue($supplierReceipt->getId());
+        $form->getComponent('supplierReceipt') ?->setDefaultValue($supplierReceipt->getId());
+
         $componentProduct = $form->getComponent('product');
-        $items = $componentProduct->getItems();
+        $items = $componentProduct?->getItems();
 
         foreach ($supplierReceipt->getSupplierReceiptItems() as $supplierReceiptItem) {
             if (isset($items[$supplierReceiptItem->getProduct()->getId()])) {
@@ -74,7 +82,7 @@ class SupplierReceipt extends AbstractHandler
             }
         }
 
-        $componentProduct->setItems($items);
+        $componentProduct?->setItems($items);
 
         $this->view->setTemplate('supplier-receipt::overview.html.twig', [
             'supplierReceipt' => $supplierReceipt,

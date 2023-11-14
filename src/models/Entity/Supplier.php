@@ -29,9 +29,11 @@ class Supplier extends Entity
     /**
      * @var boolean
      *
-     * @ORM\Column(name="owner", type="boolean", length=1, nullable=false)
+     * @ORM\Column(name="owner", type="string", length=1, nullable=false)
+     * @FormAnnotation\FormElement(type="Checkbox", required=true)
+     *
      */
-    protected $owner;
+    protected bool $owner;
 
     /**
      * @var string
@@ -99,7 +101,7 @@ class Supplier extends Entity
      */
     public function setOwner(): Supplier
     {
-        $this->owner = 0;
+        $this->owner = false;
 
         return $this;
     }
